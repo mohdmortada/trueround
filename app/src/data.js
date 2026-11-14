@@ -51,6 +51,17 @@ window.TR_DATA = (function () {
       unlocked: [0, 1], watched: [] }
   };
 
+  // Fighter-page details: nickname, stance, hometown, when they joined, licence, and the date each level was reached.
+  var profiles = {
+    layla: { nickname: 'Lightning', stance: 'Orthodox', hometown: 'Byblos', since: '2023-09-02', licence: 'LBN-A-0457', history: ['2023-09-02', '2024-03-09', '2025-01-25', '2026-01-24'] },
+    mohammad: { nickname: '', stance: 'Orthodox', hometown: '', since: '2024-10-19', licence: 'LBN-A-0912', history: ['2024-10-19', '2025-05-17', '2026-02-21'] },
+    omar: { nickname: '', stance: 'Orthodox', hometown: 'Beirut', since: '2025-09-01', licence: 'LBN-J-0133', history: ['2025-09-01', '2026-06-13'] },
+    nour: { nickname: 'Quiet Storm', stance: 'Southpaw', hometown: 'Zahle', since: '2024-02-10', licence: 'LBN-A-0688', history: ['2024-02-10', '2024-12-07', '2025-11-15'] },
+    tariq: { nickname: 'The Wall', stance: 'Orthodox', hometown: 'Tripoli', since: '2022-06-15', licence: 'LBN-A-0201', history: ['2022-06-15', '2023-01-21', '2023-11-18', '2024-10-26', '2025-12-13'] },
+    sami: { nickname: '', stance: 'Switch', hometown: 'Sidon', since: '2025-11-20', licence: 'LBN-A-1040', history: ['2025-11-20', '2026-09-12'] }
+  };
+  Object.keys(profiles).forEach(function (k) { Object.assign(athletes[k], profiles[k], { notify: { push: true, events: true } }); });
+
   function D(red, blue) { return [red, blue]; }
   var bouts = [
     { id: 'b1', athlete: 'layla', event: 'Levant Open 2026', city: 'Amman', date: '2026-10-12', corner: 'red', opponent: 'Mira Sokolova', oppNation: 'KAZ', result: 'win', method: 'Unanimous decision', round: 3, time: '3:00', judges: [[D(10, 9), D(10, 9), D(9, 10)], [D(10, 9), D(10, 9), D(10, 9)], [D(10, 9), D(9, 10), D(10, 9)]], official: 'Official #A-118' },
@@ -103,8 +114,8 @@ window.TR_DATA = (function () {
   return {
     TODAY: TODAY, LEVELS: LEVELS, AREAS: AREAS,
     coaches: { hassan: { id: 'hassan', name: 'Hassan Jizzini', gym: 'Cedar Combat Club', licence: 'Coach Level 2 · LBN-C-0193' } },
-    gyms: [{ id: 'cedar', name: 'Cedar Combat Club', city: 'Beirut', coach: 'hassan' }, { id: 'harbour', name: 'Harbour MMA', city: 'Tripoli', coach: 'hassan' }],
-    federations: ['Lebanon', 'Indonesia', 'Türkiye', 'Jordan', 'Kazakhstan', 'Egypt', 'United Arab Emirates'],
+    gyms: [{ id: 'cedar', name: 'Cedar Combat Club', city: 'Beirut', coach: 'hassan', athletes: 38 }, { id: 'harbour', name: 'Harbour MMA', city: 'Tripoli', coach: 'hassan', athletes: 21 }],
+    federations: [['LBN', 'Lebanon'], ['IDN', 'Indonesia'], ['TUR', 'Türkiye'], ['JOR', 'Jordan'], ['KAZ', 'Kazakhstan'], ['EGY', 'Egypt'], ['UAE', 'United Arab Emirates']],
     seed: function () {
       return JSON.parse(JSON.stringify({ v: 1, role: 'athlete', viewAs: 'layla', athletes: athletes, bouts: bouts, events: events, registrations: [{ event: 'ev1', athlete: 'layla', weightClass: '57 kg', on: '2026-11-02' }, { event: 'ev1', athlete: 'mohammad', weightClass: '84 kg', on: '2026-11-09' }], library: library, feed: feed, gradings: [{ id: 'g1', athlete: 'nour', from: 2, to: 3, coach: 'hassan', status: 'recommended', on: '2026-11-10' }], sparring: [] }));
     }

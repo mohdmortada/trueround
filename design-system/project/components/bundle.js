@@ -27,7 +27,11 @@
     user: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c1.4-4 4.4-6 8-6s6.6 2 8 6',
     lock: 'M6 11h12v9H6zM8.5 11V8a3.5 3.5 0 0 1 7 0v3',
     scale: 'M12 4v16M5 20h14M6 8h12M6 8l-3 6h6zM18 8l-3 6h6z',
-    whistle: 'M4 10h9a5 5 0 1 1-5 5H4zM13 10l5-4M17 6h3'
+    whistle: 'M4 10h9a5 5 0 1 1-5 5H4zM13 10l5-4M17 6h3',
+    share: 'M12 15V3M7.5 7.5L12 3l4.5 4.5M5 13v8h14v-8',
+    settings: 'M4 7h9M17 7h3M15 4.5v5M4 17h3M11 17h9M9 14.5v5',
+    camera: 'M4 8h4l2-3h4l2 3h4v11H4zM12 16.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6z',
+    back: 'M15 5l-7 7 7 7'
   };
 
   function Icon(props) {

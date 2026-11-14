@@ -1,5 +1,5 @@
 import type * as React from 'react';
-export type IconName = 'check' | 'clock' | 'shield' | 'ban' | 'home' | 'ladder' | 'card' | 'play' | 'calendar' | 'user' | 'lock' | 'scale' | 'whistle';
+export type IconName = 'check' | 'clock' | 'shield' | 'ban' | 'home' | 'ladder' | 'card' | 'play' | 'calendar' | 'user' | 'lock' | 'scale' | 'whistle' | 'share' | 'settings' | 'camera' | 'back';
 export type Status = 'neutral' | 'verified' | 'pending' | 'cleared' | 'suspended';
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> { variant?: 'primary' | 'secondary' | 'quiet' | 'danger'; size?: 'md' | 'sm'; block?: boolean; icon?: IconName }
 export declare function Button(props: ButtonProps): React.ReactElement;

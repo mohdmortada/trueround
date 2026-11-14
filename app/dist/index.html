@@ -317,6 +317,7 @@ select { font: inherit; height: 44px; padding: 0 var(--space-3); border-radius: 
 .demobar-tag { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-muted); padding: 2px 6px; border: var(--stroke-hairline) solid var(--line); border-radius: var(--radius-xs); }
 .demobar-select { display: flex; align-items: center; gap: var(--space-2); font-size: 13px; color: var(--ink-muted); }
 .demobar-select select { height: 32px; font-size: 13px; }
+@media (max-width: 1399px) { .demobar-date { display: none; } }
 .demobar-date { font-family: var(--font-mono); font-size: 12px; color: var(--ink-muted); }
 .seg { display: inline-flex; padding: 3px; gap: 2px; background: var(--surface-sunken); border-radius: var(--radius-sm); max-width: 100%; overflow-x: auto; }
 .seg button { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; border: 0; background: none; padding: 6px 14px; transition: background .15s ease-out, color .15s ease-out; border-radius: var(--radius-xs); font-size: 13px; font-weight: 600; color: var(--ink-muted); cursor: pointer; white-space: nowrap; }
@@ -339,7 +340,7 @@ select { font: inherit; height: 44px; padding: 0 var(--space-3); border-radius: 
 .home-head { display: flex; align-items: center; gap: var(--space-3); }
 .home-hello { display: grid; gap: 2px; margin-right: auto; min-width: 0; }
 .avatar-btn { flex: none; width: 48px; height: 48px; border-radius: var(--radius-full); border: 0; background: var(--ink); color: var(--on-ink); font-family: var(--font-display); font-stretch: 125%; font-weight: 800; font-size: 15px; cursor: pointer; }
-.card { display: grid; gap: var(--space-3); padding: var(--space-4); background: var(--surface); border: var(--stroke-hairline) solid var(--line); border-radius: var(--radius-md); min-width: 0; }
+.card { display: grid; gap: var(--space-3); padding: var(--space-4); background: var(--surface); border: var(--stroke-hairline) solid var(--line); border-radius: 12px; box-shadow: var(--shadow-sm); min-width: 0; }
 .card-head { display: flex; justify-content: space-between; align-items: start; gap: var(--space-3); flex-wrap: wrap; }
 .note { display: flex; gap: var(--space-2); align-items: flex-start; font-size: 14px; line-height: 20px; color: var(--ink-muted); padding: var(--space-3); background: var(--surface-sunken); border-radius: var(--radius-sm); }
 .note .tr-icon { margin-top: 2px; }
@@ -471,9 +472,10 @@ select { font: inherit; height: 44px; padding: 0 var(--space-3); border-radius: 
 .stage-main { min-width: 0; width: 100%; }
 .stage-coach, .stage-official { grid-template-columns: minmax(0, 1080px); }
 .stage-athlete { grid-template-columns: minmax(0, 440px); }
+@media (min-width: 521px) { .stage-athlete { grid-template-columns: 410px; } }
 .stage-guide { display: none; }
 @media (min-width: 1040px) {
-  .stage-athlete { grid-template-columns: 440px 340px; }
+  .stage-athlete { grid-template-columns: 410px 340px; }
   .stage-guide { display: block; position: sticky; top: calc(88px + env(safe-area-inset-top, 0px)); }
 }
 
@@ -595,6 +597,196 @@ select { font: inherit; height: 44px; padding: 0 var(--space-3); border-radius: 
 .avatar-btn, .mini-avatar { overflow: hidden; padding: 0; }
 .avatar-btn img, .mini-avatar img { display: block; width: 100%; height: 100%; border-radius: inherit; object-fit: cover; }
 
+/* ---------- bright app, dark hero blocks (after the Taegeuk prototype) ---------- */
+body { background: var(--surface-sunken); }
+.card-title { font-family: var(--font-sans); font-weight: 700; font-size: 16px; line-height: 22px; }
+.pill { position: relative; display: inline-flex; align-items: center; padding: 3px 10px; border: var(--stroke-hairline) solid var(--line); border-radius: var(--radius-full); font-size: 11px; font-weight: 600; letter-spacing: .02em; color: var(--ink-muted); white-space: nowrap; }
+.pill-warn { border-color: var(--caution); color: var(--caution); }
+.level-pill { flex: none; display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: var(--radius-full); background: var(--gold-soft); color: var(--gold); font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; }
+.link-like { font-size: 13px; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
+.icon-btn { display: inline-grid; place-items: center; color: var(--ink); }
+
+/* ---------- device frame on wide screens ---------- */
+.phone-status { display: none; }
+@media (min-width: 521px) {
+  .phone { width: 410px; max-width: 410px; height: min(864px, calc(100vh - 150px)); min-height: 600px; border: 10px solid #0b0d0f; border-radius: 54px; box-shadow: 0 0 0 1px #3a3f44, 0 30px 60px #0f121433, 0 8px 20px #0f12141f; overflow: hidden; transform: translateZ(0); grid-template-rows: auto minmax(0, 1fr) auto; }
+  .phone-status { position: relative; z-index: 6; display: flex; align-items: center; justify-content: space-between; height: 46px; padding: 0 30px 0 34px; font-family: var(--font-sans); font-size: 14px; font-weight: 600; background: var(--canvas); color: var(--ink); }
+  .phone:has(.dark-top) .phone-status { background: #0e1012; color: #eeeeea; }
+  .phone-island { position: absolute; left: 50%; top: 10px; width: 112px; height: 30px; margin-left: -56px; border-radius: 20px; background: #0b0d0f; }
+  .phone-icons { display: flex; gap: 6px; align-items: center; }
+  .sig { width: 17px; height: 11px; background: currentColor; clip-path: polygon(0 100%, 100% 0, 100% 100%); }
+  .bat { position: relative; width: 24px; height: 11px; border: 1.5px solid currentColor; border-radius: 3px; }
+  .bat::after { content: ""; position: absolute; top: 1.5px; bottom: 1.5px; left: 1.5px; right: 5px; border-radius: 1px; background: currentColor; }
+  .phone-screen { overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; }
+  .phone-screen::-webkit-scrollbar { display: none; }
+  .phone-nav { position: static; border-radius: 0; padding-bottom: 14px; }
+  /* Sheets opened inside the phone stay inside it (the transform makes it their containing block). */
+  .phone .sheet-scrim { place-items: end stretch; padding-top: 56px; }
+  .phone .sheet { max-width: none; max-height: 100%; border-radius: 20px 20px 0 0; }
+}
+
+/* ---------- home ---------- */
+.home-top { display: flex; align-items: center; gap: var(--space-3); }
+.home-hello { display: grid; margin-right: auto; min-width: 0; }
+.home-name { font-weight: 900; font-size: 26px; line-height: 28px; overflow-wrap: anywhere; }
+.next-up { position: relative; overflow: hidden; display: grid; gap: var(--space-3); padding: var(--space-5); border-radius: 14px; background: var(--canvas); color: var(--ink); border-top: 3px solid var(--gold-mark); box-shadow: var(--shadow-lg); }
+.next-ring { position: absolute; right: -96px; bottom: -118px; width: 230px; height: 230px; fill: none; stroke-width: 7; pointer-events: none; }
+.next-ring .ring-a, .fp-ring .ring-a, .onb-ring .ring-a { stroke: var(--ring-ink); }
+.next-ring .ring-b, .fp-ring .ring-b, .onb-ring .ring-b { stroke: var(--gold-mark); opacity: .5; }
+.next-kicker { position: relative; color: var(--gold); }
+.next-up .next-event, .next-up .btn-row, .next-empty { position: relative; }
+.next-empty { display: grid; gap: var(--space-1); }
+.next-up .countdown { border-color: var(--line); }
+.focus { display: grid; gap: var(--space-3); padding-top: var(--space-3); border-top: var(--stroke-hairline) solid var(--line); }
+.record-strip { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); width: 100%; font: inherit; color: inherit; text-align: left; cursor: pointer; transition: border-color .15s ease-out; }
+.record-strip:hover { border-color: var(--rule); }
+.record-strip:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.record-strip-rec { display: grid; gap: var(--space-1); }
+.record-strip-last { display: grid; justify-items: end; gap: 2px; text-align: right; min-width: 0; }
+
+/* ---------- fighter page ---------- */
+.fp { display: grid; }
+.phone-screen > .fp { margin: calc(-1 * var(--space-5)) calc(-1 * var(--space-4)) 0; }
+.fp-hero { position: relative; overflow: hidden; display: grid; gap: var(--space-4); padding: var(--space-3) var(--space-5) var(--space-5); background: var(--canvas); color: var(--ink); background-image: repeating-linear-gradient(180deg, transparent 0 31px, var(--texture) 31px 32px); }
+.sheet-body > .fp .fp-hero { border-radius: 14px; }
+.fp-ring { position: absolute; right: -90px; top: -50px; width: 300px; height: 300px; fill: none; stroke-width: 7; pointer-events: none; }
+.fp-bar { position: relative; display: flex; justify-content: space-between; align-items: center; min-height: 40px; }
+.fp-bar .tr-label { color: var(--ink-muted); }
+.fp-actions { display: flex; gap: var(--space-2); }
+.fp-hero .icon-btn { background: transparent; border-color: var(--line); }
+.fp-tags { position: relative; display: flex; flex-wrap: wrap; gap: 6px; }
+.fp-id { position: relative; display: flex; align-items: center; gap: var(--space-4); }
+.fp-photo { flex: none; display: grid; place-items: center; width: 88px; height: 88px; border-radius: var(--radius-full); overflow: hidden; border: 3px solid var(--gold-mark); background: var(--surface); color: var(--ink); font-family: var(--font-display); font-stretch: 125%; font-weight: 800; font-size: 26px; }
+.fp-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.fp-names { container-type: inline-size; flex: 1; min-width: 0; display: grid; gap: 4px; }
+.fp-nick { font-style: italic; font-size: 13px; color: var(--ink-muted); }
+.fp-name { font-weight: 900; font-size: min(36px, calc(100cqi / (var(--chars, 7) * 1.05))); line-height: .92; letter-spacing: -0.01em; overflow-wrap: anywhere; }
+.fp-sub { font-size: 13px; color: var(--ink-muted); }
+.fp-stats { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-3); }
+.fp-stat { display: grid; gap: 6px; justify-items: start; min-width: 0; }
+.fp-stat-num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-weight: 600; font-size: 24px; line-height: 28px; padding-bottom: 4px; border-bottom: 2px solid var(--gold-mark); white-space: nowrap; }
+.fp-stat-num small { font-size: 14px; line-height: 0; color: var(--ink-muted); }
+.fp-stat-label { font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-muted); }
+.fp-meta { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: var(--space-2); }
+.fp-coach, .fp-last { min-width: 0; padding: var(--space-3); border-radius: 10px; background: var(--surface); border: var(--stroke-hairline) solid var(--line); }
+.fp-coach { display: flex; align-items: center; gap: var(--space-2); }
+.fp-coach .mini-avatar { width: 32px; height: 32px; font-size: 11px; }
+.fp-last { display: grid; gap: 1px; align-content: start; font: inherit; color: inherit; text-align: left; }
+button.fp-last { cursor: pointer; transition: border-color .15s ease-out; }
+button.fp-last:hover { border-color: var(--rule); }
+button.fp-last:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.fp-meta-k { display: block; font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-muted); }
+.fp-meta-v { display: block; font-size: 13px; font-weight: 600; overflow-wrap: anywhere; }
+.fp-last-link { font-size: 12px; font-weight: 600; color: var(--gold); }
+.fp-body { display: grid; gap: var(--space-4); padding-top: var(--space-4); }
+.phone-screen > .fp .fp-body { padding: var(--space-4) var(--space-4) 0; }
+.gauges { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
+.gauge { margin: 0; display: grid; justify-items: center; gap: var(--space-2); text-align: center; }
+.gauge .ring-box, .gauge .ring-box svg { width: 104px; height: 104px; }
+.gauge .ring-num { font-size: 24px; }
+.gauge .ring-num small { font-size: 13px; color: var(--ink-muted); }
+.gauge figcaption { display: grid; }
+.gauge.lead .ring-val { stroke: var(--gold-mark); }
+.bars { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
+.bars li { display: grid; grid-template-columns: minmax(84px, 8em) minmax(0, 1fr) 4.5em; align-items: center; gap: var(--space-3); font-size: 14px; }
+.bar-track { height: 8px; border-radius: var(--radius-full); background: var(--surface-sunken); overflow: hidden; }
+.bar-fill { display: block; height: 100%; border-radius: inherit; background: var(--ink); transform-origin: left; }
+.bar-val { text-align: right; color: var(--ink-muted); }
+.fights { list-style: none; margin: 0; padding: 0; display: grid; }
+.fight-row { width: 100%; display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) 0; border: 0; border-top: var(--stroke-hairline) solid var(--line); background: none; font: inherit; color: inherit; text-align: left; cursor: pointer; }
+.fights li:first-child .fight-row { border-top: 0; }
+.fight-row:hover .bout-opp { text-decoration: underline; text-underline-offset: 3px; }
+.fight-row:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.method-pill { flex: none; padding: 3px 9px; border-radius: var(--radius-full); font-size: 11px; font-weight: 600; white-space: nowrap; background: var(--surface-sunken); color: var(--ink-muted); }
+.method-pill.pill-win { background: var(--ink); color: var(--on-ink); }
+.fp-details .seg { display: flex; width: 100%; }
+.fp-details .seg button { flex: 1; justify-content: center; padding-inline: 8px; }
+.kv { margin: 0; display: grid; }
+.kv div { display: flex; justify-content: space-between; gap: var(--space-4); padding: 10px 0; border-top: var(--stroke-hairline) solid var(--line); font-size: 14px; line-height: 20px; }
+.kv div:first-child { border-top: 0; }
+.kv dt { color: var(--ink-muted); }
+.kv dd { margin: 0; font-weight: 600; text-align: right; overflow-wrap: anywhere; }
+.timeline { list-style: none; margin: var(--space-2) 0 0; padding: 0; display: grid; }
+.timeline li { display: grid; grid-template-columns: 14px 1fr auto; gap: var(--space-3); align-items: center; padding: 8px 0; font-size: 14px; font-weight: 600; }
+.tl-dot { width: 10px; height: 10px; border-radius: var(--radius-full); background: var(--ink-faint); }
+.timeline li:first-child .tl-dot { background: var(--gold-mark); box-shadow: 0 0 0 3px var(--gold-soft); }
+.fp-share { display: grid; gap: var(--space-2); text-align: center; padding-bottom: var(--space-2); }
+.cell-link { border: 0; background: none; padding: 0; font: inherit; font-weight: 600; color: inherit; text-align: left; cursor: pointer; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 4px; }
+.cell-link:hover { text-decoration-color: var(--ink); }
+.cell-link:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+
+/* ---------- settings ---------- */
+.account-card { display: flex; align-items: center; gap: var(--space-4); }
+.account-card .who-text { flex: 1; }
+.account-face { width: 56px; height: 56px; font-size: 16px; }
+
+/* ---------- onboarding ---------- */
+.phone-onb { display: flex; flex-direction: column; }
+.onb { flex: 1; min-height: 100%; display: flex; flex-direction: column; gap: var(--space-5); }
+.onb-hero-screen { position: relative; overflow: hidden; margin: calc(-1 * var(--space-5)) calc(-1 * var(--space-4)) calc(-1 * var(--space-8)); padding: var(--space-6) var(--space-6) var(--space-8); background: var(--canvas); color: var(--ink); background-image: repeating-linear-gradient(180deg, transparent 0 31px, var(--texture) 31px 32px); }
+.onb-hero-screen > * { position: relative; }
+.onb-hero-screen > .onb-ring { position: absolute; right: -120px; top: -100px; width: 360px; height: 360px; fill: none; stroke-width: 6; pointer-events: none; }
+.onb-brand { display: flex; align-items: center; gap: var(--space-2); }
+.onb-hero { font-weight: 900; font-size: 40px; line-height: 38px; margin-top: var(--space-6); }
+.onb-points, .safety-list, .next-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4); }
+.onb-points li, .safety-list li, .next-steps li { display: grid; grid-template-columns: 40px 1fr; gap: var(--space-3); align-items: start; }
+.onb-points strong, .safety-list strong, .next-steps strong { display: block; font-size: 15px; line-height: 20px; }
+.onb-points li > span > span, .safety-list li > span > span, .next-steps li > span > span { display: block; font-size: 13px; line-height: 18px; color: var(--ink-muted); }
+.onb-ico { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; background: var(--surface); border: var(--stroke-hairline) solid var(--line); color: var(--gold); }
+.onb-cta { margin-top: auto; display: grid; gap: var(--space-1); justify-items: center; }
+.onb-cta .tr-btn, .onb-foot .tr-btn { width: 100%; }
+.onb-fine { font-size: 12px; line-height: 16px; color: var(--ink-faint); text-align: center; }
+.onb-gold { color: var(--gold); }
+.onb-done-face { margin-top: var(--space-4); }
+.onb-hero-screen .onb-gold + .onb-hero { margin-top: 0; }
+.ns-dot { display: grid; place-items: center; width: 30px; height: 30px; border-radius: var(--radius-full); border: 1.5px solid var(--line); font-family: var(--font-mono); font-size: 13px; font-weight: 600; }
+.next-steps li.now .ns-dot { background: var(--gold-mark); border-color: var(--gold-mark); color: #0f1214; }
+.onb-top { display: flex; align-items: center; gap: var(--space-3); }
+.onb-back { min-height: 36px; gap: 2px; text-decoration: none; }
+.onb-progress { list-style: none; margin: 0; padding: 0; flex: 1; display: flex; gap: 4px; }
+.onb-progress li { flex: 1; height: 4px; border-radius: 2px; background: var(--line); transition: background .2s ease-out; }
+.onb-progress li.done { background: var(--ink); }
+.onb-progress li.on { background: var(--gold-mark); }
+.onb-head { display: grid; gap: var(--space-2); }
+.onb-title { font-weight: 900; font-size: 30px; line-height: 30px; }
+.onb-lede { font-size: 14px; line-height: 20px; }
+.onb-foot { margin-top: auto; display: grid; padding-top: var(--space-2); }
+.field-label { font-size: 14px; font-weight: 600; }
+.field-group { display: grid; gap: var(--space-2); }
+.field-group .seg { display: flex; width: 100%; }
+.field-group .seg button { flex: 1; justify-content: center; }
+.choice-list { border: 0; margin: 0; padding: 0; display: grid; gap: var(--space-2); min-width: 0; }
+.choice-list legend { padding: 0; margin-bottom: var(--space-2); }
+.choice { position: relative; display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); border: 1.5px solid var(--line); border-radius: 12px; background: var(--surface); cursor: pointer; transition: border-color .15s ease-out; }
+.choice.on { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+.choice input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.choice:has(input:focus-visible) { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.choice-main { flex: 1; min-width: 0; display: grid; gap: 2px; }
+.choice .tr-icon { opacity: 0; }
+.choice.on .tr-icon { opacity: 1; }
+.photo-pick { display: grid; justify-items: center; gap: var(--space-4); padding: var(--space-4) 0; text-align: center; }
+.photo-preview { display: grid; place-items: center; width: 152px; height: 152px; border-radius: var(--radius-full); overflow: hidden; background: var(--surface); border: 2px dashed var(--line); color: var(--ink-faint); }
+.photo-preview.has-photo { border: 3px solid var(--gold-mark); }
+.photo-preview img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.photo-btn { cursor: pointer; }
+.photo-pick:has(input:focus-visible) .photo-btn { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.join-lists { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+
+/* ---------- coach: join requests ---------- */
+.join-list { list-style: none; margin: 0; padding: 0; display: grid; }
+.join-list li { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-3); padding: var(--space-3) 0; border-top: var(--stroke-hairline) solid var(--line); }
+.join-list li:first-child { border-top: 0; }
+
+/* ---------- motion for the new screens ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .fp-body > *, .onb-head, .onb-body, .onb-hero-screen > :not(.onb-ring) { animation: tr-rise .42s cubic-bezier(.2, .8, .2, 1) both; }
+  .fp-body > :nth-child(2), .onb-body, .onb-hero-screen > :nth-child(3) { animation-delay: .05s; }
+  .fp-body > :nth-child(3), .onb-hero-screen > :nth-child(4) { animation-delay: .1s; }
+  .fp-body > :nth-child(n+4), .onb-hero-screen > :nth-child(n+5) { animation-delay: .15s; }
+  .bar-fill { animation: bar-grow .6s cubic-bezier(.2, .8, .2, 1) .1s both; }
+  @keyframes bar-grow { from { transform: scaleX(0); } }
+}
+
 </style>
 </head>
 <body>
@@ -632,7 +824,11 @@ select { font: inherit; height: 44px; padding: 0 var(--space-3); border-radius: 
     user: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c1.4-4 4.4-6 8-6s6.6 2 8 6',
     lock: 'M6 11h12v9H6zM8.5 11V8a3.5 3.5 0 0 1 7 0v3',
     scale: 'M12 4v16M5 20h14M6 8h12M6 8l-3 6h6zM18 8l-3 6h6z',
-    whistle: 'M4 10h9a5 5 0 1 1-5 5H4zM13 10l5-4M17 6h3'
+    whistle: 'M4 10h9a5 5 0 1 1-5 5H4zM13 10l5-4M17 6h3',
+    share: 'M12 15V3M7.5 7.5L12 3l4.5 4.5M5 13v8h14v-8',
+    settings: 'M4 7h9M17 7h3M15 4.5v5M4 17h3M11 17h9M9 14.5v5',
+    camera: 'M4 8h4l2-3h4l2 3h4v11H4zM12 16.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6z',
+    back: 'M15 5l-7 7 7 7'
   };
 
   function Icon(props) {
@@ -902,6 +1098,17 @@ window.TR_DATA = (function () {
       unlocked: [0, 1], watched: [] }
   };
 
+  // Fighter-page details: nickname, stance, hometown, when they joined, licence, and the date each level was reached.
+  var profiles = {
+    layla: { nickname: 'Lightning', stance: 'Orthodox', hometown: 'Byblos', since: '2023-09-02', licence: 'LBN-A-0457', history: ['2023-09-02', '2024-03-09', '2025-01-25', '2026-01-24'] },
+    mohammad: { nickname: '', stance: 'Orthodox', hometown: '', since: '2024-10-19', licence: 'LBN-A-0912', history: ['2024-10-19', '2025-05-17', '2026-02-21'] },
+    omar: { nickname: '', stance: 'Orthodox', hometown: 'Beirut', since: '2025-09-01', licence: 'LBN-J-0133', history: ['2025-09-01', '2026-06-13'] },
+    nour: { nickname: 'Quiet Storm', stance: 'Southpaw', hometown: 'Zahle', since: '2024-02-10', licence: 'LBN-A-0688', history: ['2024-02-10', '2024-12-07', '2025-11-15'] },
+    tariq: { nickname: 'The Wall', stance: 'Orthodox', hometown: 'Tripoli', since: '2022-06-15', licence: 'LBN-A-0201', history: ['2022-06-15', '2023-01-21', '2023-11-18', '2024-10-26', '2025-12-13'] },
+    sami: { nickname: '', stance: 'Switch', hometown: 'Sidon', since: '2025-11-20', licence: 'LBN-A-1040', history: ['2025-11-20', '2026-09-12'] }
+  };
+  Object.keys(profiles).forEach(function (k) { Object.assign(athletes[k], profiles[k], { notify: { push: true, events: true } }); });
+
   function D(red, blue) { return [red, blue]; }
   var bouts = [
     { id: 'b1', athlete: 'layla', event: 'Levant Open 2026', city: 'Amman', date: '2026-10-12', corner: 'red', opponent: 'Mira Sokolova', oppNation: 'KAZ', result: 'win', method: 'Unanimous decision', round: 3, time: '3:00', judges: [[D(10, 9), D(10, 9), D(9, 10)], [D(10, 9), D(10, 9), D(10, 9)], [D(10, 9), D(9, 10), D(10, 9)]], official: 'Official #A-118' },
@@ -954,8 +1161,8 @@ window.TR_DATA = (function () {
   return {
     TODAY: TODAY, LEVELS: LEVELS, AREAS: AREAS,
     coaches: { hassan: { id: 'hassan', name: 'Hassan Jizzini', gym: 'Cedar Combat Club', licence: 'Coach Level 2 · LBN-C-0193' } },
-    gyms: [{ id: 'cedar', name: 'Cedar Combat Club', city: 'Beirut', coach: 'hassan' }, { id: 'harbour', name: 'Harbour MMA', city: 'Tripoli', coach: 'hassan' }],
-    federations: ['Lebanon', 'Indonesia', 'Türkiye', 'Jordan', 'Kazakhstan', 'Egypt', 'United Arab Emirates'],
+    gyms: [{ id: 'cedar', name: 'Cedar Combat Club', city: 'Beirut', coach: 'hassan', athletes: 38 }, { id: 'harbour', name: 'Harbour MMA', city: 'Tripoli', coach: 'hassan', athletes: 21 }],
+    federations: [['LBN', 'Lebanon'], ['IDN', 'Indonesia'], ['TUR', 'Türkiye'], ['JOR', 'Jordan'], ['KAZ', 'Kazakhstan'], ['EGY', 'Egypt'], ['UAE', 'United Arab Emirates']],
     seed: function () {
       return JSON.parse(JSON.stringify({ v: 1, role: 'athlete', viewAs: 'layla', athletes: athletes, bouts: bouts, events: events, registrations: [{ event: 'ev1', athlete: 'layla', weightClass: '57 kg', on: '2026-11-02' }, { event: 'ev1', athlete: 'mohammad', weightClass: '84 kg', on: '2026-11-09' }], library: library, feed: feed, gradings: [{ id: 'g1', athlete: 'nour', from: 2, to: 3, coach: 'hassan', status: 'recommended', on: '2026-11-10' }], sparring: [] }));
     }
@@ -971,8 +1178,12 @@ window.TR_DATA = (function () {
   var Button = T.Button, Badge = T.Badge, CornerTag = T.CornerTag, Icon = T.Icon, Scorecard = T.Scorecard, Record = T.Record,
     LevelLadder = T.LevelLadder, SkillMeter = T.SkillMeter, ClearanceCard = T.ClearanceCard, AthleteCard = T.AthleteCard,
     Field = T.Field, Toggle = T.Toggle, BottomNav = T.BottomNav;
-  var STORE_KEY = 'trueround-demo-v3';
+  var STORE_KEY = 'trueround-demo-v4';
   var TODAY = D.TODAY, LEVELS = D.LEVELS;
+  // The app is a bright design with dark hero blocks, whatever the system theme.
+  document.documentElement.setAttribute('data-theme', 'light');
+  // First visit: open on the onboarding welcome instead of the demo athlete.
+  var FIRST_VISIT = (function () { try { return !window.localStorage.getItem(STORE_KEY); } catch (e) { return false; } })();
 
   /* ---------- helpers ---------- */
   var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -1091,7 +1302,7 @@ window.TR_DATA = (function () {
         n.gradings.forEach(function (g) {
           if (g.id !== a.id) return;
           g.status = a.approve ? 'approved' : 'returned'; g.decidedOn = TODAY;
-          if (a.approve) { n.athletes[g.athlete].level = g.to; feedItem(n, g.athlete, 'verified', 'Promoted to ' + LEVELS[g.to] + ' by the federation grading panel.'); }
+          if (a.approve) { ath = n.athletes[g.athlete]; ath.level = g.to; (ath.history = ath.history || [])[g.to] = TODAY; feedItem(n, g.athlete, 'verified', 'Promoted to ' + LEVELS[g.to] + ' by the federation grading panel.'); }
           else feedItem(n, g.athlete, 'review', 'The grading panel returned your ' + LEVELS[g.to] + ' recommendation to your coach.');
         });
         break;
@@ -1120,7 +1331,12 @@ window.TR_DATA = (function () {
         if (ath.watched.indexOf(a.video) < 0) ath.watched.push(a.video);
         break;
       case 'privacy': n.athletes[a.athlete].privacy[a.key] = a.value; break;
-      case 'create': n.athletes[a.athlete.id] = a.athlete; n.viewAs = a.athlete.id; n.role = 'athlete'; feedItem(n, a.athlete.id, 'review', 'Account created. Coach Hassan Jizzini can now see you on the Cedar Combat Club roster.'); break;
+      case 'notify': ath = n.athletes[a.athlete]; ath.notify = Object.assign({ push: true, events: true }, ath.notify); ath.notify[a.key] = a.value; break;
+      case 'create': n.athletes[a.athlete.id] = a.athlete; n.viewAs = a.athlete.id; n.role = 'athlete'; feedItem(n, a.athlete.id, 'review', 'Join request sent to Coach ' + coachName(a.athlete.coach) + ' at ' + a.athlete.gym + '.'); break;
+      case 'accept':
+        ath = n.athletes[a.athlete]; ath.joinStatus = 'active';
+        feedItem(n, a.athlete, 'verified', 'Coach ' + coachName(ath.coach) + ' accepted you onto the ' + ath.gym + ' roster.');
+        break;
       case 'delete':
         delete n.athletes[a.id];
         ['bouts', 'registrations', 'feed', 'gradings'].forEach(function (k) { n[k] = n[k].filter(function (x) { return x.athlete !== a.id; }); });
@@ -1149,7 +1365,11 @@ window.TR_DATA = (function () {
   // Longest line of a stacked display name; the CSS sizes the type so it fits.
   function nameChars(a) { return { '--chars': Math.max(6, a.first.length, isMinor(a) ? 2 : a.last.length) }; }
   // Under-18s never show a photo, whatever the record holds.
-  function photoOf(a) { return a.photo && !isMinor(a) ? (window.TR_PHOTOS || {})[a.photo] || null : null; }
+  // A photo is either a key into TR_PHOTOS or one the athlete uploaded during onboarding.
+  function photoOf(a) {
+    if (!a.photo || isMinor(a)) return null;
+    return a.photo.indexOf('data:image/') === 0 ? a.photo : (window.TR_PHOTOS || {})[a.photo] || null;
+  }
   function Face(props) {
     var src = photoOf(props.a);
     return src ? html`<img src=${src} alt="" width=${props.size} height=${props.size} />` : initialsOf(props.a);
@@ -1188,13 +1408,17 @@ window.TR_DATA = (function () {
     </div>`;
   }
 
+  // Sheets can stack (a scorecard over a fighter page); Escape closes only the top one.
+  var openSheets = [];
   function Sheet(props) {
-    var ref = useRef(null);
+    var ref = useRef(null), idRef = useRef(uid());
     useEffect(function () {
-      function onKey(e) { if (e.key === 'Escape') props.onClose(); }
+      var id = idRef.current;
+      openSheets.push(id);
+      function onKey(e) { if (e.key === 'Escape' && openSheets[openSheets.length - 1] === id) props.onClose(); }
       document.addEventListener('keydown', onKey);
       if (ref.current) ref.current.focus();
-      return function () { document.removeEventListener('keydown', onKey); };
+      return function () { openSheets = openSheets.filter(function (x) { return x !== id; }); document.removeEventListener('keydown', onKey); };
     }, []);
     return html`<div className="sheet-scrim" onClick=${props.onClose}>
       <div className=${'sheet' + (props.wide ? ' sheet-wide' : '')} role="dialog" aria-modal="true" aria-label=${props.title} tabIndex="-1" ref=${ref} onClick=${function (e) { e.stopPropagation(); }}>
@@ -1227,9 +1451,10 @@ window.TR_DATA = (function () {
       <${Seg} label="Switch role" value=${s.role} onChange=${function (r) { act({ type: 'role', role: r }); }}
         options=${[['athlete', 'Athlete'], ['coach', 'Coach'], ['official', 'Official']]} />
       ${s.role === 'athlete' ? html`<label className="demobar-select"><span>Viewing as</span>
-        <select id="view-as" value=${s.viewAs} onChange=${function (e) { act({ type: 'viewAs', id: e.target.value }); }}>
+        <select id="view-as" value=${s.viewAs} onChange=${function (e) { props.closeOnboarding(); act({ type: 'viewAs', id: e.target.value }); }}>
           ${athletes.map(function (a) { return html`<option key=${a.id} value=${a.id}>${nameOf(a)}${isMinor(a) ? ' (under 18)' : ''}</option>`; })}
         </select></label>` : null}
+      <button type="button" className="link-btn" onClick=${props.startOnboarding}>New athlete</button>
       <span className="demobar-date">Demo date ${fmt(TODAY)}</span>
       <button type="button" className="link-btn guide-btn" onClick=${props.openGuide}>How to demo</button>
       <button type="button" className="link-btn" onClick=${function () { setConfirming(true); }}>Reset demo</button>
@@ -1239,31 +1464,36 @@ window.TR_DATA = (function () {
     </div>`;
   }
 
-  /* ---------- athlete app ---------- */
-  var TABS = [{ id: 'home', label: 'Home', icon: 'home' }, { id: 'pathway', label: 'Pathway', icon: 'ladder' }, { id: 'record', label: 'Record', icon: 'card' }, { id: 'learn', label: 'Learn', icon: 'play' }, { id: 'events', label: 'Events', icon: 'calendar' }];
+  /* ---------- athlete app: a phone, with a device frame on wide screens ---------- */
+  var TABS = [{ id: 'home', label: 'Home', icon: 'home' }, { id: 'pathway', label: 'Pathway', icon: 'ladder' }, { id: 'learn', label: 'Learn', icon: 'play' }, { id: 'events', label: 'Events', icon: 'calendar' }, { id: 'profile', label: 'Profile', icon: 'user' }];
+
+  function StatusBar() {
+    return html`<div className="phone-status" aria-hidden="true"><span>9:41</span><span className="phone-island"></span>
+      <span className="phone-icons"><span className="sig"></span><span className="bat"></span></span></div>`;
+  }
 
   function AthleteApp(props) {
     var s = props.s, act = props.act;
     var a = s.athletes[s.viewAs];
     var tab = props.tab, setTab = props.setTab;
-    var ps = useState(false), profile = ps[0], setProfile = ps[1];
-    var ss = useState(false), signup = ss[0], setSignup = ss[1];
-    useEffect(function () { setProfile(false); }, [s.viewAs]);
+    var ss = useState(false), settings = ss[0], setSettings = ss[1];
+    useEffect(function () { setSettings(false); }, [s.viewAs, tab]);
+    if (props.onboarding) return html`<div className="phone"><${StatusBar} />
+      <main className="phone-screen phone-onb"><${Onboarding} act=${act} close=${props.closeOnboarding} /></main></div>`;
     if (!a) return null;
     var screen;
-    var common = { s: s, a: a, act: act, go: setTab, openProfile: function () { setProfile(true); } };
-    if (profile) screen = html`<${ProfileScreen} ...${common} back=${function () { setProfile(false); }} startSignup=${function () { setSignup(true); }} />`;
-    else if (tab === 'home') screen = html`<${HomeScreen} ...${common} />`;
+    var common = { s: s, a: a, act: act, go: setTab, openProfile: function () { setTab('profile'); } };
+    if (tab === 'profile') screen = settings ? html`<${SettingsScreen} ...${common} back=${function () { setSettings(false); }} startOnboarding=${props.startOnboarding} />`
+      : html`<${FighterPage} s=${s} a=${a} act=${act} viewer="self" onSettings=${function () { setSettings(true); }} goPathway=${function () { setTab('pathway'); }} />`;
     else if (tab === 'pathway') screen = html`<${PathwayScreen} ...${common} />`;
-    else if (tab === 'record') screen = html`<${RecordScreen} ...${common} />`;
     else if (tab === 'learn') screen = html`<${LearnScreen} ...${common} />`;
-    else screen = html`<${EventsScreen} ...${common} />`;
+    else if (tab === 'events') screen = html`<${EventsScreen} ...${common} />`;
+    else screen = html`<${HomeScreen} ...${common} />`;
     var hasNew = s.feed.some(function (f) { return f.athlete === a.id && f.kind === 'result' && f.date === TODAY; });
-    return html`<div className="phone">
-      <main className="phone-screen" key=${tab + profile + a.id}>${screen}</main>
-      <${BottomNav} active=${profile ? '' : tab} onSelect=${function (id) { setProfile(false); setTab(id); window.scrollTo(0, 0); }}
-        items=${TABS.map(function (t) { return t.id === 'record' && hasNew ? Object.assign({}, t, { badge: 'New result' }) : t; })} className="phone-nav" />
-      ${signup ? html`<${Signup} act=${act} close=${function () { setSignup(false); setProfile(false); setTab('home'); }} />` : null}
+    return html`<div className="phone"><${StatusBar} />
+      <main className="phone-screen" key=${tab + settings + a.id}>${screen}</main>
+      <${BottomNav} active=${tab} onSelect=${function (id) { setTab(id); window.scrollTo(0, 0); }}
+        items=${TABS.map(function (t) { return t.id === 'profile' && hasNew ? Object.assign({}, t, { badge: 'New result' }) : t; })} className="phone-nav" />
     </div>`;
   }
 
@@ -1273,48 +1503,59 @@ window.TR_DATA = (function () {
       ${props.right || null}</header>`;
   }
 
+  function LevelPill(props) {
+    return html`<span className="level-pill"><${Icon} name="check" size=${14} strokeWidth=${3} />${LEVELS[props.level]}</span>`;
+  }
+
   function HomeScreen(p) {
     var s = p.s, a = p.a, m = medical(a);
     var reg = s.registrations.filter(function (r) { return r.athlete === a.id; }).map(function (r) { return Object.assign({}, r, { ev: s.events.filter(function (e) { return e.id === r.event; })[0] }); })
       .filter(function (r) { return r.ev && r.ev.date >= TODAY; }).sort(function (x, y) { return x.ev.date < y.ev.date ? -1 : 1; })[0];
-    var skills = Object.keys(a.skills).map(function (k) { return a.skills[k]; });
+    var skills = Object.keys(a.skills).map(function (k) { return Object.assign({ id: k }, a.skills[k]); });
     var strong = skills.filter(function (x) { return x.value >= 80; }).length;
     var pending = skills.filter(function (x) { return x.status === 'pending'; }).length;
-    var feed = s.feed.filter(function (f) { return f.athlete === a.id; }).slice(0, 5);
+    // The skills nearest a check: anything waiting on the coach first, then the highest meters below 100.
+    var focus = skills.filter(function (x) { return x.value < 100; })
+      .sort(function (x, y) { return (y.status === 'pending') - (x.status === 'pending') || y.value - x.value; }).slice(0, 3);
+    var feed = s.feed.filter(function (f) { return f.athlete === a.id; }).slice(0, 4);
     var grading = s.gradings.filter(function (g) { return g.athlete === a.id && g.status === 'recommended'; })[0];
     var KIND_ICON = { verified: 'check', result: 'card', medical: 'shield', review: 'clock' };
-    var rec = recordOf(s, a.id);
+    var rec = recordOf(s, a.id), last = boutsOf(s, a.id)[0];
     return html`<div className="stack">
-      <header className="hero-card theme-dark">
-        <${Ring} className="hero-ring" />
-        <div className="hero-top">
-          <p className="tr-label">${a.division} · ${a.weightClass}${a.nation ? ' · ' + a.nation : ''}</p>
-          <button type="button" className="avatar-btn" onClick=${p.openProfile} aria-label="Open your profile"><${Face} a=${a} size=${48} /></button>
-        </div>
-        <h1 className="hero-name tr-display" style=${nameChars(a)}>${a.first}<br/>${isMinor(a) ? a.last.charAt(0) + '.' : a.last}</h1>
-        <div className="hero-stats">
-          <${Record} wins=${rec.wins} losses=${rec.losses} draws=${rec.draws} animate=${true} />
-          <div className="hero-level"><span className="tr-label">Level</span><span className="hero-level-name"><${Icon} name="check" size=${16} strokeWidth=${3} />${LEVELS[a.level]}</span></div>
-        </div>
+      <header className="home-top">
+        <button type="button" className="avatar-btn" onClick=${p.openProfile} aria-label="Open your fighter page"><${Face} a=${a} size=${48} /></button>
+        <div className="home-hello"><p className="small muted">${a.since === TODAY ? 'Welcome' : 'Welcome back'}</p><h1 className="home-name tr-display">${a.first}</h1></div>
+        <${LevelPill} level=${a.level} />
       </header>
+      ${a.joinStatus === 'pending' ? html`<p className="note"><${Icon} name="clock" size=${16} /> Your join request is with Coach ${coachName(a.coach)}. Skill checks open once you're on the roster.</p>` : null}
+      <section className="next-up theme-dark">
+        <${Ring} className="next-ring" />
+        <p className="tr-label next-kicker">Next up</p>
+        ${reg ? html`<div className="next-event"><${DateTile} date=${reg.ev.date} /><div className="next-event-text"><p className="headline tr-display">${reg.ev.name}</p><p className="small muted">${reg.ev.city} · ${reg.weightClass} · registered</p></div>
+          <div className="countdown"><span className="countdown-num"><${Num} n=${days(TODAY, reg.ev.date)} /></span><span className="tr-label">days</span></div></div>`
+          : html`<div className="next-empty"><p className="headline tr-display">No event yet</p><p className="small muted">Pick one and the app checks your eligibility before you register.</p></div>`}
+        <div className="btn-row"><${Button} size="sm" variant=${reg ? 'secondary' : 'primary'} onClick=${function () { p.go('events'); }}>${reg ? 'All events' : 'Browse events'}<//></div>
+      </section>
       <${ClearanceCard} status=${m.status} title=${medicalTitle(m)} until=${m.until ? fmt(m.until).toUpperCase() : null} issuedBy=${m.by}>
         ${m.status === 'suspended' ? html`<p className="small">${m.reason}. Your coach can't book you for contact sparring until then.</p>` : null}
         ${m.missing || m.status === 'pending' ? html`<p className="small">Book a pre-competition medical before your next registration closes.</p>` : null}
       <//>
       <section className="card">
-        <div className="card-head"><h2 className="tr-label">Next event</h2>${reg ? html`<${Badge} status="cleared">Registered<//>` : null}</div>
-        ${reg ? html`<div className="next-event"><${DateTile} date=${reg.ev.date} /><div className="next-event-text"><p className="headline tr-display">${reg.ev.name}</p><p className="muted small">${reg.ev.city} · ${reg.weightClass}</p></div>
-          <div className="countdown"><span className="countdown-num">${days(TODAY, reg.ev.date)}</span><span className="tr-label">days</span></div></div>`
-          : html`<p className="muted">You're not registered for anything yet.</p><${Button} size="sm" onClick=${function () { p.go('events'); }}>Browse events<//>`}
-      </section>
-      <section className="card">
-        <div className="card-head"><h2 className="tr-label">Pathway</h2><button type="button" className="link-btn" onClick=${function () { p.go('pathway'); }}>Open</button></div>
+        <div className="card-head"><div><p className="tr-label">Pathway · level ${a.level + 1} of ${LEVELS.length}</p><h2 className="card-title">${LEVELS[a.level]}</h2></div>
+          <button type="button" className="link-btn" onClick=${function () { p.go('pathway'); }}>Open</button></div>
         <${LevelLadder} levels=${LEVELS} current=${a.level} />
+        ${focus.length ? html`<div className="focus"><p className="tr-label">Closest to the next check</p>
+          ${focus.map(function (x) { return html`<${SkillMeter} key=${x.id} skill=${SKILL_NAMES[x.id]} value=${x.value} status=${x.status === 'pending' ? 'pending' : 'neutral'} />`; })}</div>` : null}
         <p className="small muted">${strong} of ${skills.length} skills verified at 80% or more${pending ? ' · ' + pending + ' awaiting your coach' : ''}.</p>
         ${grading ? html`<${Badge} status="pending">Recommended for ${LEVELS[grading.to]} · awaiting grading panel<//>` : null}
       </section>
+      <button type="button" className="card record-strip" onClick=${p.openProfile}>
+        <span className="record-strip-rec"><span className="tr-label">Verified record</span><${Record} wins=${rec.wins} losses=${rec.losses} draws=${rec.draws} size="sm" /></span>
+        <span className="record-strip-last">${last ? html`<span className="small">Last: <strong>${boutResultLabel(last)}</strong> vs ${last.opponent}</span><span className="small muted">${last.event}</span>`
+          : html`<span className="small muted">No bouts yet</span>`}<span className="link-like">Fighter page →</span></span>
+      </button>
       <section className="card">
-        <h2 className="tr-label">On your record</h2>
+        <h2 className="card-title">On your record</h2>
         ${feed.length ? html`<ul className="feed">${feed.map(function (f) {
           return html`<li key=${f.id}><span className=${'feed-icon feed-' + f.kind}><${Icon} name=${KIND_ICON[f.kind] || 'check'} size=${16} /></span><div><p>${f.text}</p><p className="data muted">${fmt(f.date)}</p></div></li>`;
         })}</ul>` : html`<p className="muted">Nothing yet. Verified skills, results and medicals will appear here.</p>`}
@@ -1324,21 +1565,21 @@ window.TR_DATA = (function () {
 
   function PathwayScreen(p) {
     var a = p.a, act = p.act;
-    var minor = isMinor(a);
+    var minor = isMinor(a), waiting = a.joinStatus === 'pending';
     return html`<div className="stack">
       <${ScreenHead} eyebrow=${'Level ' + (a.level + 1) + ' of ' + LEVELS.length} title="Pathway" />
       <${LevelLadder} levels=${LEVELS} current=${a.level} />
       <p className="note"><${Icon} name="lock" size=${16} /> Only ${coachName(a.coach)} can move these meters, after seeing the skill in person. Learn videos prepare you; they never change a meter.</p>
       ${D.AREAS.map(function (area) {
         return html`<section key=${area.id} className="card">
-          <h2 className="tr-label">${area.name}${area.id === 'safety' && minor ? ' · junior ruleset' : ''}</h2>
+          <h2 className="card-title">${area.name}${area.id === 'safety' && minor ? ' · junior ruleset' : ''}</h2>
           <div className="skills">${area.skills.map(function (pair) {
             var x = a.skills[pair[0]];
             return html`<div key=${pair[0]} className="skill-row">
               <${SkillMeter} skill=${pair[1]} value=${x.value} status=${x.status === 'pending' ? 'pending' : x.value >= 100 ? 'verified' : 'neutral'}
                 verifiedBy=${x.by ? coachName(x.by) : null} date=${x.date ? fmt(x.date) : null} />
               ${x.status === 'pending' ? html`<p className="small muted">You asked for a check at ${x.requested}% on ${fmt(x.requestedOn)}.</p>`
-                : x.value < 100 ? html`<${Button} size="sm" variant="quiet" icon="clock" onClick=${function () { act({ type: 'request', athlete: a.id, skill: pair[0] }, 'Check requested. ' + coachName(a.coach) + ' will see it on their roster.'); }}>Ask coach to check<//>` : null}
+                : x.value < 100 ? html`<${Button} size="sm" variant="quiet" icon="clock" disabled=${waiting} onClick=${function () { act({ type: 'request', athlete: a.id, skill: pair[0] }, 'Check requested. ' + coachName(a.coach) + ' will see it on their roster.'); }}>${waiting ? 'Opens when your coach accepts you' : 'Ask coach to check'}<//>` : null}
             </div>`;
           })}</div></section>`;
       })}
@@ -1346,38 +1587,180 @@ window.TR_DATA = (function () {
   }
 
   function boutResultLabel(b) { return b.result === 'win' ? 'W' : b.result === 'loss' ? 'L' : 'D'; }
-  function RecordScreen(p) {
-    var s = p.s, a = p.a;
-    var bs = useState(null), open = bs[0], setOpen = bs[1];
-    var list = boutsOf(s, a.id), rec = recordOf(s, a.id);
+
+  function BoutSheet(props) {
+    var a = props.a, bout = props.bout;
+    return html`<${Sheet} title=${bout.event} onClose=${props.onClose} wide=${true}>
+      <p className="small muted">${bout.city} · ${fmt(bout.date)} · ${a.division} ${a.weightClass}</p>
+      <${FaceOff} red=${bout.corner === 'red' ? nameOf(a) : bout.opponent} blue=${bout.corner === 'blue' ? nameOf(a) : bout.opponent}
+        redNation=${bout.corner === 'red' ? a.nation : bout.oppNation} blueNation=${bout.corner === 'blue' ? a.nation : bout.oppNation} />
+      ${bout.judges ? html`<${Scorecard} red=${bout.corner === 'red' ? nameOf(a) : bout.opponent} blue=${bout.corner === 'blue' ? nameOf(a) : bout.opponent}
+          judges=${bout.judges} verifiedBy=${'Bout sheet signed · ' + bout.official} hideCorners=${true}
+          result=${{ winner: bout.result === 'draw' ? null : (bout.result === 'win') === (bout.corner === 'red') ? 'red' : 'blue', method: bout.method }} />`
+        : html`<div className="card"><div className="row-between"><${CornerTag} corner=${bout.corner}>${nameOf(a)}<//><span className=${'res res-' + bout.result}>${boutResultLabel(bout)}</span></div>
+          <p className="headline tr-display">${bout.method}</p><p className="muted">Round ${bout.round} · ${bout.time}</p>
+          <${Badge} status="verified">Bout sheet signed · ${bout.official}<//></div>`}
+    <//>`;
+  }
+
+  function ShareSheet(props) {
+    var a = props.a, rec = props.rec, photo = photoOf(a);
+    return html`<${Sheet} title="Share card" onClose=${props.onClose}>
+      <div className="share-card theme-dark">
+        <div className="share-top"><${Mark} size=${28} /><span className="wordmark">TrueRound</span>${photo ? html`<img className="share-photo" src=${photo} alt="" width="64" height="64" />` : null}</div>
+        <p className="tr-label share-kicker">Verified record</p>
+        <p className="share-name tr-display" style=${nameChars(a)}>${a.first}<br/>${a.last}</p>
+        <p className="share-sub">${a.gym} · ${LEVELS[a.level]} · ${a.weightClass}</p>
+        <div className="share-rec"><${Record} wins=${rec.wins} losses=${rec.losses} draws=${rec.draws} /></div>
+        <p className="data share-url">trueround.app/${(a.first + '-' + a.last).toLowerCase()}</p>
+      </div>
+      <p className="small muted">In the app this saves as an image sized for Instagram and links to the public page.</p>
+    <//>`;
+  }
+
+  /* ---------- fighter page: the full profile, for the athlete and their coach ---------- */
+  function finishOf(b) { return b.result === 'win' && !/decision/i.test(b.method); }
+  function roundsOf(b) { return b.judges ? b.judges[0].length : b.round; }
+  function secsOf(t) { var x = String(t).split(':'); return Number(x[0]) * 60 + Number(x[1]); }
+  function methodShort(b) {
+    if (/draw/i.test(b.method)) return 'Draw';
+    var dec = /^(\w+) decision/i.exec(b.method);
+    if (dec) return dec[1] + ' dec.';
+    return (/submission/i.test(b.method) ? 'Submission' : 'Stoppage') + ' · R' + b.round;
+  }
+  // Fighter facts from the bout list (newest first).
+  function factsOf(list) {
+    var wins = list.filter(function (b) { return b.result === 'win'; });
+    var fin = wins.filter(finishOf);
+    var run = 0, best = 0, cur = 0;
+    list.slice().reverse().forEach(function (b) { run = b.result === 'win' ? run + 1 : 0; best = Math.max(best, run); });
+    while (cur < list.length && list[cur].result === list[0].result) cur++;
+    return {
+      wins: wins, finishes: fin, best: best, current: list.length ? boutResultLabel(list[0]) + cur : 'None yet',
+      fastest: fin.slice().sort(function (x, y) { return x.round - y.round || secsOf(x.time) - secsOf(y.time); })[0],
+      rounds: list.reduce(function (t, b) { return t + roundsOf(b); }, 0), debut: list[list.length - 1]
+    };
+  }
+  function fedName(code) { var f = D.federations.filter(function (x) { return x[0] === code; })[0]; return f ? f[1] : code; }
+
+  function Gauge(props) {
+    var C = 2 * Math.PI * 26;
+    return html`<figure className=${'gauge' + (props.lead ? ' lead' : '')}>
+      <div className="ring-box"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="26" className="ring-track"/>
+        <circle cx="32" cy="32" r="26" className="ring-val" style=${{ strokeDasharray: (C * props.pct / 100).toFixed(1) + ' ' + C.toFixed(1) }} transform="rotate(-90 32 32)"/></svg>
+        <span className="ring-num"><span>${props.pct}<small>%</small></span></span></div>
+      <figcaption><span className="ring-name">${props.label}</span><span className="data muted">${props.sub}</span></figcaption></figure>`;
+  }
+
+  // rows: [label, value, display]; bars are scaled to `max`, or to the largest value.
+  function Bars(props) {
+    var max = props.max || Math.max.apply(null, props.rows.map(function (r) { return r[1]; }).concat([1]));
+    return html`<ul className="bars">${props.rows.map(function (r) {
+      return html`<li key=${r[0]}><span className="bar-label">${r[0]}</span><span className="bar-track"><span className="bar-fill" style=${{ width: Math.round(r[1] / max * 100) + '%' }}></span></span><span className="data bar-val">${r[2]}</span></li>`;
+    })}</ul>`;
+  }
+
+  function KV(props) {
+    return html`<dl className="kv">${props.rows.map(function (r) { return html`<div key=${r[0]}><dt>${r[0]}</dt><dd>${r[1]}</dd></div>`; })}</dl>`;
+  }
+
+  function FighterPage(p) {
+    var s = p.s, a = p.a, self = p.viewer === 'self';
+    var os = useState(null), open = os[0], setOpen = os[1];
+    var ts = useState('bio'), tab = ts[0], setTab = ts[1];
+    var ss = useState(false), sharing = ss[0], setSharing = ss[1];
+    var list = boutsOf(s, a.id), rec = recordOf(s, a.id), f = factsOf(list), m = medical(a), minor = isMinor(a);
     var bout = open ? list.filter(function (b) { return b.id === open; })[0] : null;
-    return html`<div className="stack">
-      <${ScreenHead} eyebrow="Verified record" title="Record" />
-      <section className="card record-hero">
-        <${Record} wins=${rec.wins} losses=${rec.losses} draws=${rec.draws} animate=${true} />
-        <p className="small muted">${list.length} bouts. Every result here was written by the event's officials from a signed bout sheet. You can't add or edit one yourself.</p>
-      </section>
-      <${WinMethods} bouts=${list} />
-      ${list.length ? html`<ul className="bouts">${list.map(function (b) {
-        return html`<li key=${b.id}><button type="button" className="bout-row" onClick=${function () { setOpen(b.id); }}>
-          <span className=${'res res-' + b.result}>${boutResultLabel(b)}</span>
-          <span className="bout-main"><span className="bout-opp">vs ${b.opponent} <span className="muted">(${b.oppNation})</span></span>
-            <span className="small muted">${b.event} · ${fmt(b.date)}</span>
-            <span className="small">${b.method}${b.judges ? '' : ' · R' + b.round + ' ' + b.time}</span></span>
-          <span className=${'corner-dot corner-' + b.corner} aria-label=${b.corner + ' corner'}></span></button></li>`;
-      })}</ul>` : html`<p className="muted">No bouts yet. Your first result appears here after your first event.</p>`}
-      ${bout ? html`<${Sheet} title=${bout.event} onClose=${function () { setOpen(null); }} wide=${true}>
-        <p className="small muted">${bout.city} · ${fmt(bout.date)} · ${a.division} ${a.weightClass}</p>
-        <${FaceOff} red=${bout.corner === 'red' ? nameOf(a) : bout.opponent} blue=${bout.corner === 'blue' ? nameOf(a) : bout.opponent}
-          redNation=${bout.corner === 'red' ? a.nation : bout.oppNation} blueNation=${bout.corner === 'blue' ? a.nation : bout.oppNation} />
-        ${bout.judges ? html`<${Scorecard} red=${bout.corner === 'red' ? nameOf(a) : bout.opponent} blue=${bout.corner === 'blue' ? nameOf(a) : bout.opponent}
-            judges=${bout.judges} verifiedBy=${'Bout sheet signed · ' + bout.official} hideCorners=${true}
-            result=${{ winner: bout.result === 'draw' ? null : (bout.result === 'win') === (bout.corner === 'red') ? 'red' : 'blue', method: bout.method }} />`
-          : html`<div className="card"><div className="row-between"><${CornerTag} corner=${bout.corner}>${nameOf(a)}<//><span className=${'res res-' + bout.result}>${boutResultLabel(bout)}</span></div>
-            <p className="headline tr-display">${bout.method}</p><p className="muted">Round ${bout.round} · ${bout.time}</p>
-            <${Badge} status="verified">Bout sheet signed · ${bout.official}<//></div>`}
-      <//>` : null}
+    var last = list[0], coach = D.coaches[a.coach] || { name: 'Unassigned' };
+    var winRate = list.length ? Math.round(rec.wins / list.length * 100) : 0;
+    var finishRate = f.wins.length ? Math.round(f.finishes.length / f.wins.length * 100) : 0;
+    var methods = WIN_METHODS.map(function (mm) { var n = f.wins.filter(function (b) { return mm[1].test(b.method); }).length; return [mm[0], n, n + (n === 1 ? ' win' : ' wins')]; });
+    var areas = D.AREAS.map(function (ar) {
+      var v = Math.round(ar.skills.reduce(function (t, sk) { return t + a.skills[sk[0]].value; }, 0) / ar.skills.length);
+      return [ar.name, v, v + '%'];
+    });
+    var status = a.joinStatus === 'pending' ? 'Join request pending' : m.status === 'suspended' ? 'Suspended' : 'Active';
+    var upcoming = s.registrations.filter(function (r) { return r.athlete === a.id; })
+      .map(function (r) { return s.events.filter(function (e) { return e.id === r.event; })[0]; }).filter(function (e) { return e && e.date >= TODAY; });
+    var canShare = !minor && a.privacy.shareCards;
+    var details;
+    if (tab === 'facts') details = html`<${KV} rows=${[
+      ['Bouts', String(list.length)], ['Rounds fought', String(f.rounds)], ['Finishes', String(f.finishes.length)],
+      ['Fastest finish', f.fastest ? 'R' + f.fastest.round + ' ' + f.fastest.time + ' vs ' + f.fastest.opponent : 'None yet'],
+      ['Current streak', f.current], ['Longest win streak', String(f.best)],
+      ['Debut', f.debut ? f.debut.event + ' · ' + fmt(f.debut.date) : 'Not yet']]} />`;
+    else if (tab === 'fed') details = html`<div className="stack">
+      <${KV} rows=${[['Federation', fedName(a.nation)], ['Licence', a.licence || 'Issued after the first grading'], ['Current level', LEVELS[a.level]]]} />
+      <div><p className="tr-label">Level history</p>
+        <ol className="timeline">${(a.history || []).map(function (d, i) { return { level: LEVELS[i], date: d }; }).filter(function (x) { return x.date; }).reverse().map(function (x) {
+          return html`<li key=${x.level}><span className="tl-dot"></span><span>${x.level}</span><span className="data muted">${fmt(x.date)}</span></li>`;
+        })}</ol></div>
+      ${upcoming.length ? html`<div><p className="tr-label">Registered for</p><${KV} rows=${upcoming.map(function (e) { return [e.name, fmt(e.date)]; })} /></div>` : null}
     </div>`;
+    else details = html`<${KV} rows=${[
+      ['Status', status], ['Division', a.division], ['Weight class', a.weightClass], ['Stance', a.stance || 'Not set'], ['Nation', fedName(a.nation)],
+      ['Hometown', minor ? 'Private' : a.hometown || 'Not shared'], ['Trains at', a.gym], ['Coach', coach.name], ['On TrueRound since', fmt(a.since || TODAY)]]} />`;
+    return html`<article className="fp">
+      <header className="fp-hero theme-dark dark-top">
+        <${Ring} className="fp-ring" />
+        <div className="fp-bar"><span className="tr-label">${self ? 'Your fighter page' : 'Fighter page'}</span>
+          <div className="fp-actions">
+            ${canShare ? html`<button type="button" className="icon-btn" onClick=${function () { setSharing(true); }} aria-label="Share fighter page"><${Icon} name="share" size=${18} /></button>` : null}
+            ${self ? html`<button type="button" className="icon-btn" onClick=${p.onSettings} aria-label="Settings"><${Icon} name="settings" size=${18} /></button>` : null}
+          </div></div>
+        <div className="fp-tags">${[a.division + ' · ' + a.weightClass, status, 'Coach-verified pathway'].map(function (t, i) {
+          return html`<span key=${t} className=${'pill' + (i === 1 && status !== 'Active' ? ' pill-warn' : '')}>${t}</span>`;
+        })}</div>
+        <div className="fp-id">
+          <span className="fp-photo"><${Face} a=${a} size=${88} /></span>
+          <div className="fp-names">${a.nickname && !minor ? html`<p className="fp-nick">“${a.nickname}”</p>` : null}
+            <h1 className="fp-name tr-display" style=${nameChars(a)}>${a.first}<br/>${minor ? a.last.charAt(0) + '.' : a.last}</h1>
+            <p className="fp-sub">${a.gym} · ${a.nation}</p></div>
+        </div>
+        <div className="fp-stats">
+          <div className="fp-stat"><span className="fp-stat-num">${rec.wins}-${rec.losses}-${rec.draws}</span><span className="fp-stat-label">Record</span></div>
+          <div className="fp-stat"><span className="fp-stat-num">${f.finishes.length}</span><span className="fp-stat-label">Finishes</span></div>
+          <div className="fp-stat"><span className="fp-stat-num">${a.level + 1}<small>/${LEVELS.length}</small></span><span className="fp-stat-label">${LEVELS[a.level]}</span></div>
+        </div>
+        <div className="fp-meta">
+          <div className="fp-coach"><span className="mini-avatar" aria-hidden="true">${coach.name.split(' ').map(function (w) { return w.charAt(0); }).join('').slice(0, 2)}</span>
+            <span><span className="fp-meta-k">Coach</span><span className="fp-meta-v">${coach.name}</span></span></div>
+          ${last ? html`<button type="button" className="fp-last" onClick=${function () { setOpen(last.id); }}>
+            <span className="fp-meta-k">Last bout</span><span className="fp-meta-v">${boutResultLabel(last)} vs ${last.opponent}</span><span className="fp-last-link">Scorecard →</span></button>`
+            : html`<div className="fp-last"><span className="fp-meta-k">Last bout</span><span className="fp-meta-v">No bouts yet</span></div>`}
+        </div>
+      </header>
+      <div className="fp-body">
+        ${minor ? html`<p className="note"><${Icon} name="lock" size=${16} /> Private profile. Only ${self ? 'you, your guardian' : 'the athlete, their guardian'} and the coach see this page. No public page or photo until 18.</p>` : null}
+        <section className="card"><div className="card-head"><h2 className="card-title">Performance</h2><span className="data muted">from signed bout sheets</span></div>
+          ${list.length ? html`<div className="gauges">
+            <${Gauge} label="Win rate" pct=${winRate} sub=${rec.wins + ' of ' + list.length + ' bouts'} lead=${true} />
+            <${Gauge} label="Finish rate" pct=${finishRate} sub=${f.finishes.length + ' of ' + f.wins.length + ' wins'} /></div>`
+            : html`<p className="small muted">No bouts yet. These fill in after the first signed bout sheet.</p>`}
+        </section>
+        ${f.wins.length ? html`<section className="card"><h2 className="card-title">Result by method</h2><${Bars} rows=${methods} /></section>` : null}
+        <section className="card"><div className="card-head"><h2 className="card-title">Skills by area</h2><span className="data muted">coach-verified</span></div>
+          <${Bars} rows=${areas} max=${100} />
+          ${self ? html`<button type="button" className="link-btn" onClick=${p.goPathway}>Open pathway →</button>` : null}</section>
+        <section className="card"><div className="card-head"><h2 className="card-title">Fight record</h2><span className="data muted">${list.length} ${list.length === 1 ? 'bout' : 'bouts'}</span></div>
+          ${list.length ? html`<ul className="fights">${list.map(function (b) {
+            return html`<li key=${b.id}><button type="button" className="fight-row" onClick=${function () { setOpen(b.id); }}>
+              <span className=${'res res-' + b.result}>${boutResultLabel(b)}</span>
+              <span className="bout-main"><span className="bout-opp">vs ${b.opponent} <span className="muted">${b.oppNation}</span></span><span className="small muted">${b.event} · ${fmt(b.date)}</span></span>
+              <span className=${'method-pill pill-' + b.result}>${methodShort(b)}</span></button></li>`;
+          })}</ul>` : html`<p className="small muted">No bouts yet. The first result appears here after the first event.</p>`}
+          <p className="small muted">Every result was written by the event's officials from a signed bout sheet. Tap one for the scorecard.</p>
+        </section>
+        <section className="card fp-details">
+          <${Seg} label="Fighter details" value=${tab} onChange=${setTab} options=${[['bio', 'Bio'], ['facts', 'Fighter facts'], ['fed', 'Federation']]} />
+          ${details}
+        </section>
+        ${canShare ? html`<div className="fp-share"><${Button} variant="primary" block=${true} icon="share" onClick=${function () { setSharing(true); }}>Share fighter page<//>
+          <p className="small muted">Public by choice. Under-18s stay private.</p></div>` : null}
+      </div>
+      ${bout ? html`<${BoutSheet} a=${a} bout=${bout} onClose=${function () { setOpen(null); }} />` : null}
+      ${sharing ? html`<${ShareSheet} a=${a} rec=${rec} onClose=${function () { setSharing(false); }} />` : null}
+    </article>`;
   }
 
   function LearnScreen(p) {
@@ -1433,45 +1816,46 @@ window.TR_DATA = (function () {
     </div>`;
   }
 
-  function ProfileScreen(p) {
+  /* ---------- settings: account, notifications, privacy, data ---------- */
+  function SettingsScreen(p) {
     var s = p.s, a = p.a, act = p.act;
-    var minor = isMinor(a), rec = recordOf(s, a.id);
+    var minor = isMinor(a), notify = Object.assign({ push: true, events: true }, a.notify);
     var vs = useState(null), view = vs[0], setView = vs[1];
-    var exportData = view === 'export' ? JSON.stringify({ athlete: a, bouts: boutsOf(s, a.id), registrations: s.registrations.filter(function (r) { return r.athlete === a.id; }), feed: s.feed.filter(function (f) { return f.athlete === a.id; }) }, null, 2) : '';
+    var exportData = view === 'export' ? JSON.stringify({
+      athlete: Object.assign({}, a, { photo: a.photo && a.photo.indexOf('data:') === 0 ? '(uploaded photo)' : a.photo }),
+      bouts: boutsOf(s, a.id), registrations: s.registrations.filter(function (r) { return r.athlete === a.id; }), feed: s.feed.filter(function (f) { return f.athlete === a.id; })
+    }, null, 2) : '';
     function copy() {
       try { navigator.clipboard.writeText(exportData).then(function () { act({ type: 'noop' }, 'Copied to clipboard.'); }, function () { act({ type: 'noop' }, 'Select the text and copy it.'); }); }
       catch (e) { act({ type: 'noop' }, 'Select the text and copy it.'); }
     }
     return html`<div className="stack">
-      <div className="row-between"><button type="button" className="link-btn" onClick=${p.back}>← Back</button><span className="tr-label">Profile</span></div>
-      ${minor ? html`<${AthleteCard} name=${nameOf(a)} gym=${a.gym} level=${LEVELS[a.level]} footer="Under 18: name, gym and level only. Record, weight and nation stay private." />`
-        : html`<${AthleteCard} name=${nameOf(a)} photo=${photoOf(a)} gym=${a.gym} coach=${coachName(a.coach)} record=${rec} level=${LEVELS[a.level]} weightClass=${a.weightClass} nation=${a.nation} verified=${rec.wins + rec.losses + rec.draws > 0} />`}
-      <div className="btn-row"><${Button} block=${true} icon="user" disabled=${minor || !a.privacy.shareCards} onClick=${function () { setView('share'); }}>${minor ? 'Share cards are off for under-18s' : a.privacy.shareCards ? 'Preview share card' : 'Share cards are off'}<//></div>
-      ${minor && a.guardian ? html`<section className="card"><h2 className="tr-label">Guardian</h2><p>Managed by <strong>${a.guardian.name}</strong> (${a.guardian.email}). Consent recorded ${fmt(a.guardian.consentOn)}.</p><p className="small muted">Your guardian can view, export or delete this account at any time.</p></section>` : null}
-      <section className="card"><h2 className="tr-label">Privacy and sharing</h2>
+      <div className="row-between"><button type="button" className="link-btn" onClick=${p.back}>← Fighter page</button><span className="tr-label">Settings</span></div>
+      <section className="card account-card">
+        <span className="mini-avatar account-face" aria-hidden="true"><${Face} a=${a} size=${56} /></span>
+        <div className="who-text"><span className="cell-name">${nameOf(a)}</span><span className="small muted">${a.email}</span>
+          <span className="small muted">${a.gym} · since ${fmt(a.since || TODAY)}</span></div>
+        <${LevelPill} level=${a.level} />
+      </section>
+      ${minor && a.guardian ? html`<section className="card"><h2 className="card-title">Guardian</h2><p>Managed by <strong>${a.guardian.name}</strong> (${a.guardian.email}). Consent recorded ${fmt(a.guardian.consentOn)}.</p><p className="small muted">Your guardian can view, export or delete this account at any time.</p></section>` : null}
+      <section className="card"><h2 className="card-title">Notifications</h2>
+        <${Toggle} id="nt-push" label="Push notifications" hint="Verified skills, results and medical changes." checked=${notify.push} onChange=${function (v) { act({ type: 'notify', athlete: a.id, key: 'push', value: v }); }} />
+        <${Toggle} id="nt-events" label="Event reminders" hint="Registration deadlines, medicals and weigh-ins." checked=${notify.events} onChange=${function (v) { act({ type: 'notify', athlete: a.id, key: 'events', value: v }); }} />
+      </section>
+      <section className="card"><h2 className="card-title">Privacy and sharing</h2>
         <${Toggle} id="pv-public" label="Public fighter page" hint=${minor ? 'Guardian-controlled while under 18. Off, and hidden from search engines.' : 'Your verified record on a page search engines can find.'}
           checked=${!minor && a.privacy.publicPage} disabled=${minor} onChange=${function (v) { act({ type: 'privacy', athlete: a.id, key: 'publicPage', value: v }, v ? 'Public page on.' : 'Public page off.'); }} />
         <${Toggle} id="pv-share" label="Share cards" hint="Auto-made cards when a promotion or result is verified." checked=${!minor && a.privacy.shareCards} disabled=${minor}
           onChange=${function (v) { act({ type: 'privacy', athlete: a.id, key: 'shareCards', value: v }); }} />
         <${Toggle} id="pv-mkt" label="News and offers" hint="Off unless you turn it on." checked=${a.privacy.marketing} onChange=${function (v) { act({ type: 'privacy', athlete: a.id, key: 'marketing', value: v }); }} />
       </section>
-      <section className="card"><h2 className="tr-label">Your data</h2>
+      <section className="card"><h2 className="card-title">Your data</h2>
         <p className="small muted">TrueRound keeps your name, date of birth, gym, coach, verified skills and results, and the status and dates of your medicals. It never stores a diagnosis.</p>
         <div className="btn-row"><${Button} size="sm" onClick=${function () { setView('export'); }}>Download my data<//><${Button} size="sm" variant="danger" onClick=${function () { setView('delete'); }}>Delete account<//></div>
       </section>
-      <section className="card"><h2 className="tr-label">Try it</h2><p className="small muted">See the sign-up flow a new athlete goes through, including the under-18 guardian step.</p>
-        <${Button} size="sm" onClick=${p.startSignup}>Start sign-up flow<//></section>
+      <section className="card"><h2 className="card-title">New to TrueRound?</h2><p className="small muted">Walk through the onboarding a new athlete sees, including the under-18 guardian step.</p>
+        <${Button} size="sm" onClick=${p.startOnboarding}>Start onboarding<//></section>
       <p className="small muted about">TrueRound is a concept prototype prepared for a partnership proposal. It is not an official product of GAMMA or of any federation. Every athlete, coach, gym, official and event in it is fictional, except Mohammad Mortada, added on request; that profile's record is demo data too.</p>
-      ${view === 'share' ? html`<${Sheet} title="Share card" onClose=${function () { setView(null); }}>
-        <div className="share-card theme-dark">
-          <div className="share-top"><${Mark} size=${28} /><span className="wordmark">TrueRound</span>${photoOf(a) ? html`<img className="share-photo" src=${photoOf(a)} alt="" width="64" height="64" />` : null}</div>
-          <p className="tr-label share-kicker">Verified record</p>
-          <p className="share-name tr-display" style=${nameChars(a)}>${a.first}<br/>${a.last}</p>
-          <p className="share-sub">${a.gym} · ${LEVELS[a.level]} · ${a.weightClass}</p>
-          <div className="share-rec"><${Record} wins=${rec.wins} losses=${rec.losses} draws=${rec.draws} /></div>
-          <p className="data share-url">trueround.app/${(a.first + '-' + a.last).toLowerCase()}</p>
-        </div>
-        <p className="small muted">In the app this saves as an image sized for Instagram and links to the public page.</p><//>` : null}
       ${view === 'export' ? html`<${Sheet} title="Your data" onClose=${function () { setView(null); }} wide=${true}>
         <p className="small muted">Everything TrueRound holds about this account, as JSON.</p>
         <pre className="export" tabIndex="0">${exportData}</pre>
@@ -1482,56 +1866,175 @@ window.TR_DATA = (function () {
     </div>`;
   }
 
-  function Signup(props) {
-    var act = props.act;
-    var st = useState(0), step = st[0], setStep = st[1];
-    var fs = useState({ first: '', last: '', email: '', dob: '', gName: '', gEmail: '', gConsent: false, federation: 'Lebanon', gym: 'Cedar Combat Club', weight: '61 kg', publicPage: false, shareCards: false, marketing: false });
+  /* ---------- onboarding: the full join journey ---------- */
+  var WEIGHTS = ['48 kg', '52 kg', '57 kg', '61 kg', '66 kg', '70 kg', '77 kg', '84 kg', '93 kg', '120 kg'];
+  var ONB = {
+    account: ['Account', 'Create your account', 'Your verified pathway, record and medical status in one place. We email you a sign-in link, so there is no password to remember.'],
+    age: ['Age', 'Your date of birth', 'We ask so we can apply the right protections for your age.'],
+    guardian: ['Guardian', 'Parent or guardian', 'Under-18 accounts are created through a parent or guardian, who can view, export or delete the data at any time.'],
+    club: ['Club', 'Federation and gym', 'Your coach at this gym is the only person who can verify your skills.'],
+    fighter: ['Fighter', 'Fighter details', 'This sets your division and the events you can enter. You can change weight class later.'],
+    photo: ['Photo', 'Add a photo', 'It appears on your fighter page and share cards. You can change or remove it at any time.'],
+    safety: ['Safety', 'Safety comes first', 'Medical clearance and suspensions are written by doctors and officials, never by you or your coach.'],
+    sharing: ['Sharing', 'Choose what to share', 'Pathway tracking is required. Everything else is your choice and can change later.'],
+    coach: ['Coach', 'Join your coach’s roster', 'Your coach accepts you before anything is verified.']
+  };
+
+  // Crop an uploaded image to a 288px square (biased up a little, where faces usually are) as a JPEG data URL.
+  function squarePhoto(file, done) {
+    var reader = new FileReader();
+    reader.onload = function () {
+      var img = new Image();
+      img.onload = function () {
+        var side = Math.min(img.width, img.height), c = document.createElement('canvas');
+        c.width = c.height = 288;
+        c.getContext('2d').drawImage(img, (img.width - side) / 2, (img.height - side) * 0.3, side, side, 0, 0, 288, 288);
+        done(c.toDataURL('image/jpeg', 0.82));
+      };
+      img.onerror = function () { done(null); };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function Onboarding(p) {
+    var act = p.act;
+    var ss = useState('welcome'), step = ss[0], setStep = ss[1];
+    var fs = useState({ first: '', last: '', email: '', dob: '', gName: '', gEmail: '', gConsent: false, federation: 'LBN', gym: 'cedar', sex: '', weight: '', stance: 'Orthodox',
+      nickname: '', hometown: '', photo: null, medReminder: true, rulesAck: false, publicPage: false, shareCards: false, marketing: false });
     var f = fs[0], setF = fs[1];
-    function set(k) { return function (e) { var v = e && e.target ? (e.target.type === 'checkbox' ? e.target.checked : e.target.value) : e; setF(Object.assign({}, f, (function () { var o = {}; o[k] = v; return o; })())); }; }
+    var cs = useState(null), created = cs[0], setCreated = cs[1];
+    function set(k, v) { setF(function (cur) { var o = Object.assign({}, cur); o[k] = v; return o; }); }
+    function bind(k) { return function (e) { set(k, e.target.type === 'checkbox' ? e.target.checked : e.target.value); }; }
     var years = f.dob ? age(f.dob) : null;
-    var minor = years !== null && years < 18;
-    var tooYoung = years !== null && years < 8;
-    var steps = ['Account', 'Age', 'Guardian', 'Club', 'Sharing'];
-    function next() { if (step === 1 && !minor) setStep(3); else setStep(step + 1); }
-    function back() { if (step === 3 && !minor) setStep(1); else setStep(Math.max(0, step - 1)); }
+    var minor = years !== null && years < 18, tooYoung = years !== null && years < 8;
+    var flow = ['account', 'age'].concat(minor ? ['guardian'] : [], ['club', 'fighter'], minor ? [] : ['photo'], ['safety', 'sharing', 'coach']);
+    var idx = flow.indexOf(step);
+    var gym = D.gyms.filter(function (g) { return g.id === f.gym; })[0];
+    var EMAIL = /.+@.+\..+/;
+    var valid = {
+      account: f.first.trim() && f.last.trim() && EMAIL.test(f.email), age: years !== null && !tooYoung && years < 100,
+      guardian: f.gName.trim() && EMAIL.test(f.gEmail) && f.gConsent, club: !!gym, fighter: f.sex && f.weight,
+      photo: true, safety: f.rulesAck, sharing: true, coach: true
+    }[step];
+    function go(to) { setStep(to); var el = document.querySelector('.phone-onb'); if (el) el.scrollTop = 0; window.scrollTo(0, 0); }
+    function back() { go(idx <= 0 ? 'welcome' : flow[idx - 1]); }
     function finish() {
-      var id = (f.first + '-' + f.last).toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + uid().slice(0, 3);
       var sk = {};
       Object.keys(SKILL_NAMES).forEach(function (k) { sk[k] = { value: 0, status: 'none', by: null, date: null }; });
-      act({ type: 'create', athlete: { id: id, first: f.first.trim(), last: f.last.trim(), dob: f.dob, nation: f.federation.slice(0, 3).toUpperCase(), gym: f.gym, coach: 'hassan', weightClass: f.weight, division: (minor ? 'Junior' : 'Senior') + ' athlete', level: 0, email: minor ? f.gEmail : f.email,
-        guardian: minor ? { name: f.gName, email: f.gEmail, consentOn: TODAY } : undefined, clearance: null, suspension: null,
-        privacy: { publicPage: !minor && f.publicPage, shareCards: !minor && f.shareCards, marketing: f.marketing }, skills: sk, unlocked: [0], watched: [] } }, 'Welcome to TrueRound, ' + f.first.trim() + '.');
-      props.close();
+      var athlete = {
+        id: (f.first + '-' + f.last).toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + uid().slice(0, 3),
+        first: f.first.trim(), last: f.last.trim(), dob: f.dob, nation: f.federation, gym: gym.name, coach: gym.coach, weightClass: f.weight,
+        division: (minor ? 'Junior ' : 'Senior ') + f.sex, level: 0, email: minor ? f.gEmail : f.email,
+        nickname: minor ? '' : f.nickname.trim(), hometown: f.hometown.trim(), stance: f.stance, photo: minor ? null : f.photo,
+        since: TODAY, history: [TODAY], joinStatus: 'pending', notify: { push: true, events: f.medReminder },
+        guardian: minor ? { name: f.gName.trim(), email: f.gEmail, consentOn: TODAY } : undefined, clearance: null, suspension: null,
+        privacy: { publicPage: !minor && f.publicPage, shareCards: !minor && f.shareCards, marketing: f.marketing }, skills: sk, unlocked: [0], watched: []
+      };
+      act({ type: 'create', athlete: athlete });
+      setCreated(athlete); go('done');
     }
-    var valid = [f.first.trim() && f.last.trim() && /.+@.+\..+/.test(f.email), years !== null && !tooYoung && years < 100, f.gName.trim() && /.+@.+\..+/.test(f.gEmail) && f.gConsent, true, true][step];
+
+    if (step === 'welcome') return html`<div className="onb onb-hero-screen theme-dark dark-top">
+      <${Ring} className="onb-ring" />
+      <div className="onb-brand"><${Mark} size=${34} /><span className="wordmark">TrueRound</span></div>
+      <h1 className="onb-hero tr-display">Your fight record.<br/>Verified.</h1>
+      <ul className="onb-points">
+        <li><span className="onb-ico"><${Icon} name="ladder" size=${20} /></span><span><strong>A pathway your coach signs off</strong><span>Skills move only after your coach has seen them in person.</span></span></li>
+        <li><span className="onb-ico"><${Icon} name="card" size=${20} /></span><span><strong>Results from the officials</strong><span>Every bout comes from a signed bout sheet, with the judges’ scores.</span></span></li>
+        <li><span className="onb-ico"><${Icon} name="shield" size=${20} /></span><span><strong>Clearance you can show</strong><span>Medical status and dates, ready at weigh-in. Never a diagnosis.</span></span></li>
+      </ul>
+      <div className="onb-cta"><${Button} variant="primary" block=${true} onClick=${function () { go('account'); }}>Create your account<//>
+        <button type="button" className="link-btn" onClick=${function () { p.close(); }}>Skip to the demo</button></div>
+      <p className="onb-fine">Concept prototype for GAMMA. Nothing you type leaves this browser.</p>
+    </div>`;
+
+    if (step === 'done') return html`<div className="onb onb-hero-screen theme-dark dark-top">
+      <${Ring} className="onb-ring" />
+      <span className="fp-photo onb-done-face"><${Face} a=${created} size=${88} /></span>
+      <p className="tr-label onb-gold">Account created</p>
+      <h1 className="onb-hero tr-display">You’re in,<br/>${created.first}.</h1>
+      <p className="muted">Your join request is with Coach ${coachName(created.coach)} at ${created.gym}.</p>
+      <ol className="next-steps">
+        <li className="now"><span className="ns-dot"><${Icon} name="clock" size=${14} strokeWidth=${2.5} /></span><span><strong>Coach accepts you</strong><span>Usually after your next session.</span></span></li>
+        <li><span className="ns-dot">2</span><span><strong>Ask for your first skill check</strong><span>From Pathway, after a session.</span></span></li>
+        <li><span className="ns-dot">3</span><span><strong>Book a pre-competition medical</strong><span>Every event needs one on file.</span></span></li>
+        <li><span className="ns-dot">4</span><span><strong>Pick your first event</strong><span>The app checks your eligibility for you.</span></span></li>
+      </ol>
+      <div className="onb-cta"><${Button} variant="primary" block=${true} onClick=${function () { p.close('home'); }}>Go to my home<//></div>
+      <p className="onb-fine">Demo tip: switch to Coach to accept the join request.</p>
+    </div>`;
+
     var body;
-    if (step === 0) body = html`<div className="form"><p className="muted">Your verified pathway, record and medical status in one place.</p>
-      <${Field} id="su-first" label="First name" value=${f.first} onChange=${set('first')} autoComplete="given-name" />
-      <${Field} id="su-last" label="Last name" value=${f.last} onChange=${set('last')} autoComplete="family-name" />
-      <${Field} id="su-email" label="Email" type="email" value=${f.email} onChange=${set('email')} autoComplete="email" /></div>`;
-    else if (step === 1) body = html`<div className="form"><${Field} id="su-dob" label="Date of birth" type="date" value=${f.dob} onChange=${set('dob')} max=${TODAY}
-        hint="We ask so we can apply the right protections for your age." error=${tooYoung ? 'Athletes must be at least 8 to join.' : null} />
-      ${years !== null && !tooYoung ? html`<p className="note">${minor ? html`<${Icon} name="shield" size=${16} /> You're ${years}. A parent or guardian creates and manages your account, and your profile stays private.` : html`<${Icon} name="check" size=${16} /> You're ${years}. You manage your own account.`}</p>` : null}</div>`;
-    else if (step === 2) body = html`<div className="form"><p className="muted">Under-18 accounts are created through a parent or guardian, who can view, export or delete the data at any time.</p>
-      <${Field} id="su-gname" label="Guardian's full name" value=${f.gName} onChange=${set('gName')} />
-      <${Field} id="su-gemail" label="Guardian's email" type="email" value=${f.gEmail} onChange=${set('gEmail')} hint="We send the consent request here." />
-      <label className="check-line" htmlFor="su-gconsent"><input id="su-gconsent" type="checkbox" checked=${f.gConsent} onChange=${set('gConsent')} /> <span>I am the parent or guardian and I consent to this account being created.</span></label></div>`;
-    else if (step === 3) body = html`<div className="form">
-      <div className="tr-field"><label htmlFor="su-fed">National federation</label><select id="su-fed" value=${f.federation} onChange=${set('federation')}>${D.federations.map(function (x) { return html`<option key=${x}>${x}</option>`; })}</select></div>
-      <div className="tr-field"><label htmlFor="su-gym">Gym</label><select id="su-gym" value=${f.gym} onChange=${set('gym')}>${D.gyms.map(function (g) { return html`<option key=${g.id} value=${g.name}>${g.name} · ${g.city}</option>`; })}</select></div>
-      <div className="tr-field"><label htmlFor="su-wt">Weight class</label><select id="su-wt" value=${f.weight} onChange=${set('weight')}>${['48 kg', '52 kg', '57 kg', '61 kg', '66 kg', '70 kg', '77 kg', '84 kg', '93 kg', '120 kg'].map(function (x) { return html`<option key=${x}>${x}</option>`; })}</select></div>
-      <p className="note"><${Icon} name="user" size=${16} /> Your coach at this gym, Hassan Jizzini, is the only person who can verify your skills.</p></div>`;
-    else body = html`<div className="form"><p className="muted">Pathway tracking is required. Everything else is your choice and can change later.</p>
-      <${Toggle} id="su-core" label="Pathway tracking" hint="Required: your coach verifies your skills here." checked=${true} disabled=${true} />
-      <${Toggle} id="su-public" label="Public fighter page" hint=${minor ? 'Off for under-18s. Your guardian can choose later.' : 'Lets clubs and scouts find your verified record.'} checked=${!minor && f.publicPage} disabled=${minor} onChange=${set('publicPage')} />
-      <${Toggle} id="su-share" label="Share cards" hint=${minor ? 'Off for under-18s.' : 'Auto-made cards for promotions and results.'} checked=${!minor && f.shareCards} disabled=${minor} onChange=${set('shareCards')} />
-      <${Toggle} id="su-mkt" label="News and offers" hint="Off unless you turn it on." checked=${f.marketing} onChange=${set('marketing')} /></div>`;
-    return html`<${Sheet} title="Join TrueRound" onClose=${props.close}>
-      <ol className="steps">${steps.map(function (n, i) { var skip = i === 2 && years !== null && !minor; return html`<li key=${n} className=${(i < step ? 'done' : i === step ? 'on' : '') + (skip ? ' skip' : '')}><span></span>${n}</li>`; })}</ol>
-      ${body}
-      <div className="btn-row">${step > 0 ? html`<${Button} variant="quiet" onClick=${back}>Back<//>` : null}
-        ${step < 4 ? html`<${Button} variant="primary" disabled=${!valid} onClick=${next}>Continue<//>` : html`<${Button} variant="primary" onClick=${finish}>Create account<//>`}</div>
-    <//>`;
+    if (step === 'account') body = html`<div className="form">
+      <${Field} id="onb-first" label="First name" value=${f.first} onChange=${bind('first')} autoComplete="given-name" />
+      <${Field} id="onb-last" label="Last name" value=${f.last} onChange=${bind('last')} autoComplete="family-name" />
+      <${Field} id="onb-email" label="Email" type="email" value=${f.email} onChange=${bind('email')} autoComplete="email" hint="We send your sign-in link here." /></div>`;
+    else if (step === 'age') body = html`<div className="form">
+      <${Field} id="onb-dob" label="Date of birth" type="date" value=${f.dob} onChange=${bind('dob')} max=${TODAY} error=${tooYoung ? 'Athletes must be at least 8 to join.' : null} />
+      ${years !== null && !tooYoung ? html`<p className="note">${minor ? html`<${Icon} name="shield" size=${16} /> You’re ${years}. A parent or guardian creates and manages your account, and your profile stays private with no photo.` : html`<${Icon} name="check" size=${16} /> You’re ${years}. You manage your own account.`}</p>` : null}</div>`;
+    else if (step === 'guardian') body = html`<div className="form">
+      <${Field} id="onb-gname" label="Guardian’s full name" value=${f.gName} onChange=${bind('gName')} />
+      <${Field} id="onb-gemail" label="Guardian’s email" type="email" value=${f.gEmail} onChange=${bind('gEmail')} hint="We send the consent request here." />
+      <label className="check-line" htmlFor="onb-gconsent"><input id="onb-gconsent" type="checkbox" checked=${f.gConsent} onChange=${bind('gConsent')} /> <span>I am the parent or guardian and I consent to this account being created.</span></label></div>`;
+    else if (step === 'club') body = html`<div className="form">
+      <div className="tr-field"><label htmlFor="onb-fed">National federation</label><select id="onb-fed" value=${f.federation} onChange=${bind('federation')}>${D.federations.map(function (x) { return html`<option key=${x[0]} value=${x[0]}>${x[1]}</option>`; })}</select></div>
+      <fieldset className="choice-list"><legend className="field-label">Gym</legend>
+        ${D.gyms.map(function (g) { return html`<label key=${g.id} className=${'choice' + (f.gym === g.id ? ' on' : '')}>
+          <input type="radio" name="onb-gym" value=${g.id} checked=${f.gym === g.id} onChange=${bind('gym')} />
+          <span className="choice-main"><strong>${g.name}</strong><span className="small muted">${g.city} · Coach ${coachName(g.coach)} · ${g.athletes} athletes</span></span>
+          <${Icon} name="check" size=${18} strokeWidth=${3} /></label>`; })}
+      </fieldset>
+      <p className="small muted">Gym not listed? Gyms join through the national federation; ask your coach to apply.</p></div>`;
+    else if (step === 'fighter') body = html`<div className="form">
+      <div className="field-group"><p className="field-label">Division</p><${Seg} label="Division" value=${f.sex} onChange=${function (v) { set('sex', v); }}
+        options=${[['women', minor ? 'Junior women' : 'Women'], ['men', minor ? 'Junior men' : 'Men']]} /></div>
+      <div className="tr-field"><label htmlFor="onb-wt">Weight class</label><select id="onb-wt" value=${f.weight} onChange=${bind('weight')}>
+        <option value="">Choose your weight class</option>${WEIGHTS.map(function (x) { return html`<option key=${x}>${x}</option>`; })}</select></div>
+      <div className="field-group"><p className="field-label">Stance</p><${Seg} label="Stance" value=${f.stance} onChange=${function (v) { set('stance', v); }}
+        options=${[['Orthodox', 'Orthodox'], ['Southpaw', 'Southpaw'], ['Switch', 'Switch']]} /></div>
+      ${minor ? null : html`<${Field} id="onb-nick" label="Nickname (optional)" value=${f.nickname} onChange=${bind('nickname')} hint="Shown in quotes on your fighter page." />`}
+      <${Field} id="onb-home" label="Hometown (optional)" value=${f.hometown} onChange=${bind('hometown')} /></div>`;
+    else if (step === 'photo') body = html`<div className="photo-pick">
+      <span className=${'photo-preview' + (f.photo ? ' has-photo' : '')}>${f.photo ? html`<img src=${f.photo} alt="Your photo" />` : html`<${Icon} name="camera" size=${36} />`}</span>
+      <label className="tr-btn tr-btn-secondary photo-btn" htmlFor="onb-photo"><${Icon} name="camera" size=${18} />${f.photo ? 'Choose another' : 'Choose a photo'}</label>
+      <input id="onb-photo" className="sr" type="file" accept="image/*" onChange=${function (e) { var file = e.target.files && e.target.files[0]; if (file) squarePhoto(file, function (url) { if (url) set('photo', url); }); }} />
+      <p className="small muted">A clear, front-facing head-and-shoulders photo works best. It’s cropped to a circle.</p></div>`;
+    else if (step === 'safety') body = html`<div className="form">
+      <ul className="safety-list">
+        <li><span className="onb-ico"><${Icon} name="shield" size=${20} /></span><span><strong>Medical clearance</strong><span>An event doctor records it before you compete. It shows a status and dates only, never a diagnosis.</span></span></li>
+        <li><span className="onb-ico"><${Icon} name="ban" size=${20} /></span><span><strong>Suspensions</strong><span>After a stoppage the doctor can set a rest period. Your coach’s sparring plan blocks contact until it ends.</span></span></li>
+        <li><span className="onb-ico"><${Icon} name="whistle" size=${20} /></span><span><strong>${minor ? 'Junior ruleset' : 'Rules of your division'}</strong><span>${minor ? 'Junior divisions use a restricted ruleset set by your federation. Your Safety and rules skills cover it.' : 'Legal targets, tapping and the weigh-in protocol are part of your pathway under Safety and rules.'}</span></span></li>
+      </ul>
+      <${Toggle} id="onb-med" label="Remind me to book a medical" hint="Before your first registration closes." checked=${f.medReminder} onChange=${function (v) { set('medReminder', v); }} />
+      <label className="check-line" htmlFor="onb-rules"><input id="onb-rules" type="checkbox" checked=${f.rulesAck} onChange=${bind('rulesAck')} /> <span>I understand that only doctors and officials can clear or suspend me.</span></label></div>`;
+    else if (step === 'sharing') body = html`<div className="form">
+      <${Toggle} id="onb-core" label="Pathway tracking" hint="Required: your coach verifies your skills here." checked=${true} disabled=${true} />
+      <${Toggle} id="onb-public" label="Public fighter page" hint=${minor ? 'Off for under-18s. Your guardian can choose later.' : 'Lets clubs and scouts find your verified record.'} checked=${!minor && f.publicPage} disabled=${minor} onChange=${function (v) { set('publicPage', v); }} />
+      <${Toggle} id="onb-share" label="Share cards" hint=${minor ? 'Off for under-18s.' : 'Auto-made cards for promotions and results.'} checked=${!minor && f.shareCards} disabled=${minor} onChange=${function (v) { set('shareCards', v); }} />
+      <${Toggle} id="onb-mkt" label="News and offers" hint="Off unless you turn it on." checked=${f.marketing} onChange=${function (v) { set('marketing', v); }} /></div>`;
+    else if (step === 'coach') body = html`<div className="form">
+      <${AthleteCard} name=${f.first.trim() + ' ' + (minor ? f.last.trim().charAt(0) + '.' : f.last.trim())} photo=${minor ? null : f.photo} gym=${gym.name} coach=${coachName(gym.coach)}
+        level=${LEVELS[0]} weightClass=${minor ? null : f.weight} nation=${minor ? null : f.federation} />
+      <div className="join-lists">
+        <div><p className="tr-label">Your coach sees</p><ul className="plain"><li>Your pathway and checks</li><li>Medical status and dates</li><li>Your results and level</li></ul></div>
+        <div><p className="tr-label">Your coach doesn’t see</p><ul className="plain"><li>Your email${minor ? ' or your guardian’s' : ''}</li><li>Your date of birth</li><li>Anything you keep private</li></ul></div>
+      </div></div>`;
+
+    var meta = ONB[step];
+    return html`<div className="onb">
+      <div className="onb-top">
+        <button type="button" className="link-btn onb-back" onClick=${back}><${Icon} name="back" size=${16} />Back</button>
+        <ol className="onb-progress" aria-label=${'Step ' + (idx + 1) + ' of ' + flow.length}>${flow.map(function (k, i) { return html`<li key=${k} className=${i < idx ? 'done' : i === idx ? 'on' : ''}></li>`; })}</ol>
+        <button type="button" className="icon-btn" onClick=${function () { p.close(); }} aria-label="Leave sign-up">✕</button>
+      </div>
+      <div className="onb-head" key=${step}><p className="tr-label">Step ${idx + 1} of ${flow.length} · ${meta[0]}</p>
+        <h1 className="onb-title tr-display">${meta[1]}</h1><p className="muted onb-lede">${meta[2]}</p></div>
+      <div className="onb-body" key=${step + '-body'}>${body}</div>
+      <div className="onb-foot">
+        <${Button} variant="primary" block=${true} disabled=${!valid} onClick=${step === 'coach' ? finish : function () { go(flow[idx + 1]); }}>${step === 'coach' ? 'Send join request' : step === 'photo' && !f.photo ? 'Skip for now' : 'Continue'}<//>
+      </div>
+    </div>`;
   }
 
   /* ---------- coach portal ---------- */
@@ -1542,6 +2045,8 @@ window.TR_DATA = (function () {
     var requests = [];
     roster.forEach(function (a) { Object.keys(a.skills).forEach(function (k) { if (a.skills[k].status === 'pending') requests.push({ athlete: a, skill: k, x: a.skills[k] }); }); });
     var tab = props.tab, setTab = props.setTab;
+    var vs = useState(null), viewing = vs[0], setViewing = vs[1];
+    var joins = roster.filter(function (a) { return a.joinStatus === 'pending'; });
     var suspended = roster.filter(function (a) { return medical(a).status === 'suspended'; }).length;
     var due = roster.filter(function (a) { var m = medical(a); return m.status === 'pending'; }).length;
     var tiles = [
@@ -1551,7 +2056,7 @@ window.TR_DATA = (function () {
       { label: 'Medical due', n: due, go: 'roster', tone: due ? 'caution' : '' }
     ];
     var body;
-    if (tab === 'roster') body = html`<${CoachRoster} s=${s} roster=${roster} act=${act} />`;
+    if (tab === 'roster') body = html`<${CoachRoster} s=${s} roster=${roster} act=${act} open=${setViewing} />`;
     else if (tab === 'verify') body = html`<${CoachVerify} requests=${requests} act=${act} />`;
     else if (tab === 'sparring') body = html`<${CoachSparring} s=${s} roster=${roster} act=${act} />`;
     else body = html`<${Gradings} s=${s} mode="coach" act=${act} />`;
@@ -1559,12 +2064,22 @@ window.TR_DATA = (function () {
       <header className="portal-head"><div><p className="tr-label">Coach portal · synced with the app</p><h1 className="scr-title tr-display">${coach.name}</h1>
         <p className="muted">${coach.gym} · ${coach.licence}</p></div>
         <p className="small muted portal-scope"><${Icon} name="lock" size=${16} /> You see only athletes assigned to you.</p></header>
+      ${joins.length ? html`<section className="card join-requests">
+        <div className="card-head"><h2 className="card-title">Join requests</h2><${Badge} status="pending">${joins.length} new<//></div>
+        <ul className="join-list">${joins.map(function (a) {
+          return html`<li key=${a.id}><div className="who"><span className="mini-avatar" aria-hidden="true"><${Face} a=${a} size=${36} /></span>
+            <div className="who-text"><span className="cell-name">${nameOf(a)}</span><span className="small muted">${a.division} · ${a.weightClass} · ${a.gym}${isMinor(a) ? ' · guardian consent recorded' : ''}</span></div></div>
+            <div className="btn-row"><${Button} size="sm" variant="quiet" onClick=${function () { setViewing(a.id); }}>View profile<//>
+              <${Button} size="sm" variant="primary" icon="check" onClick=${function () { act({ type: 'accept', athlete: a.id }, nameOf(a) + ' is on your roster.', 'verified'); }}>Accept<//></div></li>`;
+        })}</ul></section>` : null}
       <div className="tiles">${tiles.map(function (t) {
         return html`<button key=${t.label} type="button" className=${'tile' + (t.tone ? ' tile-' + t.tone : '')} onClick=${function () { setTab(t.go); }}>
           <span className="tile-num"><${Num} n=${t.n} /></span><span className="tr-label">${t.label}</span></button>`;
       })}</div>
       <${Seg} label="Coach sections" value=${tab} onChange=${setTab} options=${[['roster', 'Roster'], ['verify', 'Verify', requests.length || null], ['sparring', 'Sparring plan'], ['gradings', 'Gradings']]} />
-      ${body}</div>`;
+      ${body}
+      ${viewing && s.athletes[viewing] ? html`<${Sheet} title=${nameOf(s.athletes[viewing])} onClose=${function () { setViewing(null); }}>
+        <${FighterPage} s=${s} a=${s.athletes[viewing]} act=${act} viewer="coach" /><//>` : null}</div>`;
   }
 
   function CoachRoster(props) {
@@ -1576,7 +2091,7 @@ window.TR_DATA = (function () {
         var pend = Object.keys(a.skills).filter(function (k) { return a.skills[k].status === 'pending'; }).length;
         var graded = s.gradings.some(function (g) { return g.athlete === a.id && g.status === 'recommended'; });
         return html`<tr key=${a.id}>
-          <th scope="row"><div className="who"><span className="mini-avatar" aria-hidden="true"><${Face} a=${a} size=${36} /></span><div className="who-text"><span className="cell-name">${nameOf(a)}</span><span className="small muted">${a.division} · ${a.weightClass}${isMinor(a) ? ' · guardian-managed' : ''}</span></div></div></th>
+          <th scope="row"><div className="who"><span className="mini-avatar" aria-hidden="true"><${Face} a=${a} size=${36} /></span><div className="who-text"><button type="button" className="cell-link" onClick=${function () { props.open(a.id); }}>${nameOf(a)}</button><span className="small muted">${a.division} · ${a.weightClass}${isMinor(a) ? ' · guardian-managed' : ''}${a.joinStatus === 'pending' ? ' · join request' : ''}</span></div></div></th>
           <td>${LEVELS[a.level]}</td><td>${medicalBadge(m)}</td>
           <td>${pend ? html`<${Badge} status="pending">${pend} waiting<//>` : html`<span className="muted">None</span>`}</td>
           <td className="mono">${rec.wins}-${rec.losses}-${rec.draws}</td>
@@ -1755,15 +2270,17 @@ window.TR_DATA = (function () {
 
   /* ---------- guided demo ---------- */
   var GUIDE = [
+    { role: 'athlete', tab: 'onboarding', title: 'Join as a new athlete', text: 'Sign up: age check, guardian consent for under-18s, gym, fighter details, photo and a join request to the coach.' },
     { role: 'athlete', tab: 'pathway', title: 'Ask for a check', text: 'As Layla, open Pathway and tap “Ask coach to check” on any skill below 100%.' },
     { role: 'coach', tab: 'verify', title: 'Verify it as the coach', text: 'The request is waiting for Coach Hassan Jizzini. Pick a level and verify it.' },
     { role: 'official', tab: 'bout', title: 'Sign a bout sheet', text: 'Score three rounds as the officials. Signing writes the result to the athlete’s record.' },
     { role: 'official', tab: 'medical', title: 'Issue a suspension', text: 'Record a post-stoppage suspension. The coach’s sparring plan blocks that athlete at once.' },
-    { role: 'athlete', tab: 'events', title: 'Check eligibility', text: 'Back as an athlete, try to register. Medical, suspension and level decide, not a form.' }
+    { role: 'athlete', tab: 'events', title: 'Check eligibility', text: 'Back as an athlete, try to register. Medical, suspension and level decide, not a form.' },
+    { role: 'athlete', tab: 'profile', title: 'Open the fighter page', text: 'Profile shows the full fighter page: record, finishes, skills by area, every bout with its scorecard, and level history.' }
   ];
   function Guide(props) {
     return html`<div className="guide">
-      <p className="tr-label guide-kicker">Guided demo · 2 minutes</p>
+      <p className="tr-label guide-kicker">Guided demo · 3 minutes</p>
       <h2 className="guide-title tr-display">One record,<br/>three roles</h2>
       <p className="small muted">Every change you make here appears for the other roles straight away.</p>
       <ol className="guide-steps">${GUIDE.map(function (g, i) {
@@ -1786,6 +2303,7 @@ window.TR_DATA = (function () {
     var ts = useState(null), toast = ts[0], setToast = ts[1];
     var ns = useState({ athlete: 'home', coach: 'roster', official: 'bout' }), nav = ns[0], setNav = ns[1];
     var gs = useState(false), guideOpen = gs[0], setGuideOpen = gs[1];
+    var os = useState(FIRST_VISIT), onboarding = os[0], setOnboarding = os[1];
     var timer = useRef(null);
     useEffect(function () { try { window.localStorage.setItem(STORE_KEY, JSON.stringify(s)); } catch (e) { /* storage blocked */ } }, [s]);
     function act(a, msg, kind) {
@@ -1795,18 +2313,24 @@ window.TR_DATA = (function () {
     function setTab(role) { return function (t) { setNav(function (cur) { var o = Object.assign({}, cur); o[role] = t; return o; }); }; }
     function go(role, tab) {
       if (role !== s.role) dispatch({ type: 'role', role: role });
-      setTab(role)(tab); setGuideOpen(false); window.scrollTo(0, 0);
+      if (tab === 'onboarding') setOnboarding(true);
+      else { setOnboarding(false); setTab(role)(tab); }
+      setGuideOpen(false); window.scrollTo(0, 0);
     }
+    function startOnboarding() { go('athlete', 'onboarding'); }
+    function closeOnboarding(tab) { setOnboarding(false); if (tab) setTab('athlete')(tab); window.scrollTo(0, 0); }
+    var here = s.role === 'athlete' && onboarding ? 'onboarding' : nav[s.role];
     var view = s.role === 'coach' ? html`<${CoachPortal} s=${s} act=${act} tab=${nav.coach} setTab=${setTab('coach')} />`
       : s.role === 'official' ? html`<${OfficialDesk} s=${s} act=${act} tab=${nav.official} setTab=${setTab('official')} />`
-      : html`<${AthleteApp} s=${s} act=${act} tab=${nav.athlete} setTab=${setTab('athlete')} />`;
+      : html`<${AthleteApp} s=${s} act=${act} tab=${nav.athlete} setTab=${setTab('athlete')}
+          onboarding=${onboarding} startOnboarding=${startOnboarding} closeOnboarding=${closeOnboarding} />`;
     return html`<div className="shell">
-      <${DemoBar} s=${s} act=${act} openGuide=${function () { setGuideOpen(true); }} />
+      <${DemoBar} s=${s} act=${act} openGuide=${function () { setGuideOpen(true); }} startOnboarding=${startOnboarding} closeOnboarding=${closeOnboarding} />
       <div className=${'stage stage-' + s.role}>
         <div className="stage-main">${view}</div>
-        ${s.role === 'athlete' ? html`<aside className="stage-guide" aria-label="Guided demo"><${Guide} role=${s.role} tab=${nav[s.role]} go=${go} /></aside>` : null}
+        ${s.role === 'athlete' ? html`<aside className="stage-guide" aria-label="Guided demo"><${Guide} role=${s.role} tab=${here} go=${go} /></aside>` : null}
       </div>
-      ${guideOpen ? html`<${Sheet} title="How to demo" onClose=${function () { setGuideOpen(false); }}><${Guide} role=${s.role} tab=${nav[s.role]} go=${go} /><//>` : null}
+      ${guideOpen ? html`<${Sheet} title="How to demo" onClose=${function () { setGuideOpen(false); }}><${Guide} role=${s.role} tab=${here} go=${go} /><//>` : null}
       <div className="toast-zone" aria-live="polite">${toast ? html`<div className=${'toast toast-' + (toast.kind || 'plain')} role="status">
         ${TOAST_ICON[toast.kind] ? html`<span className="toast-icon"><${Icon} name=${TOAST_ICON[toast.kind]} size=${16} strokeWidth=${3} /></span>` : null}${toast.msg}</div>` : null}</div>
     </div>`;
