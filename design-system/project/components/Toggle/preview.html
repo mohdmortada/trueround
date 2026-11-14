@@ -1,0 +1,12 @@
+<!-- @dsCard group="Forms" height=150 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Toggle — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var T = window.TrueRound, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render((function(){function Demo(){var a=React.useState(true),b=React.useState(false);return h('div',{className:'tr-stack',style:{gap:0}},h(T.Toggle,{label:'Event reminders',hint:'48 hours before weigh-ins.',checked:a[0],onChange:a[1]}),h(T.Toggle,{label:'Public fighter page',hint:'Guardian-controlled while under 18.',checked:b[0],onChange:b[1],disabled:true}))}return h(Demo)})());
+</script>
+</body>
+</html>

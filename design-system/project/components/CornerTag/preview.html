@@ -1,0 +1,12 @@
+<!-- @dsCard group="Status" height=56 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>CornerTag — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var T = window.TrueRound, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div',{className:'tr-row'},h(T.CornerTag,{corner:'red'}),h(T.CornerTag,{corner:'blue'}),h(T.CornerTag,{corner:'red'},'Red'),h(T.CornerTag,{corner:'blue'},'Blue')));
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<!-- @dsCard group="Progression" height=176 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>SkillMeter — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var T = window.TrueRound, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div',{className:'tr-stack',style:{gap:'24px'}},h(T.SkillMeter,{skill:'Double-leg takedown',value:80,verifiedBy:'Coach Karim Nassar',date:'4 Nov 2026'}),h(T.SkillMeter,{skill:'Guard retention',value:40,status:'pending'})));
+</script>
+</body>
+</html>

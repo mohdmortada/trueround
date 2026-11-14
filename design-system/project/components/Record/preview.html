@@ -1,0 +1,12 @@
+<!-- @dsCard group="Competition" height=96 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Record — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var T = window.TrueRound, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div',{className:'tr-row',style:{gap:'48px'}},h(T.Record,{wins:11,losses:2,draws:0}),h(T.Record,{wins:4,losses:1,draws:1,size:'sm'})));
+</script>
+</body>
+</html>

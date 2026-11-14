@@ -1,0 +1,12 @@
+<!-- @dsCard group="Progression" height=80 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>LevelLadder — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var T = window.TrueRound, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div',{className:'tr-stack'},h(T.LevelLadder,{levels:['Foundation','Novice','Intermediate','Advanced','Elite'],current:2})));
+</script>
+</body>
+</html>

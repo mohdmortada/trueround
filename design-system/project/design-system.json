@@ -1,0 +1,38 @@
+{
+  "v": 3,
+  "layout": "files",
+  "createdOnFiles": { "v": 1, "at": "2026-11-14T21:40:00Z" },
+  "title": "TrueRound",
+  "namespace": "TrueRound",
+  "libraries": [
+    { "name": "react", "version": "18" },
+    { "name": "react-dom", "version": "18" }
+  ],
+  "sections": {},
+  "groups": ["Logos"],
+  "assetGroups": {
+    "Logos": {
+      "name": "Logos",
+      "tile": "l",
+      "order": [
+        "trueround-lockup.svg",
+        "trueround-lockup-dark.svg",
+        "trueround-mark.svg",
+        "trueround-mark-dark.svg",
+        "trueround-wordmark.svg",
+        "trueround-wordmark-dark.svg"
+      ],
+      "files": {
+        "trueround-lockup.svg": { "name": "trueround-lockup.svg", "blob": "61eca8429a470fd5106148b3e5d08626", "size": 1318, "type": "image/svg+xml" },
+        "trueround-lockup-dark.svg": { "name": "trueround-lockup-dark.svg", "blob": "badcde309d2e8c047db39f192bfd7037", "size": 1318, "type": "image/svg+xml" },
+        "trueround-mark.svg": { "name": "trueround-mark.svg", "blob": "6cacfbcd5c40e066dab6cfa311a51a9e", "size": 527, "type": "image/svg+xml" },
+        "trueround-mark-dark.svg": { "name": "trueround-mark-dark.svg", "blob": "ff065bf0666fe50138502929151ed68a", "size": 527, "type": "image/svg+xml" },
+        "trueround-wordmark.svg": { "name": "trueround-wordmark.svg", "blob": "25c72ac9a03917efe4219341cff1e550", "size": 936, "type": "image/svg+xml" },
+        "trueround-wordmark-dark.svg": { "name": "trueround-wordmark-dark.svg", "blob": "df02772d713e83989a571fa34f499126", "size": 936, "type": "image/svg+xml" }
+      }
+    }
+  },
+  "blobs": {},
+  "docs": { "readme": "project/README.md", "sections": [] },
+  "lastChange": { "by": "Mohammad", "via": "Claude Code", "at": "2026-11-14T21:40:00Z", "note": "First version of the TrueRound system for the GAMMA pitch" }
+}

@@ -1,0 +1,55 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>TrueRound</title>
+<style>
+  html, body { margin:0; height:100%; }
+  body { background:var(--canvas); color:var(--ink); font-family:var(--font-sans); overflow:hidden; }
+  .cover { position:relative; height:288px; overflow:hidden; }
+  .art { position:absolute; top:0; left:480px; width:480px; height:288px; overflow:hidden; }
+  .art svg { display:block; width:480px; height:288px; }
+  .ink { fill:var(--ink); }
+  .gold { fill:var(--gold-mark); }
+  .red { fill:var(--corner-red); }
+  .blue { fill:var(--corner-blue); }
+  .tint { fill:var(--line); }
+  .blk { rx:var(--radius-sm); }
+  .cut { fill:none; stroke:var(--canvas); stroke-width:var(--space-2); }
+  .arc { fill:none; stroke:var(--ink); stroke-width:var(--space-2); }
+  .words { position:absolute; left:var(--space-6); bottom:var(--space-6); max-width:440px; }
+  .name { margin:0; font-family:var(--font-display); font-stretch:125%; font-size:64px; line-height:.95; font-weight:900; letter-spacing:-.01em; color:var(--ink); white-space:nowrap; }
+  .tag { margin:var(--space-2) 0 0 2px; font-size:14px; line-height:20px; color:var(--ink-muted); }
+</style>
+</head>
+<body>
+<div class="cover">
+<div class="art" aria-hidden="true">
+<svg viewBox="0 0 480 288" width="480" height="288">
+<!--
+  blocks      ink 192×272 slab bled off the top (the scorecard's ink) · gold-mark 96×96 (verified, the one hue people remember) · corner-red and corner-blue 96×40 side by side, the two columns of a scorecard · line 144×96 bleeding off the right edge as relief — about 30% of 960×288
+  arrangement one tall ink slab with satellites; every bottom on one line, space-6 above the edge; space-4 gutters
+  pattern     arcs, from the mark: a ring cut into three arcs, the three rounds of a bout, canvas cut out of the slab and in ink on the tint
+  scales      sides in space-6 multiples, gutters space-4, arc stroke space-2, block corners radius-sm (the system is squared)
+-->
+<rect class="ink blk" x="16" y="-8" width="192" height="272" rx="4"/>
+<path class="cut" d="M122.68 97.03A56 56 0 0 1 164.95 170.23"/>
+<path class="cut" d="M154.26 188.74A56 56 0 0 1 69.74 188.74"/>
+<path class="cut" d="M59.05 170.23A56 56 0 0 1 101.32 97.03"/>
+<rect class="red blk" x="224" y="112" width="96" height="40" rx="4"/>
+<rect class="blue blk" x="336" y="112" width="96" height="40" rx="4"/>
+<rect class="gold blk" x="224" y="168" width="96" height="96" rx="4"/>
+<rect class="tint blk" x="336" y="168" width="152" height="96" rx="4"/>
+<path class="arc" d="M413.34 188.52A28 28 0 0 1 434.47 225.12"/>
+<path class="arc" d="M429.13 234.37A28 28 0 0 1 386.87 234.37"/>
+<path class="arc" d="M381.53 225.12A28 28 0 0 1 402.66 188.52"/>
+</svg>
+</div>
+<div class="words">
+<h1 class="name">TrueRound</h1>
+<p class="tag">Every round, on the record.</p>
+</div>
+</div>
+</body>
+</html>

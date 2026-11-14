@@ -1,0 +1,12 @@
+<!-- @dsCard group="Safety" height=260 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>ClearanceCard — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var T = window.TrueRound, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div',{className:'tr-stack',style:{gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))'}},h(T.ClearanceCard,{status:'cleared',until:'30 MAR 2027',issuedBy:'Event doctor · Lic. MD-2291'}),h(T.ClearanceCard,{status:'suspended',until:'12 DEC 2026',issuedBy:'Event doctor · Lic. MD-2291'})));
+</script>
+</body>
+</html>

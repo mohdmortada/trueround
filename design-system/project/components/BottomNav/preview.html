@@ -1,0 +1,12 @@
+<!-- @dsCard group="Navigation" height=88 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>BottomNav — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var T = window.TrueRound, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render((function(){function Demo(){var s=React.useState('pathway');return h(T.BottomNav,{active:s[0],onSelect:s[1],items:[{id:'home',label:'Home',icon:'home'},{id:'pathway',label:'Pathway',icon:'ladder'},{id:'record',label:'Record',icon:'card',badge:'New result'},{id:'learn',label:'Learn',icon:'play'},{id:'events',label:'Events',icon:'calendar'}]})}return h(Demo)})());
+</script>
+</body>
+</html>
