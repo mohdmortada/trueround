@@ -96,10 +96,11 @@ select { font: inherit; height: 44px; padding: 0 var(--space-3); border-radius: 
 .export { margin: 0; max-height: 50vh; overflow: auto; padding: var(--space-3); background: var(--surface-sunken); border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 12px; line-height: 18px; white-space: pre; }
 
 /* share card: always the dark theme */
-.share-card { display: grid; gap: var(--space-3); padding: var(--space-6); border-radius: var(--radius-md); background: var(--canvas); color: var(--ink); border-top: var(--stroke-heavy) solid var(--gold-mark); }
+.share-card { container-type: inline-size; display: grid; gap: var(--space-3); padding: var(--space-6); border-radius: var(--radius-md); background: var(--canvas); color: var(--ink); border-top: var(--stroke-heavy) solid var(--gold-mark); }
 .share-top { display: flex; align-items: center; gap: var(--space-2); }
+.share-photo { margin-left: auto; width: 64px; height: 64px; border-radius: var(--radius-full); object-fit: cover; border: 2px solid var(--line); }
 .share-kicker { color: var(--gold); }
-.share-name { font-weight: 900; font-size: 40px; line-height: 38px; overflow-wrap: anywhere; }
+.share-name { font-weight: 900; font-size: min(40px, calc(100cqi / (var(--chars, 7) * 1.05))); line-height: 0.95; overflow-wrap: anywhere; }
 .share-sub { color: var(--ink-muted); font-size: 14px; }
 .share-rec { padding-top: var(--space-3); border-top: var(--stroke-hairline) solid var(--line); }
 .share-url { color: var(--ink-muted); }
@@ -202,14 +203,15 @@ select { font: inherit; height: 44px; padding: 0 var(--space-3); border-radius: 
 }
 
 /* ---------- home: the fight-card header ---------- */
-.hero-card { position: relative; overflow: hidden; display: grid; gap: var(--space-4); padding: var(--space-5) var(--space-5) var(--space-5); border-radius: 14px; background: var(--canvas); color: var(--ink); background-image: repeating-linear-gradient(180deg, transparent 0 31px, var(--texture) 31px 32px); box-shadow: var(--shadow-lg); }
+.hero-card { container-type: inline-size; position: relative; overflow: hidden; display: grid; gap: var(--space-4); padding: var(--space-5) var(--space-5) var(--space-5); border-radius: 14px; background: var(--canvas); color: var(--ink); background-image: repeating-linear-gradient(180deg, transparent 0 31px, var(--texture) 31px 32px); box-shadow: var(--shadow-lg); }
 .hero-card .tr-label { color: var(--ink-muted); position: relative; }
 .hero-ring { position: absolute; right: -72px; top: -64px; width: 280px; height: 280px; fill: none; stroke-width: 7; pointer-events: none; }
 .hero-ring .ring-a { stroke: var(--ring-ink); }
 .hero-ring .ring-b { stroke: var(--gold-mark); opacity: .55; }
 .hero-top { position: relative; display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); }
 .hero-card .avatar-btn { background: var(--ink); color: var(--on-ink); }
-.hero-name { position: relative; margin: 0; font-weight: 900; font-size: 44px; line-height: 40px; letter-spacing: -0.015em; overflow-wrap: anywhere; }
+/* Long names shrink to fit their longest word instead of breaking mid-word. */
+.hero-name { position: relative; margin: 0; font-weight: 900; font-size: min(44px, calc(100cqi / (var(--chars, 7) * 1.05))); line-height: 0.91; letter-spacing: -0.015em; overflow-wrap: anywhere; }
 .hero-stats { position: relative; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: var(--space-4); padding-top: var(--space-4); border-top: var(--stroke-hairline) solid var(--line); }
 .hero-card .tr-record-num { color: var(--ink); }
 .hero-level { display: grid; justify-items: end; gap: 2px; }
@@ -302,3 +304,6 @@ select { font: inherit; height: 44px; padding: 0 var(--space-3); border-radius: 
 .who { display: flex; align-items: center; gap: var(--space-3); }
 .who-text { display: grid; gap: 2px; min-width: 0; }
 .mini-avatar { flex: none; display: grid; place-items: center; width: 36px; height: 36px; border-radius: var(--radius-full); background: var(--ink); color: var(--on-ink); font-family: var(--font-display); font-stretch: 125%; font-weight: 800; font-size: 12px; }
+/* A fighter photo fills the same circle as the initials. */
+.avatar-btn, .mini-avatar { overflow: hidden; padding: 0; }
+.avatar-btn img, .mini-avatar img { display: block; width: 100%; height: 100%; border-radius: inherit; object-fit: cover; }

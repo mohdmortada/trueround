@@ -178,7 +178,9 @@
     var rec = props.record || {};
     return h('article', { className: cx('tr-athlete', props.corner && 'tr-athlete-' + props.corner, props.className) },
       h('div', { className: 'tr-athlete-top' },
-        h('div', { className: 'tr-avatar', 'aria-hidden': 'true' }, initials(props.name)),
+        props.photo
+          ? h('img', { className: 'tr-avatar tr-avatar-photo', src: props.photo, alt: '', width: 56, height: 56 })
+          : h('div', { className: 'tr-avatar', 'aria-hidden': 'true' }, initials(props.name)),
         h('div', { className: 'tr-athlete-id' },
           props.verified ? h(Badge, { status: 'verified' }, 'Verified record') : null,
           h('h3', { className: 'tr-athlete-name' }, props.name),

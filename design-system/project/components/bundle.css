@@ -94,6 +94,7 @@ body { margin: 0; font-family: var(--font-sans); font-size: 16px; line-height: 2
 .tr-athlete-blue { border-top: var(--stroke-heavy) solid var(--corner-blue); }
 .tr-athlete-top { display: flex; gap: var(--space-4); align-items: center; min-width: 0; }
 .tr-avatar { flex: none; width: 56px; height: 56px; border-radius: var(--radius-full); display: grid; place-items: center; background: var(--ink); color: var(--on-ink); font-family: var(--font-display); font-stretch: 125%; font-weight: 800; font-size: 18px; }
+.tr-avatar-photo { object-fit: cover; background: var(--line); }
 .tr-athlete-id { display: grid; gap: var(--space-1); justify-items: start; min-width: 0; }
 .tr-athlete-name { margin: 0; font-family: var(--font-display); font-stretch: 125%; font-weight: 900; text-transform: uppercase; font-size: 24px; line-height: 26px; overflow-wrap: anywhere; }
 .tr-athlete-sub { margin: 0; font-size: 14px; line-height: 20px; color: var(--ink-muted); }

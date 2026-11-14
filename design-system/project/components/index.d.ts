@@ -19,7 +19,7 @@ export interface SkillMeterProps { skill: string; value: number; status?: 'verif
 export declare function SkillMeter(props: SkillMeterProps): React.ReactElement;
 export interface ClearanceCardProps { status: 'cleared' | 'pending' | 'suspended'; title?: string; until?: string; issuedBy?: string; children?: React.ReactNode }
 export declare function ClearanceCard(props: ClearanceCardProps): React.ReactElement;
-export interface AthleteCardProps { name: string; gym?: string; coach?: string; record?: { wins: number; losses: number; draws: number }; level?: string; weightClass?: string; nation?: string; verified?: boolean; corner?: 'red' | 'blue'; footer?: React.ReactNode }
+export interface AthleteCardProps { name: string; photo?: string; gym?: string; coach?: string; record?: { wins: number; losses: number; draws: number }; level?: string; weightClass?: string; nation?: string; verified?: boolean; corner?: 'red' | 'blue'; footer?: React.ReactNode }
 export declare function AthleteCard(props: AthleteCardProps): React.ReactElement;
 export interface FieldProps extends React.InputHTMLAttributes<HTMLInputElement> { label: string; hint?: string; error?: string }
 export declare function Field(props: FieldProps): React.ReactElement;

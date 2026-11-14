@@ -5,7 +5,7 @@
   var Button = T.Button, Badge = T.Badge, CornerTag = T.CornerTag, Icon = T.Icon, Scorecard = T.Scorecard, Record = T.Record,
     LevelLadder = T.LevelLadder, SkillMeter = T.SkillMeter, ClearanceCard = T.ClearanceCard, AthleteCard = T.AthleteCard,
     Field = T.Field, Toggle = T.Toggle, BottomNav = T.BottomNav;
-  var STORE_KEY = 'trueround-demo-v2';
+  var STORE_KEY = 'trueround-demo-v3';
   var TODAY = D.TODAY, LEVELS = D.LEVELS;
 
   /* ---------- helpers ---------- */
@@ -180,6 +180,14 @@
   function Num(props) { return T.useCountUp(props.n, true, 600); }
 
   function initialsOf(a) { return (a.first.charAt(0) + a.last.charAt(0)).toUpperCase(); }
+  // Longest line of a stacked display name; the CSS sizes the type so it fits.
+  function nameChars(a) { return { '--chars': Math.max(6, a.first.length, isMinor(a) ? 2 : a.last.length) }; }
+  // Under-18s never show a photo, whatever the record holds.
+  function photoOf(a) { return a.photo && !isMinor(a) ? (window.TR_PHOTOS || {})[a.photo] || null : null; }
+  function Face(props) {
+    var src = photoOf(props.a);
+    return src ? html`<img src=${src} alt="" width=${props.size} height=${props.size} />` : initialsOf(props.a);
+  }
 
   // Event date as a tile: the day large, the month under it.
   function DateTile(props) {
@@ -315,9 +323,9 @@
         <${Ring} className="hero-ring" />
         <div className="hero-top">
           <p className="tr-label">${a.division} · ${a.weightClass}${a.nation ? ' · ' + a.nation : ''}</p>
-          <button type="button" className="avatar-btn" onClick=${p.openProfile} aria-label="Open your profile">${(a.first[0] + a.last[0]).toUpperCase()}</button>
+          <button type="button" className="avatar-btn" onClick=${p.openProfile} aria-label="Open your profile"><${Face} a=${a} size=${48} /></button>
         </div>
-        <h1 className="hero-name tr-display">${a.first}<br/>${isMinor(a) ? a.last.charAt(0) + '.' : a.last}</h1>
+        <h1 className="hero-name tr-display" style=${nameChars(a)}>${a.first}<br/>${isMinor(a) ? a.last.charAt(0) + '.' : a.last}</h1>
         <div className="hero-stats">
           <${Record} wins=${rec.wins} losses=${rec.losses} draws=${rec.draws} animate=${true} />
           <div className="hero-level"><span className="tr-label">Level</span><span className="hero-level-name"><${Icon} name="check" size=${16} strokeWidth=${3} />${LEVELS[a.level]}</span></div>
@@ -471,7 +479,7 @@
     return html`<div className="stack">
       <div className="row-between"><button type="button" className="link-btn" onClick=${p.back}>← Back</button><span className="tr-label">Profile</span></div>
       ${minor ? html`<${AthleteCard} name=${nameOf(a)} gym=${a.gym} level=${LEVELS[a.level]} footer="Under 18: name, gym and level only. Record, weight and nation stay private." />`
-        : html`<${AthleteCard} name=${nameOf(a)} gym=${a.gym} coach=${coachName(a.coach)} record=${rec} level=${LEVELS[a.level]} weightClass=${a.weightClass} nation=${a.nation} verified=${rec.wins + rec.losses + rec.draws > 0} />`}
+        : html`<${AthleteCard} name=${nameOf(a)} photo=${photoOf(a)} gym=${a.gym} coach=${coachName(a.coach)} record=${rec} level=${LEVELS[a.level]} weightClass=${a.weightClass} nation=${a.nation} verified=${rec.wins + rec.losses + rec.draws > 0} />`}
       <div className="btn-row"><${Button} block=${true} icon="user" disabled=${minor || !a.privacy.shareCards} onClick=${function () { setView('share'); }}>${minor ? 'Share cards are off for under-18s' : a.privacy.shareCards ? 'Preview share card' : 'Share cards are off'}<//></div>
       ${minor && a.guardian ? html`<section className="card"><h2 className="tr-label">Guardian</h2><p>Managed by <strong>${a.guardian.name}</strong> (${a.guardian.email}). Consent recorded ${fmt(a.guardian.consentOn)}.</p><p className="small muted">Your guardian can view, export or delete this account at any time.</p></section>` : null}
       <section className="card"><h2 className="tr-label">Privacy and sharing</h2>
@@ -487,12 +495,12 @@
       </section>
       <section className="card"><h2 className="tr-label">Try it</h2><p className="small muted">See the sign-up flow a new athlete goes through, including the under-18 guardian step.</p>
         <${Button} size="sm" onClick=${p.startSignup}>Start sign-up flow<//></section>
-      <p className="small muted about">TrueRound is a concept prototype prepared for a partnership proposal. It is not an official product of GAMMA or of any federation. Every athlete, coach, gym, official and event in it is fictional.</p>
+      <p className="small muted about">TrueRound is a concept prototype prepared for a partnership proposal. It is not an official product of GAMMA or of any federation. Every athlete, coach, gym, official and event in it is fictional, except Mohammad Mortada, added on request; that profile's record is demo data too.</p>
       ${view === 'share' ? html`<${Sheet} title="Share card" onClose=${function () { setView(null); }}>
         <div className="share-card theme-dark">
-          <div className="share-top"><${Mark} size=${28} /><span className="wordmark">TrueRound</span></div>
+          <div className="share-top"><${Mark} size=${28} /><span className="wordmark">TrueRound</span>${photoOf(a) ? html`<img className="share-photo" src=${photoOf(a)} alt="" width="64" height="64" />` : null}</div>
           <p className="tr-label share-kicker">Verified record</p>
-          <p className="share-name tr-display">${a.first}<br/>${a.last}</p>
+          <p className="share-name tr-display" style=${nameChars(a)}>${a.first}<br/>${a.last}</p>
           <p className="share-sub">${a.gym} · ${LEVELS[a.level]} · ${a.weightClass}</p>
           <div className="share-rec"><${Record} wins=${rec.wins} losses=${rec.losses} draws=${rec.draws} /></div>
           <p className="data share-url">trueround.app/${(a.first + '-' + a.last).toLowerCase()}</p>
@@ -602,7 +610,7 @@
         var pend = Object.keys(a.skills).filter(function (k) { return a.skills[k].status === 'pending'; }).length;
         var graded = s.gradings.some(function (g) { return g.athlete === a.id && g.status === 'recommended'; });
         return html`<tr key=${a.id}>
-          <th scope="row"><div className="who"><span className="mini-avatar" aria-hidden="true">${initialsOf(a)}</span><div className="who-text"><span className="cell-name">${nameOf(a)}</span><span className="small muted">${a.division} · ${a.weightClass}${isMinor(a) ? ' · guardian-managed' : ''}</span></div></div></th>
+          <th scope="row"><div className="who"><span className="mini-avatar" aria-hidden="true"><${Face} a=${a} size=${36} /></span><div className="who-text"><span className="cell-name">${nameOf(a)}</span><span className="small muted">${a.division} · ${a.weightClass}${isMinor(a) ? ' · guardian-managed' : ''}</span></div></div></th>
           <td>${LEVELS[a.level]}</td><td>${medicalBadge(m)}</td>
           <td>${pend ? html`<${Badge} status="pending">${pend} waiting<//>` : html`<span className="muted">None</span>`}</td>
           <td className="mono">${rec.wins}-${rec.losses}-${rec.draws}</td>

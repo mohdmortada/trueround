@@ -12,7 +12,7 @@ tokens = compile_tokens(os.path.join(ds, 'tokens.json'),
 bundle_css = re.sub(r"^@import url\([^)]*\);\s*", '', read(os.path.join(ds, 'components', 'bundle.css')))
 assert '@import' not in bundle_css
 css = tokens + '\n' + bundle_css + '\n' + read(os.path.join(src, 'app.css'))
-js = [read(os.path.join(ds, 'components', 'bundle.js')), read(os.path.join(src, 'data.js')), read(os.path.join(src, 'app.js'))]
+js = [read(os.path.join(ds, 'components', 'bundle.js')), read(os.path.join(src, 'photos.js')), read(os.path.join(src, 'data.js')), read(os.path.join(src, 'app.js'))]
 for chunk in js + [css]:
     assert '</script' not in chunk.lower() and '</style' not in chunk.lower(), 'closing tag inside inline code'
 

@@ -1,4 +1,5 @@
-/* TrueRound demo data. Every person, gym and event here is fictional. */
+/* TrueRound demo data. Every person, gym and event here is fictional, except Mohammad Mortada,
+   added on request with a real photo. The record, level and medical on that profile are still demo values. */
 window.TR_DATA = (function () {
   var TODAY = '2026-11-14';
   var LEVELS = ['Foundation', 'Novice', 'Intermediate', 'Advanced', 'Elite'];
@@ -28,6 +29,10 @@ window.TR_DATA = (function () {
       clearance: { until: '2027-03-30', issuedBy: 'Event doctor · Lic. MD-2291', issuedOn: '2026-09-30' }, suspension: null, privacy: { publicPage: true, shareCards: true, marketing: false },
       skills: skills([100, 90, 80, 70, 100, 80, 60, 80, 90, 100, 70, 60, 90, 80, 100, 100, 90], [['guard-retention', 80, '2026-11-12'], ['counters', 80, '2026-11-13']], ['2026-11-04', '2026-10-28', '2026-10-21', '2026-09-30']),
       unlocked: [0, 1, 2, 3], watched: ['adv-1', 'adv-2'] },
+    mohammad: { id: 'mohammad', first: 'Mohammad', last: 'Mortada', photo: 'mohammad-mortada.jpg', dob: '1990-01-01', nation: 'LBN', gym: 'Cedar Combat Club', coach: 'hassan', weightClass: '84 kg', division: 'Senior men', level: 2, email: 'mohammad.mortada@example.com',
+      clearance: { until: '2027-05-20', issuedBy: 'Event doctor · Lic. MD-2291', issuedOn: '2026-05-20' }, suspension: null, privacy: { publicPage: true, shareCards: true, marketing: false },
+      skills: skills([90, 80, 70, 60, 80, 70, 50, 70, 60, 50, 60, 50, 60, 70, 100, 90, 90], [['single-leg', 70, '2026-11-12']], ['2026-11-06', '2026-10-24', '2026-10-10']),
+      unlocked: [0, 1, 2], watched: ['int-1'] },
     omar: { id: 'omar', first: 'Omar', last: 'Saleh', dob: '2009-08-02', nation: 'LBN', gym: 'Cedar Combat Club', coach: 'hassan', weightClass: '66 kg', division: 'Junior men', level: 1, email: 'r.saleh@example.com', guardian: { name: 'Rana Saleh', email: 'r.saleh@example.com', consentOn: '2025-09-01' },
       clearance: { until: '2027-01-20', issuedBy: 'Event doctor · Lic. MD-2291', issuedOn: '2026-01-20' }, suspension: null, privacy: { publicPage: false, shareCards: false, marketing: false },
       skills: skills([60, 40, 30, 0, 50, 20, 0, 40, 30, 20, 30, 0, 20, 30, 100, 80, 70], [['sprawl', 40, '2026-11-11']]),
@@ -61,6 +66,11 @@ window.TR_DATA = (function () {
     { id: 'b11', athlete: 'layla', event: 'Cedar Cup 2024', city: 'Beirut', date: '2024-11-09', corner: 'blue', opponent: 'Sara Daher', oppNation: 'LBN', result: 'win', method: 'Unanimous decision', round: 3, time: '3:00', judges: [[D(9, 10), D(9, 10), D(10, 9)], [D(9, 10), D(9, 10), D(9, 10)], [D(9, 10), D(9, 10), D(9, 10)]], official: 'Official #A-102' },
     { id: 'b12', athlete: 'layla', event: 'Cedar Cup 2024', city: 'Beirut', date: '2024-06-15', corner: 'red', opponent: 'Hiba Nasr', oppNation: 'LBN', result: 'win', method: 'Submission (rear-naked choke)', round: 1, time: '2:52', official: 'Official #A-102' },
     { id: 'b13', athlete: 'layla', event: 'Novice Open 2024', city: 'Beirut', date: '2024-02-24', corner: 'red', opponent: 'Rita Khoury', oppNation: 'LBN', result: 'win', method: 'Unanimous decision', round: 3, time: '3:00', judges: [[D(10, 9), D(10, 9), D(10, 9)], [D(10, 9), D(10, 9), D(10, 9)], [D(10, 9), D(9, 10), D(10, 9)]], official: 'Official #A-102' },
+    { id: 'b40', athlete: 'mohammad', event: 'Cedar Cup Autumn 2026', city: 'Beirut', date: '2026-11-08', corner: 'red', opponent: 'Yusuf Demir', oppNation: 'TUR', result: 'win', method: 'Unanimous decision', round: 3, time: '3:00', judges: [[D(10, 9), D(10, 9), D(10, 9)], [D(10, 9), D(9, 10), D(10, 9)], [D(10, 9), D(10, 9), D(9, 10)]], official: 'Official #A-118' },
+    { id: 'b41', athlete: 'mohammad', event: 'Levant Open 2026', city: 'Amman', date: '2026-10-11', corner: 'blue', opponent: 'Zaid Haddadin', oppNation: 'JOR', result: 'win', method: 'Submission (guillotine choke)', round: 2, time: '1:48', official: 'Official #J-044' },
+    { id: 'b42', athlete: 'mohammad', event: 'Cedar Cup Summer 2026', city: 'Beirut', date: '2026-08-22', corner: 'red', opponent: 'Ruslan Abenov', oppNation: 'KAZ', result: 'loss', method: 'Split decision', round: 3, time: '3:00', judges: [[D(10, 9), D(10, 9), D(9, 10)], [D(9, 10), D(10, 9), D(9, 10)], [D(9, 10), D(9, 10), D(10, 9)]], official: 'Official #A-102' },
+    { id: 'b43', athlete: 'mohammad', event: 'National Championships 2026', city: 'Beirut', date: '2026-03-14', corner: 'red', opponent: 'Marc Azzi', oppNation: 'LBN', result: 'win', method: 'Referee stops contest (strikes)', round: 1, time: '2:20', official: 'Official #A-118' },
+    { id: 'b44', athlete: 'mohammad', event: 'Cedar Cup 2025', city: 'Beirut', date: '2025-06-07', corner: 'blue', opponent: 'Fadi Nehme', oppNation: 'LBN', result: 'win', method: 'Unanimous decision', round: 3, time: '3:00', judges: [[D(9, 10), D(9, 10), D(10, 9)], [D(9, 10), D(9, 10), D(9, 10)], [D(10, 9), D(9, 10), D(9, 10)]], official: 'Official #A-102' },
     { id: 'b20', athlete: 'tariq', event: 'Cedar Cup Autumn 2026', city: 'Beirut', date: '2026-11-08', corner: 'red', opponent: 'Bekzat Nurlan', oppNation: 'KAZ', result: 'loss', method: 'Referee stops contest (strikes)', round: 2, time: '1:55', official: 'Official #A-118' },
     { id: 'b21', athlete: 'tariq', event: 'Levant Open 2026', city: 'Amman', date: '2026-10-11', corner: 'blue', opponent: 'Hamza Odeh', oppNation: 'JOR', result: 'win', method: 'Unanimous decision', round: 3, time: '3:00', judges: [[D(9, 10), D(9, 10), D(9, 10)], [D(9, 10), D(10, 9), D(9, 10)], [D(9, 10), D(9, 10), D(9, 10)]], official: 'Official #J-044' },
     { id: 'b30', athlete: 'nour', event: 'Cedar Cup Summer 2026', city: 'Beirut', date: '2026-08-22', corner: 'red', opponent: 'Yara Saad', oppNation: 'LBN', result: 'win', method: 'Unanimous decision', round: 3, time: '3:00', judges: [[D(10, 9), D(10, 9), D(10, 9)], [D(10, 9), D(9, 10), D(10, 9)], [D(10, 9), D(10, 9), D(10, 9)]], official: 'Official #A-102' },
@@ -85,6 +95,8 @@ window.TR_DATA = (function () {
     { id: 'f1', athlete: 'layla', date: '2026-11-04', kind: 'verified', text: 'Coach Hassan Jizzini verified Double-leg takedown at 80%.' },
     { id: 'f2', athlete: 'layla', date: '2026-10-12', kind: 'result', text: 'Result written by Official #A-118: win by unanimous decision at Levant Open 2026.' },
     { id: 'f3', athlete: 'layla', date: '2026-09-30', kind: 'medical', text: 'Pre-competition medical recorded. Cleared to compete until 30 Mar 2027.' },
+    { id: 'f5', athlete: 'mohammad', date: '2026-11-08', kind: 'result', text: 'Result written by Official #A-118: win by unanimous decision at Cedar Cup Autumn 2026.' },
+    { id: 'f6', athlete: 'mohammad', date: '2026-11-06', kind: 'verified', text: 'Coach Hassan Jizzini verified Jab-cross combinations at 90%.' },
     { id: 'f4', athlete: 'tariq', date: '2026-11-08', kind: 'medical', text: 'Medical suspension issued. No contact sparring until 12 Dec 2026.' }
   ];
 
@@ -94,7 +106,7 @@ window.TR_DATA = (function () {
     gyms: [{ id: 'cedar', name: 'Cedar Combat Club', city: 'Beirut', coach: 'hassan' }, { id: 'harbour', name: 'Harbour MMA', city: 'Tripoli', coach: 'hassan' }],
     federations: ['Lebanon', 'Indonesia', 'Türkiye', 'Jordan', 'Kazakhstan', 'Egypt', 'United Arab Emirates'],
     seed: function () {
-      return JSON.parse(JSON.stringify({ v: 1, role: 'athlete', viewAs: 'layla', athletes: athletes, bouts: bouts, events: events, registrations: [{ event: 'ev1', athlete: 'layla', weightClass: '57 kg', on: '2026-11-02' }], library: library, feed: feed, gradings: [{ id: 'g1', athlete: 'nour', from: 2, to: 3, coach: 'hassan', status: 'recommended', on: '2026-11-10' }], sparring: [] }));
+      return JSON.parse(JSON.stringify({ v: 1, role: 'athlete', viewAs: 'layla', athletes: athletes, bouts: bouts, events: events, registrations: [{ event: 'ev1', athlete: 'layla', weightClass: '57 kg', on: '2026-11-02' }, { event: 'ev1', athlete: 'mohammad', weightClass: '84 kg', on: '2026-11-09' }], library: library, feed: feed, gradings: [{ id: 'g1', athlete: 'nour', from: 2, to: 3, coach: 'hassan', status: 'recommended', on: '2026-11-10' }], sparring: [] }));
     }
   };
 })();
