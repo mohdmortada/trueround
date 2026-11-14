@@ -15,7 +15,7 @@ window.TR_DATA = (function () {
     AREAS.forEach(function (a) {
       a.skills.forEach(function (s) {
         var v = values[i % values.length];
-        out[s[0]] = { value: v, status: v > 0 ? 'verified' : 'none', by: v > 0 ? 'karim' : null, date: v > 0 ? (dates ? dates[i % dates.length] : '2026-10-28') : null };
+        out[s[0]] = { value: v, status: v > 0 ? 'verified' : 'none', by: v > 0 ? 'hassan' : null, date: v > 0 ? (dates ? dates[i % dates.length] : '2026-10-28') : null };
         i++;
       });
     });
@@ -24,23 +24,23 @@ window.TR_DATA = (function () {
   }
 
   var athletes = {
-    layla: { id: 'layla', first: 'Layla', last: 'Haddad', dob: '2001-05-14', nation: 'LBN', gym: 'Cedar Combat Club', coach: 'karim', weightClass: '57 kg', division: 'Senior women', level: 3, email: 'layla.haddad@example.com',
+    layla: { id: 'layla', first: 'Layla', last: 'Haddad', dob: '2001-05-14', nation: 'LBN', gym: 'Cedar Combat Club', coach: 'hassan', weightClass: '57 kg', division: 'Senior women', level: 3, email: 'layla.haddad@example.com',
       clearance: { until: '2027-03-30', issuedBy: 'Event doctor · Lic. MD-2291', issuedOn: '2026-09-30' }, suspension: null, privacy: { publicPage: true, shareCards: true, marketing: false },
       skills: skills([100, 90, 80, 70, 100, 80, 60, 80, 90, 100, 70, 60, 90, 80, 100, 100, 90], [['guard-retention', 80, '2026-11-12'], ['counters', 80, '2026-11-13']], ['2026-11-04', '2026-10-28', '2026-10-21', '2026-09-30']),
       unlocked: [0, 1, 2, 3], watched: ['adv-1', 'adv-2'] },
-    omar: { id: 'omar', first: 'Omar', last: 'Saleh', dob: '2009-08-02', nation: 'LBN', gym: 'Cedar Combat Club', coach: 'karim', weightClass: '66 kg', division: 'Junior men', level: 1, email: 'r.saleh@example.com', guardian: { name: 'Rana Saleh', email: 'r.saleh@example.com', consentOn: '2025-09-01' },
+    omar: { id: 'omar', first: 'Omar', last: 'Saleh', dob: '2009-08-02', nation: 'LBN', gym: 'Cedar Combat Club', coach: 'hassan', weightClass: '66 kg', division: 'Junior men', level: 1, email: 'r.saleh@example.com', guardian: { name: 'Rana Saleh', email: 'r.saleh@example.com', consentOn: '2025-09-01' },
       clearance: { until: '2027-01-20', issuedBy: 'Event doctor · Lic. MD-2291', issuedOn: '2026-01-20' }, suspension: null, privacy: { publicPage: false, shareCards: false, marketing: false },
       skills: skills([60, 40, 30, 0, 50, 20, 0, 40, 30, 20, 30, 0, 20, 30, 100, 80, 70], [['sprawl', 40, '2026-11-11']]),
       unlocked: [0, 1], watched: ['nov-1'] },
-    nour: { id: 'nour', first: 'Nour', last: 'Khalil', dob: '2004-02-09', nation: 'LBN', gym: 'Cedar Combat Club', coach: 'karim', weightClass: '52 kg', division: 'Senior women', level: 2, email: 'nour.k@example.com',
+    nour: { id: 'nour', first: 'Nour', last: 'Khalil', dob: '2004-02-09', nation: 'LBN', gym: 'Cedar Combat Club', coach: 'hassan', weightClass: '52 kg', division: 'Senior women', level: 2, email: 'nour.k@example.com',
       clearance: { until: '2027-06-02', issuedBy: 'Event doctor · Lic. MD-1847', issuedOn: '2026-06-02' }, suspension: null, privacy: { publicPage: true, shareCards: true, marketing: true },
       skills: skills([80, 70, 60, 50, 70, 60, 40, 70, 60, 50, 60, 50, 40, 60, 100, 90, 80], [['top-control', 70, '2026-11-10']]),
       unlocked: [0, 1, 2], watched: [] },
-    tariq: { id: 'tariq', first: 'Tariq', last: 'Mansour', dob: '1998-11-30', nation: 'LBN', gym: 'Cedar Combat Club', coach: 'karim', weightClass: '77 kg', division: 'Senior men', level: 4, email: 'tariq.m@example.com',
+    tariq: { id: 'tariq', first: 'Tariq', last: 'Mansour', dob: '1998-11-30', nation: 'LBN', gym: 'Cedar Combat Club', coach: 'hassan', weightClass: '77 kg', division: 'Senior men', level: 4, email: 'tariq.m@example.com',
       clearance: { until: '2027-02-15', issuedBy: 'Event doctor · Lic. MD-2291', issuedOn: '2026-02-15' }, suspension: { until: '2026-12-12', reason: 'Mandatory rest after a stoppage', issuedBy: 'Event doctor · Lic. MD-3305', issuedOn: '2026-11-08' }, privacy: { publicPage: true, shareCards: true, marketing: false },
       skills: skills([100, 100, 90, 90, 100, 90, 90, 100, 100, 90, 90, 100, 90, 90, 100, 100, 100]),
       unlocked: [0, 1, 2, 3, 4], watched: [] },
-    sami: { id: 'sami', first: 'Sami', last: 'Aoun', dob: '2006-04-18', nation: 'LBN', gym: 'Cedar Combat Club', coach: 'karim', weightClass: '61 kg', division: 'Senior men', level: 1, email: 'sami.aoun@example.com',
+    sami: { id: 'sami', first: 'Sami', last: 'Aoun', dob: '2006-04-18', nation: 'LBN', gym: 'Cedar Combat Club', coach: 'hassan', weightClass: '61 kg', division: 'Senior men', level: 1, email: 'sami.aoun@example.com',
       clearance: { until: '2026-11-28', issuedBy: 'Event doctor · Lic. MD-1847', issuedOn: '2025-11-28' }, suspension: null, privacy: { publicPage: true, shareCards: true, marketing: false },
       skills: skills([50, 40, 40, 20, 40, 30, 20, 50, 40, 30, 30, 20, 30, 20, 100, 70, 60], [['low-kick', 50, '2026-11-13'], ['double-leg', 60, '2026-11-13']]),
       unlocked: [0, 1], watched: [] }
@@ -82,7 +82,7 @@ window.TR_DATA = (function () {
   ];
 
   var feed = [
-    { id: 'f1', athlete: 'layla', date: '2026-11-04', kind: 'verified', text: 'Coach Karim Nassar verified Double-leg takedown at 80%.' },
+    { id: 'f1', athlete: 'layla', date: '2026-11-04', kind: 'verified', text: 'Coach Hassan Jizzini verified Double-leg takedown at 80%.' },
     { id: 'f2', athlete: 'layla', date: '2026-10-12', kind: 'result', text: 'Result written by Official #A-118: win by unanimous decision at Levant Open 2026.' },
     { id: 'f3', athlete: 'layla', date: '2026-09-30', kind: 'medical', text: 'Pre-competition medical recorded. Cleared to compete until 30 Mar 2027.' },
     { id: 'f4', athlete: 'tariq', date: '2026-11-08', kind: 'medical', text: 'Medical suspension issued. No contact sparring until 12 Dec 2026.' }
@@ -90,11 +90,11 @@ window.TR_DATA = (function () {
 
   return {
     TODAY: TODAY, LEVELS: LEVELS, AREAS: AREAS,
-    coaches: { karim: { id: 'karim', name: 'Karim Nassar', gym: 'Cedar Combat Club', licence: 'Coach Level 2 · LBN-C-0193' } },
-    gyms: [{ id: 'cedar', name: 'Cedar Combat Club', city: 'Beirut', coach: 'karim' }, { id: 'harbour', name: 'Harbour MMA', city: 'Tripoli', coach: 'karim' }],
+    coaches: { hassan: { id: 'hassan', name: 'Hassan Jizzini', gym: 'Cedar Combat Club', licence: 'Coach Level 2 · LBN-C-0193' } },
+    gyms: [{ id: 'cedar', name: 'Cedar Combat Club', city: 'Beirut', coach: 'hassan' }, { id: 'harbour', name: 'Harbour MMA', city: 'Tripoli', coach: 'hassan' }],
     federations: ['Lebanon', 'Indonesia', 'Türkiye', 'Jordan', 'Kazakhstan', 'Egypt', 'United Arab Emirates'],
     seed: function () {
-      return JSON.parse(JSON.stringify({ v: 1, role: 'athlete', viewAs: 'layla', athletes: athletes, bouts: bouts, events: events, registrations: [{ event: 'ev1', athlete: 'layla', weightClass: '57 kg', on: '2026-11-02' }], library: library, feed: feed, gradings: [{ id: 'g1', athlete: 'nour', from: 2, to: 3, coach: 'karim', status: 'recommended', on: '2026-11-10' }], sparring: [] }));
+      return JSON.parse(JSON.stringify({ v: 1, role: 'athlete', viewAs: 'layla', athletes: athletes, bouts: bouts, events: events, registrations: [{ event: 'ev1', athlete: 'layla', weightClass: '57 kg', on: '2026-11-02' }], library: library, feed: feed, gradings: [{ id: 'g1', athlete: 'nour', from: 2, to: 3, coach: 'hassan', status: 'recommended', on: '2026-11-10' }], sparring: [] }));
     }
   };
 })();

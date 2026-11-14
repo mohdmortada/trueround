@@ -12,7 +12,7 @@ In amateur MMA, a record is only as good as the person who wrote it down. Screen
 
 The voice is the official's, not the promoter's. Factual, calm, exact.
 
-- **Say who did it.** "Verified by Coach Karim Nassar, 4 Nov 2026." "Result written by Official #A-118." Never "Verified!" on its own.
+- **Say who did it.** "Verified by Coach Hassan Jizzini, 4 Nov 2026." "Result written by Official #A-118." Never "Verified!" on its own.
 - **Name the real thing.** Use the sport's own terms: weigh-in, bout sheet, unanimous decision, referee stops contest, medical suspension. Don't use gym-app slang like streaks, XP, "crushing it" or "beast mode".
 - **No hype about violence.** No blood, no "war", no "destroy". Amateur MMA is chasing Olympic recognition, and the copy should read like it belongs there.
 - **Sentence case** for everything except display lines, which are set uppercase by the display style itself.
@@ -22,7 +22,7 @@ The voice is the official's, not the promoter's. Factual, calm, exact.
 | Do | Don't |
 | --- | --- |
 | Result written by the event's officials | Your win has been added! |
-| Awaiting Coach Nassar | Pending |
+| Awaiting Coach Jizzini | Pending |
 | No contact sparring until 12 Dec | You're on a break |
 | Watching prepares you. Only your coach can move your progress. | Watch videos to level up |
 

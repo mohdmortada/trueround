@@ -86,7 +86,7 @@
     });
     var result = props.result;
     return h('figure', { className: cx('tr-scorecard', props.className) },
-      h('div', { className: 'tr-sc-corners' },
+      props.hideCorners ? null : h('div', { className: 'tr-sc-corners' },
         h('div', { className: 'tr-sc-fighter tr-sc-fighter-red' }, h(CornerTag, { corner: 'red' }), h('strong', null, props.red || 'Red corner')),
         h('div', { className: 'tr-sc-fighter tr-sc-fighter-blue' }, h(CornerTag, { corner: 'blue' }), h('strong', null, props.blue || 'Blue corner'))),
       h('table', { className: 'tr-sc-table' }, h('thead', null, h('tr', null, head)), h('tbody', null, rows)),

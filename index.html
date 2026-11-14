@@ -421,7 +421,7 @@ select { font: inherit; height: 44px; padding: 0 var(--space-3); border-radius: 
 .data-table .tr-btn, .data-table .tr-badge { white-space: nowrap; }
 .data-table th, .data-table td { padding: var(--space-3) var(--space-4); text-align: left; vertical-align: middle; border-top: var(--stroke-hairline) solid var(--line); }
 .data-table thead th { border-top: 0; border-bottom: var(--stroke-rule) solid var(--rule); background: var(--surface-sunken); font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-muted); }
-.data-table tbody th { font-weight: 400; display: grid; gap: 2px; }
+.data-table tbody th { font-weight: 400; }
 .cell-name { font-weight: 600; }
 .requests { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2); }
 .request { grid-template-columns: auto 1fr auto auto; align-items: center; }
@@ -539,7 +539,7 @@ select { font: inherit; height: 44px; padding: 0 var(--space-3); border-radius: 
 
 /* ---------- motion: each screen arrives in order, once ---------- */
 @media (prefers-reduced-motion: no-preference) {
-  .phone-screen > .stack > *, .portal > * { animation: tr-rise .42s cubic-bezier(.2, .8, .2, 1) both; }
+  .phone-screen > .stack > :not(.sheet-scrim), .portal > :not(.sheet-scrim) { animation: tr-rise .42s cubic-bezier(.2, .8, .2, 1) both; }
   .phone-screen > .stack > :nth-child(2), .portal > :nth-child(2) { animation-delay: .05s; }
   .phone-screen > .stack > :nth-child(3), .portal > :nth-child(3) { animation-delay: .1s; }
   .phone-screen > .stack > :nth-child(4), .portal > :nth-child(4) { animation-delay: .15s; }
@@ -550,6 +550,44 @@ select { font: inherit; height: 44px; padding: 0 var(--space-3); border-radius: 
   .sheet { animation: sheet-in .28s cubic-bezier(.2, .8, .2, 1) both; }
   @keyframes sheet-in { from { transform: translateY(24px); opacity: 0; } to { transform: none; opacity: 1; } }
 }
+
+/* ---------- date tiles: the day leads every event ---------- */
+.date-tile { flex: none; display: grid; justify-items: center; align-content: center; width: 56px; height: 60px; border-radius: var(--radius-sm); background: var(--ink); color: var(--on-ink); }
+.date-day { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 24px; line-height: 26px; font-weight: 600; }
+.date-mon { font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+.next-event { justify-content: flex-start; }
+.next-event-text { display: grid; gap: 2px; flex: 1; min-width: 0; }
+.event-row { display: flex; align-items: center; gap: var(--space-3); }
+
+/* ---------- how the wins came: ring gauges ---------- */
+.rings { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-3); }
+.ring-stat { margin: 0; display: grid; justify-items: center; gap: var(--space-2); text-align: center; }
+.ring-box { position: relative; width: 76px; height: 76px; }
+.ring-box svg { width: 76px; height: 76px; display: block; }
+.ring-track { fill: none; stroke: var(--surface-sunken); stroke-width: 7; }
+.ring-val { fill: none; stroke: var(--ink); stroke-width: 7; stroke-linecap: butt; }
+.ring-stat.lead .ring-val { stroke: var(--gold-mark); }
+.ring-num { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 22px; font-weight: 600; }
+.ring-stat figcaption { display: grid; gap: 0; }
+.ring-name { font-weight: 600; font-size: 14px; line-height: 18px; }
+@media (prefers-reduced-motion: no-preference) {
+  .ring-val { animation: ring-draw .7s cubic-bezier(.2, .8, .2, 1) .15s both; }
+  @keyframes ring-draw { from { stroke-dasharray: 0 999; } }
+}
+
+/* ---------- face-off header on a bout ---------- */
+.faceoff { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: stretch; background: var(--surface); border: var(--stroke-hairline) solid var(--line); border-radius: var(--radius-md); overflow: hidden; }
+.fo-side { display: grid; gap: 2px; align-content: start; padding: var(--space-3) var(--space-4); border-top: var(--stroke-heavy) solid var(--corner-red); min-width: 0; }
+.fo-blue { border-top-color: var(--corner-blue); text-align: right; justify-items: end; }
+.fo-corner { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--corner-red); }
+.fo-blue .fo-corner { color: var(--corner-blue); }
+.fo-name { font-family: var(--font-display); font-stretch: 112%; font-weight: 900; text-transform: uppercase; font-size: 17px; line-height: 20px; overflow-wrap: break-word; }
+.fo-vs { display: grid; place-items: center; padding: 0 var(--space-3); font-family: var(--font-display); font-stretch: 125%; font-weight: 900; font-size: 18px; color: var(--on-ink); background: var(--ink); }
+
+/* ---------- roster avatars ---------- */
+.who { display: flex; align-items: center; gap: var(--space-3); }
+.who-text { display: grid; gap: 2px; min-width: 0; }
+.mini-avatar { flex: none; display: grid; place-items: center; width: 36px; height: 36px; border-radius: var(--radius-full); background: var(--ink); color: var(--on-ink); font-family: var(--font-display); font-stretch: 125%; font-weight: 800; font-size: 12px; }
 
 </style>
 </head>
@@ -647,7 +685,7 @@ select { font: inherit; height: 44px; padding: 0 var(--space-3); border-radius: 
     });
     var result = props.result;
     return h('figure', { className: cx('tr-scorecard', props.className) },
-      h('div', { className: 'tr-sc-corners' },
+      props.hideCorners ? null : h('div', { className: 'tr-sc-corners' },
         h('div', { className: 'tr-sc-fighter tr-sc-fighter-red' }, h(CornerTag, { corner: 'red' }), h('strong', null, props.red || 'Red corner')),
         h('div', { className: 'tr-sc-fighter tr-sc-fighter-blue' }, h(CornerTag, { corner: 'blue' }), h('strong', null, props.blue || 'Blue corner'))),
       h('table', { className: 'tr-sc-table' }, h('thead', null, h('tr', null, head)), h('tbody', null, rows)),
@@ -813,7 +851,7 @@ window.TR_DATA = (function () {
     AREAS.forEach(function (a) {
       a.skills.forEach(function (s) {
         var v = values[i % values.length];
-        out[s[0]] = { value: v, status: v > 0 ? 'verified' : 'none', by: v > 0 ? 'karim' : null, date: v > 0 ? (dates ? dates[i % dates.length] : '2026-10-28') : null };
+        out[s[0]] = { value: v, status: v > 0 ? 'verified' : 'none', by: v > 0 ? 'hassan' : null, date: v > 0 ? (dates ? dates[i % dates.length] : '2026-10-28') : null };
         i++;
       });
     });
@@ -822,23 +860,23 @@ window.TR_DATA = (function () {
   }
 
   var athletes = {
-    layla: { id: 'layla', first: 'Layla', last: 'Haddad', dob: '2001-05-14', nation: 'LBN', gym: 'Cedar Combat Club', coach: 'karim', weightClass: '57 kg', division: 'Senior women', level: 3, email: 'layla.haddad@example.com',
+    layla: { id: 'layla', first: 'Layla', last: 'Haddad', dob: '2001-05-14', nation: 'LBN', gym: 'Cedar Combat Club', coach: 'hassan', weightClass: '57 kg', division: 'Senior women', level: 3, email: 'layla.haddad@example.com',
       clearance: { until: '2027-03-30', issuedBy: 'Event doctor · Lic. MD-2291', issuedOn: '2026-09-30' }, suspension: null, privacy: { publicPage: true, shareCards: true, marketing: false },
       skills: skills([100, 90, 80, 70, 100, 80, 60, 80, 90, 100, 70, 60, 90, 80, 100, 100, 90], [['guard-retention', 80, '2026-11-12'], ['counters', 80, '2026-11-13']], ['2026-11-04', '2026-10-28', '2026-10-21', '2026-09-30']),
       unlocked: [0, 1, 2, 3], watched: ['adv-1', 'adv-2'] },
-    omar: { id: 'omar', first: 'Omar', last: 'Saleh', dob: '2009-08-02', nation: 'LBN', gym: 'Cedar Combat Club', coach: 'karim', weightClass: '66 kg', division: 'Junior men', level: 1, email: 'r.saleh@example.com', guardian: { name: 'Rana Saleh', email: 'r.saleh@example.com', consentOn: '2025-09-01' },
+    omar: { id: 'omar', first: 'Omar', last: 'Saleh', dob: '2009-08-02', nation: 'LBN', gym: 'Cedar Combat Club', coach: 'hassan', weightClass: '66 kg', division: 'Junior men', level: 1, email: 'r.saleh@example.com', guardian: { name: 'Rana Saleh', email: 'r.saleh@example.com', consentOn: '2025-09-01' },
       clearance: { until: '2027-01-20', issuedBy: 'Event doctor · Lic. MD-2291', issuedOn: '2026-01-20' }, suspension: null, privacy: { publicPage: false, shareCards: false, marketing: false },
       skills: skills([60, 40, 30, 0, 50, 20, 0, 40, 30, 20, 30, 0, 20, 30, 100, 80, 70], [['sprawl', 40, '2026-11-11']]),
       unlocked: [0, 1], watched: ['nov-1'] },
-    nour: { id: 'nour', first: 'Nour', last: 'Khalil', dob: '2004-02-09', nation: 'LBN', gym: 'Cedar Combat Club', coach: 'karim', weightClass: '52 kg', division: 'Senior women', level: 2, email: 'nour.k@example.com',
+    nour: { id: 'nour', first: 'Nour', last: 'Khalil', dob: '2004-02-09', nation: 'LBN', gym: 'Cedar Combat Club', coach: 'hassan', weightClass: '52 kg', division: 'Senior women', level: 2, email: 'nour.k@example.com',
       clearance: { until: '2027-06-02', issuedBy: 'Event doctor · Lic. MD-1847', issuedOn: '2026-06-02' }, suspension: null, privacy: { publicPage: true, shareCards: true, marketing: true },
       skills: skills([80, 70, 60, 50, 70, 60, 40, 70, 60, 50, 60, 50, 40, 60, 100, 90, 80], [['top-control', 70, '2026-11-10']]),
       unlocked: [0, 1, 2], watched: [] },
-    tariq: { id: 'tariq', first: 'Tariq', last: 'Mansour', dob: '1998-11-30', nation: 'LBN', gym: 'Cedar Combat Club', coach: 'karim', weightClass: '77 kg', division: 'Senior men', level: 4, email: 'tariq.m@example.com',
+    tariq: { id: 'tariq', first: 'Tariq', last: 'Mansour', dob: '1998-11-30', nation: 'LBN', gym: 'Cedar Combat Club', coach: 'hassan', weightClass: '77 kg', division: 'Senior men', level: 4, email: 'tariq.m@example.com',
       clearance: { until: '2027-02-15', issuedBy: 'Event doctor · Lic. MD-2291', issuedOn: '2026-02-15' }, suspension: { until: '2026-12-12', reason: 'Mandatory rest after a stoppage', issuedBy: 'Event doctor · Lic. MD-3305', issuedOn: '2026-11-08' }, privacy: { publicPage: true, shareCards: true, marketing: false },
       skills: skills([100, 100, 90, 90, 100, 90, 90, 100, 100, 90, 90, 100, 90, 90, 100, 100, 100]),
       unlocked: [0, 1, 2, 3, 4], watched: [] },
-    sami: { id: 'sami', first: 'Sami', last: 'Aoun', dob: '2006-04-18', nation: 'LBN', gym: 'Cedar Combat Club', coach: 'karim', weightClass: '61 kg', division: 'Senior men', level: 1, email: 'sami.aoun@example.com',
+    sami: { id: 'sami', first: 'Sami', last: 'Aoun', dob: '2006-04-18', nation: 'LBN', gym: 'Cedar Combat Club', coach: 'hassan', weightClass: '61 kg', division: 'Senior men', level: 1, email: 'sami.aoun@example.com',
       clearance: { until: '2026-11-28', issuedBy: 'Event doctor · Lic. MD-1847', issuedOn: '2025-11-28' }, suspension: null, privacy: { publicPage: true, shareCards: true, marketing: false },
       skills: skills([50, 40, 40, 20, 40, 30, 20, 50, 40, 30, 30, 20, 30, 20, 100, 70, 60], [['low-kick', 50, '2026-11-13'], ['double-leg', 60, '2026-11-13']]),
       unlocked: [0, 1], watched: [] }
@@ -880,7 +918,7 @@ window.TR_DATA = (function () {
   ];
 
   var feed = [
-    { id: 'f1', athlete: 'layla', date: '2026-11-04', kind: 'verified', text: 'Coach Karim Nassar verified Double-leg takedown at 80%.' },
+    { id: 'f1', athlete: 'layla', date: '2026-11-04', kind: 'verified', text: 'Coach Hassan Jizzini verified Double-leg takedown at 80%.' },
     { id: 'f2', athlete: 'layla', date: '2026-10-12', kind: 'result', text: 'Result written by Official #A-118: win by unanimous decision at Levant Open 2026.' },
     { id: 'f3', athlete: 'layla', date: '2026-09-30', kind: 'medical', text: 'Pre-competition medical recorded. Cleared to compete until 30 Mar 2027.' },
     { id: 'f4', athlete: 'tariq', date: '2026-11-08', kind: 'medical', text: 'Medical suspension issued. No contact sparring until 12 Dec 2026.' }
@@ -888,11 +926,11 @@ window.TR_DATA = (function () {
 
   return {
     TODAY: TODAY, LEVELS: LEVELS, AREAS: AREAS,
-    coaches: { karim: { id: 'karim', name: 'Karim Nassar', gym: 'Cedar Combat Club', licence: 'Coach Level 2 · LBN-C-0193' } },
-    gyms: [{ id: 'cedar', name: 'Cedar Combat Club', city: 'Beirut', coach: 'karim' }, { id: 'harbour', name: 'Harbour MMA', city: 'Tripoli', coach: 'karim' }],
+    coaches: { hassan: { id: 'hassan', name: 'Hassan Jizzini', gym: 'Cedar Combat Club', licence: 'Coach Level 2 · LBN-C-0193' } },
+    gyms: [{ id: 'cedar', name: 'Cedar Combat Club', city: 'Beirut', coach: 'hassan' }, { id: 'harbour', name: 'Harbour MMA', city: 'Tripoli', coach: 'hassan' }],
     federations: ['Lebanon', 'Indonesia', 'Türkiye', 'Jordan', 'Kazakhstan', 'Egypt', 'United Arab Emirates'],
     seed: function () {
-      return JSON.parse(JSON.stringify({ v: 1, role: 'athlete', viewAs: 'layla', athletes: athletes, bouts: bouts, events: events, registrations: [{ event: 'ev1', athlete: 'layla', weightClass: '57 kg', on: '2026-11-02' }], library: library, feed: feed, gradings: [{ id: 'g1', athlete: 'nour', from: 2, to: 3, coach: 'karim', status: 'recommended', on: '2026-11-10' }], sparring: [] }));
+      return JSON.parse(JSON.stringify({ v: 1, role: 'athlete', viewAs: 'layla', athletes: athletes, bouts: bouts, events: events, registrations: [{ event: 'ev1', athlete: 'layla', weightClass: '57 kg', on: '2026-11-02' }], library: library, feed: feed, gradings: [{ id: 'g1', athlete: 'nour', from: 2, to: 3, coach: 'hassan', status: 'recommended', on: '2026-11-10' }], sparring: [] }));
     }
   };
 })();
@@ -906,7 +944,7 @@ window.TR_DATA = (function () {
   var Button = T.Button, Badge = T.Badge, CornerTag = T.CornerTag, Icon = T.Icon, Scorecard = T.Scorecard, Record = T.Record,
     LevelLadder = T.LevelLadder, SkillMeter = T.SkillMeter, ClearanceCard = T.ClearanceCard, AthleteCard = T.AthleteCard,
     Field = T.Field, Toggle = T.Toggle, BottomNav = T.BottomNav;
-  var STORE_KEY = 'trueround-demo-v1';
+  var STORE_KEY = 'trueround-demo-v2';
   var TODAY = D.TODAY, LEVELS = D.LEVELS;
 
   /* ---------- helpers ---------- */
@@ -1008,19 +1046,19 @@ window.TR_DATA = (function () {
       case 'verify':
         a.items.forEach(function (it) {
           var x = n.athletes[it.athlete].skills[it.skill];
-          x.value = it.value; x.status = 'verified'; x.by = 'karim'; x.date = TODAY; delete x.requested; delete x.requestedOn;
-          feedItem(n, it.athlete, 'verified', 'Coach Karim Nassar verified ' + SKILL_NAMES[it.skill] + ' at ' + it.value + '%.');
+          x.value = it.value; x.status = 'verified'; x.by = 'hassan'; x.date = TODAY; delete x.requested; delete x.requestedOn;
+          feedItem(n, it.athlete, 'verified', 'Coach Hassan Jizzini verified ' + SKILL_NAMES[it.skill] + ' at ' + it.value + '%.');
         });
         break;
       case 'notYet':
         sk = n.athletes[a.athlete].skills[a.skill];
         sk.status = sk.value > 0 ? 'verified' : 'none'; delete sk.requested; delete sk.requestedOn;
-        feedItem(n, a.athlete, 'review', 'Coach Karim Nassar reviewed ' + SKILL_NAMES[a.skill] + ': not yet. Keep drilling it and ask again.');
+        feedItem(n, a.athlete, 'review', 'Coach Hassan Jizzini reviewed ' + SKILL_NAMES[a.skill] + ': not yet. Keep drilling it and ask again.');
         break;
       case 'recommend':
         ath = n.athletes[a.athlete];
-        n.gradings.unshift({ id: uid(), athlete: a.athlete, from: ath.level, to: ath.level + 1, coach: 'karim', status: 'recommended', on: TODAY });
-        feedItem(n, a.athlete, 'review', 'Coach Karim Nassar recommended you for ' + LEVELS[ath.level + 1] + '. The federation grading panel will review it.');
+        n.gradings.unshift({ id: uid(), athlete: a.athlete, from: ath.level, to: ath.level + 1, coach: 'hassan', status: 'recommended', on: TODAY });
+        feedItem(n, a.athlete, 'review', 'Coach Hassan Jizzini recommended you for ' + LEVELS[ath.level + 1] + '. The federation grading panel will review it.');
         break;
       case 'grading':
         n.gradings.forEach(function (g) {
@@ -1055,7 +1093,7 @@ window.TR_DATA = (function () {
         if (ath.watched.indexOf(a.video) < 0) ath.watched.push(a.video);
         break;
       case 'privacy': n.athletes[a.athlete].privacy[a.key] = a.value; break;
-      case 'create': n.athletes[a.athlete.id] = a.athlete; n.viewAs = a.athlete.id; n.role = 'athlete'; feedItem(n, a.athlete.id, 'review', 'Account created. Coach Karim Nassar can now see you on the Cedar Combat Club roster.'); break;
+      case 'create': n.athletes[a.athlete.id] = a.athlete; n.viewAs = a.athlete.id; n.role = 'athlete'; feedItem(n, a.athlete.id, 'review', 'Account created. Coach Hassan Jizzini can now see you on the Cedar Combat Club roster.'); break;
       case 'delete':
         delete n.athletes[a.id];
         ['bouts', 'registrations', 'feed', 'gradings'].forEach(function (k) { n[k] = n[k].filter(function (x) { return x.athlete !== a.id; }); });
@@ -1079,6 +1117,41 @@ window.TR_DATA = (function () {
   }
 
   function Num(props) { return T.useCountUp(props.n, true, 600); }
+
+  function initialsOf(a) { return (a.first.charAt(0) + a.last.charAt(0)).toUpperCase(); }
+
+  // Event date as a tile: the day large, the month under it.
+  function DateTile(props) {
+    var x = parse(props.date);
+    return html`<div className="date-tile" aria-hidden="true"><span className="date-day">${x.getUTCDate()}</span><span className="date-mon">${MONTHS[x.getUTCMonth()]}</span></div>`;
+  }
+
+  // How the wins came: decision, submission or stoppage, as ring gauges.
+  var WIN_METHODS = [['Decision', /decision/i], ['Submission', /submission/i], ['Stoppage', /stops|stoppage|ko\b/i]];
+  function WinMethods(props) {
+    var wins = props.bouts.filter(function (b) { return b.result === 'win'; });
+    if (!wins.length) return null;
+    var counts = WIN_METHODS.map(function (m) { return wins.filter(function (b) { return m[1].test(b.method); }).length; });
+    var lead = Math.max.apply(null, counts), C = 2 * Math.PI * 26;
+    return html`<section className="card"><h2 className="tr-label">How the wins came</h2>
+      <div className="rings">${WIN_METHODS.map(function (m, i) {
+        var pct = Math.round(counts[i] / wins.length * 100);
+        return html`<figure key=${m[0]} className=${'ring-stat' + (counts[i] === lead && lead > 0 ? ' lead' : '')}>
+          <div className="ring-box"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="26" className="ring-track"/>
+            <circle cx="32" cy="32" r="26" className="ring-val" style=${{ strokeDasharray: (C * pct / 100).toFixed(1) + ' ' + C.toFixed(1) }} transform="rotate(-90 32 32)"/></svg>
+            <span className="ring-num">${counts[i]}</span></div>
+          <figcaption><span className="ring-name">${m[0]}</span><span className="data muted">${pct}% of wins</span></figcaption></figure>`;
+      })}</div></section>`;
+  }
+
+  // Face-off header for a bout: red corner left, blue corner right.
+  function FaceOff(props) {
+    return html`<div className="faceoff">
+      <div className="fo-side fo-red"><span className="fo-corner">Red corner</span><span className="fo-name">${props.red}</span><span className="data muted">${props.redNation || ''}</span></div>
+      <span className="fo-vs" aria-label="versus">VS</span>
+      <div className="fo-side fo-blue"><span className="fo-corner">Blue corner</span><span className="fo-name">${props.blue}</span><span className="data muted">${props.blueNation || ''}</span></div>
+    </div>`;
+  }
 
   function Sheet(props) {
     var ref = useRef(null);
@@ -1195,7 +1268,7 @@ window.TR_DATA = (function () {
       <//>
       <section className="card">
         <div className="card-head"><h2 className="tr-label">Next event</h2>${reg ? html`<${Badge} status="cleared">Registered<//>` : null}</div>
-        ${reg ? html`<div className="next-event"><div><p className="headline tr-display">${reg.ev.name}</p><p className="muted">${reg.ev.city} · ${fmt(reg.ev.date)} · ${reg.weightClass}</p></div>
+        ${reg ? html`<div className="next-event"><${DateTile} date=${reg.ev.date} /><div className="next-event-text"><p className="headline tr-display">${reg.ev.name}</p><p className="muted small">${reg.ev.city} · ${reg.weightClass}</p></div>
           <div className="countdown"><span className="countdown-num">${days(TODAY, reg.ev.date)}</span><span className="tr-label">days</span></div></div>`
           : html`<p className="muted">You're not registered for anything yet.</p><${Button} size="sm" onClick=${function () { p.go('events'); }}>Browse events<//>`}
       </section>
@@ -1249,6 +1322,7 @@ window.TR_DATA = (function () {
         <${Record} wins=${rec.wins} losses=${rec.losses} draws=${rec.draws} animate=${true} />
         <p className="small muted">${list.length} bouts. Every result here was written by the event's officials from a signed bout sheet. You can't add or edit one yourself.</p>
       </section>
+      <${WinMethods} bouts=${list} />
       ${list.length ? html`<ul className="bouts">${list.map(function (b) {
         return html`<li key=${b.id}><button type="button" className="bout-row" onClick=${function () { setOpen(b.id); }}>
           <span className=${'res res-' + b.result}>${boutResultLabel(b)}</span>
@@ -1259,8 +1333,10 @@ window.TR_DATA = (function () {
       })}</ul>` : html`<p className="muted">No bouts yet. Your first result appears here after your first event.</p>`}
       ${bout ? html`<${Sheet} title=${bout.event} onClose=${function () { setOpen(null); }} wide=${true}>
         <p className="small muted">${bout.city} · ${fmt(bout.date)} · ${a.division} ${a.weightClass}</p>
+        <${FaceOff} red=${bout.corner === 'red' ? nameOf(a) : bout.opponent} blue=${bout.corner === 'blue' ? nameOf(a) : bout.opponent}
+          redNation=${bout.corner === 'red' ? a.nation : bout.oppNation} blueNation=${bout.corner === 'blue' ? a.nation : bout.oppNation} />
         ${bout.judges ? html`<${Scorecard} red=${bout.corner === 'red' ? nameOf(a) : bout.opponent} blue=${bout.corner === 'blue' ? nameOf(a) : bout.opponent}
-            judges=${bout.judges} verifiedBy=${'Bout sheet signed · ' + bout.official}
+            judges=${bout.judges} verifiedBy=${'Bout sheet signed · ' + bout.official} hideCorners=${true}
             result=${{ winner: bout.result === 'draw' ? null : (bout.result === 'win') === (bout.corner === 'red') ? 'red' : 'blue', method: bout.method }} />`
           : html`<div className="card"><div className="row-between"><${CornerTag} corner=${bout.corner}>${nameOf(a)}<//><span className=${'res res-' + bout.result}>${boutResultLabel(bout)}</span></div>
             <p className="headline tr-display">${bout.method}</p><p className="muted">Round ${bout.round} · ${bout.time}</p>
@@ -1307,8 +1383,8 @@ window.TR_DATA = (function () {
         var reg = s.registrations.some(function (r) { return r.event === e.id && r.athlete === a.id; });
         return html`<section key=${e.id} className="card event">
           <div className="card-head"><p className="tr-label">${e.scope} · ${e.divisions.join(' and ')}</p>${reg ? html`<${Badge} status="cleared">Registered · ${a.weightClass}<//>` : null}</div>
-          <h2 className="headline tr-display">${e.name}</h2>
-          <p className="muted">${e.city} · ${fmt(e.date)} · registration closes ${fmt(e.closes)}</p>
+          <div className="event-row"><${DateTile} date=${e.date} /><div className="next-event-text"><h2 className="headline tr-display">${e.name}</h2>
+          <p className="muted small">${e.city} · registration closes ${fmt(e.closes)}</p></div></div>
           <div className="btn-row">${reg ? html`<${Button} size="sm" variant="quiet" onClick=${function () { act({ type: 'withdraw', event: e.id, athlete: a.id }, 'Withdrawn from ' + e.name + '.'); }}>Withdraw<//>`
             : html`<${Button} size="sm" onClick=${function () { setChecking(e.id); }}>Check eligibility<//>`}</div>
         </section>`;
@@ -1387,7 +1463,7 @@ window.TR_DATA = (function () {
       var id = (f.first + '-' + f.last).toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + uid().slice(0, 3);
       var sk = {};
       Object.keys(SKILL_NAMES).forEach(function (k) { sk[k] = { value: 0, status: 'none', by: null, date: null }; });
-      act({ type: 'create', athlete: { id: id, first: f.first.trim(), last: f.last.trim(), dob: f.dob, nation: f.federation.slice(0, 3).toUpperCase(), gym: f.gym, coach: 'karim', weightClass: f.weight, division: (minor ? 'Junior' : 'Senior') + ' athlete', level: 0, email: minor ? f.gEmail : f.email,
+      act({ type: 'create', athlete: { id: id, first: f.first.trim(), last: f.last.trim(), dob: f.dob, nation: f.federation.slice(0, 3).toUpperCase(), gym: f.gym, coach: 'hassan', weightClass: f.weight, division: (minor ? 'Junior' : 'Senior') + ' athlete', level: 0, email: minor ? f.gEmail : f.email,
         guardian: minor ? { name: f.gName, email: f.gEmail, consentOn: TODAY } : undefined, clearance: null, suspension: null,
         privacy: { publicPage: !minor && f.publicPage, shareCards: !minor && f.shareCards, marketing: f.marketing }, skills: sk, unlocked: [0], watched: [] } }, 'Welcome to TrueRound, ' + f.first.trim() + '.');
       props.close();
@@ -1409,7 +1485,7 @@ window.TR_DATA = (function () {
       <div className="tr-field"><label htmlFor="su-fed">National federation</label><select id="su-fed" value=${f.federation} onChange=${set('federation')}>${D.federations.map(function (x) { return html`<option key=${x}>${x}</option>`; })}</select></div>
       <div className="tr-field"><label htmlFor="su-gym">Gym</label><select id="su-gym" value=${f.gym} onChange=${set('gym')}>${D.gyms.map(function (g) { return html`<option key=${g.id} value=${g.name}>${g.name} · ${g.city}</option>`; })}</select></div>
       <div className="tr-field"><label htmlFor="su-wt">Weight class</label><select id="su-wt" value=${f.weight} onChange=${set('weight')}>${['48 kg', '52 kg', '57 kg', '61 kg', '66 kg', '70 kg', '77 kg', '84 kg', '93 kg', '120 kg'].map(function (x) { return html`<option key=${x}>${x}</option>`; })}</select></div>
-      <p className="note"><${Icon} name="user" size=${16} /> Your coach at this gym, Karim Nassar, is the only person who can verify your skills.</p></div>`;
+      <p className="note"><${Icon} name="user" size=${16} /> Your coach at this gym, Hassan Jizzini, is the only person who can verify your skills.</p></div>`;
     else body = html`<div className="form"><p className="muted">Pathway tracking is required. Everything else is your choice and can change later.</p>
       <${Toggle} id="su-core" label="Pathway tracking" hint="Required: your coach verifies your skills here." checked=${true} disabled=${true} />
       <${Toggle} id="su-public" label="Public fighter page" hint=${minor ? 'Off for under-18s. Your guardian can choose later.' : 'Lets clubs and scouts find your verified record.'} checked=${!minor && f.publicPage} disabled=${minor} onChange=${set('publicPage')} />
@@ -1426,8 +1502,8 @@ window.TR_DATA = (function () {
   /* ---------- coach portal ---------- */
   function CoachPortal(props) {
     var s = props.s, act = props.act;
-    var coach = D.coaches.karim;
-    var roster = Object.keys(s.athletes).map(function (k) { return s.athletes[k]; }).filter(function (a) { return a.coach === 'karim'; });
+    var coach = D.coaches.hassan;
+    var roster = Object.keys(s.athletes).map(function (k) { return s.athletes[k]; }).filter(function (a) { return a.coach === 'hassan'; });
     var requests = [];
     roster.forEach(function (a) { Object.keys(a.skills).forEach(function (k) { if (a.skills[k].status === 'pending') requests.push({ athlete: a, skill: k, x: a.skills[k] }); }); });
     var tab = props.tab, setTab = props.setTab;
@@ -1465,7 +1541,7 @@ window.TR_DATA = (function () {
         var pend = Object.keys(a.skills).filter(function (k) { return a.skills[k].status === 'pending'; }).length;
         var graded = s.gradings.some(function (g) { return g.athlete === a.id && g.status === 'recommended'; });
         return html`<tr key=${a.id}>
-          <th scope="row"><span className="cell-name">${nameOf(a)}</span><span className="small muted">${a.division} · ${a.weightClass}${isMinor(a) ? ' · guardian-managed' : ''}</span></th>
+          <th scope="row"><div className="who"><span className="mini-avatar" aria-hidden="true">${initialsOf(a)}</span><div className="who-text"><span className="cell-name">${nameOf(a)}</span><span className="small muted">${a.division} · ${a.weightClass}${isMinor(a) ? ' · guardian-managed' : ''}</span></div></div></th>
           <td>${LEVELS[a.level]}</td><td>${medicalBadge(m)}</td>
           <td>${pend ? html`<${Badge} status="pending">${pend} waiting<//>` : html`<span className="muted">None</span>`}</td>
           <td className="mono">${rec.wins}-${rec.losses}-${rec.draws}</td>
@@ -1645,7 +1721,7 @@ window.TR_DATA = (function () {
   /* ---------- guided demo ---------- */
   var GUIDE = [
     { role: 'athlete', tab: 'pathway', title: 'Ask for a check', text: 'As Layla, open Pathway and tap “Ask coach to check” on any skill below 100%.' },
-    { role: 'coach', tab: 'verify', title: 'Verify it as the coach', text: 'The request is waiting for Coach Karim Nassar. Pick a level and verify it.' },
+    { role: 'coach', tab: 'verify', title: 'Verify it as the coach', text: 'The request is waiting for Coach Hassan Jizzini. Pick a level and verify it.' },
     { role: 'official', tab: 'bout', title: 'Sign a bout sheet', text: 'Score three rounds as the officials. Signing writes the result to the athlete’s record.' },
     { role: 'official', tab: 'medical', title: 'Issue a suspension', text: 'Record a post-stoppage suspension. The coach’s sparring plan blocks that athlete at once.' },
     { role: 'athlete', tab: 'events', title: 'Check eligibility', text: 'Back as an athlete, try to register. Medical, suspension and level decide, not a form.' }

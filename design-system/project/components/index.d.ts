@@ -9,7 +9,7 @@ export interface CornerTagProps { corner: 'red' | 'blue'; children?: React.React
 export declare function CornerTag(props: CornerTagProps): React.ReactElement;
 export interface IconProps { name: IconName; size?: number; strokeWidth?: number; label?: string }
 export declare function Icon(props: IconProps): React.ReactElement;
-export interface ScorecardProps { red: string; blue: string; judges: Array<Array<[number, number]>>; result?: { winner: 'red' | 'blue'; method: string; winnerName?: string }; verifiedBy?: string }
+export interface ScorecardProps { red: string; blue: string; hideCorners?: boolean; judges: Array<Array<[number, number]>>; result?: { winner: 'red' | 'blue'; method: string; winnerName?: string }; verifiedBy?: string }
 export declare function Scorecard(props: ScorecardProps): React.ReactElement;
 export interface RecordProps { wins: number; losses: number; draws: number; size?: 'md' | 'sm' }
 export declare function Record(props: RecordProps): React.ReactElement;

@@ -135,7 +135,7 @@ select { font: inherit; height: 44px; padding: 0 var(--space-3); border-radius: 
 .data-table .tr-btn, .data-table .tr-badge { white-space: nowrap; }
 .data-table th, .data-table td { padding: var(--space-3) var(--space-4); text-align: left; vertical-align: middle; border-top: var(--stroke-hairline) solid var(--line); }
 .data-table thead th { border-top: 0; border-bottom: var(--stroke-rule) solid var(--rule); background: var(--surface-sunken); font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-muted); }
-.data-table tbody th { font-weight: 400; display: grid; gap: 2px; }
+.data-table tbody th { font-weight: 400; }
 .cell-name { font-weight: 600; }
 .requests { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2); }
 .request { grid-template-columns: auto 1fr auto auto; align-items: center; }
@@ -253,7 +253,7 @@ select { font: inherit; height: 44px; padding: 0 var(--space-3); border-radius: 
 
 /* ---------- motion: each screen arrives in order, once ---------- */
 @media (prefers-reduced-motion: no-preference) {
-  .phone-screen > .stack > *, .portal > * { animation: tr-rise .42s cubic-bezier(.2, .8, .2, 1) both; }
+  .phone-screen > .stack > :not(.sheet-scrim), .portal > :not(.sheet-scrim) { animation: tr-rise .42s cubic-bezier(.2, .8, .2, 1) both; }
   .phone-screen > .stack > :nth-child(2), .portal > :nth-child(2) { animation-delay: .05s; }
   .phone-screen > .stack > :nth-child(3), .portal > :nth-child(3) { animation-delay: .1s; }
   .phone-screen > .stack > :nth-child(4), .portal > :nth-child(4) { animation-delay: .15s; }
@@ -264,3 +264,41 @@ select { font: inherit; height: 44px; padding: 0 var(--space-3); border-radius: 
   .sheet { animation: sheet-in .28s cubic-bezier(.2, .8, .2, 1) both; }
   @keyframes sheet-in { from { transform: translateY(24px); opacity: 0; } to { transform: none; opacity: 1; } }
 }
+
+/* ---------- date tiles: the day leads every event ---------- */
+.date-tile { flex: none; display: grid; justify-items: center; align-content: center; width: 56px; height: 60px; border-radius: var(--radius-sm); background: var(--ink); color: var(--on-ink); }
+.date-day { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 24px; line-height: 26px; font-weight: 600; }
+.date-mon { font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+.next-event { justify-content: flex-start; }
+.next-event-text { display: grid; gap: 2px; flex: 1; min-width: 0; }
+.event-row { display: flex; align-items: center; gap: var(--space-3); }
+
+/* ---------- how the wins came: ring gauges ---------- */
+.rings { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-3); }
+.ring-stat { margin: 0; display: grid; justify-items: center; gap: var(--space-2); text-align: center; }
+.ring-box { position: relative; width: 76px; height: 76px; }
+.ring-box svg { width: 76px; height: 76px; display: block; }
+.ring-track { fill: none; stroke: var(--surface-sunken); stroke-width: 7; }
+.ring-val { fill: none; stroke: var(--ink); stroke-width: 7; stroke-linecap: butt; }
+.ring-stat.lead .ring-val { stroke: var(--gold-mark); }
+.ring-num { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 22px; font-weight: 600; }
+.ring-stat figcaption { display: grid; gap: 0; }
+.ring-name { font-weight: 600; font-size: 14px; line-height: 18px; }
+@media (prefers-reduced-motion: no-preference) {
+  .ring-val { animation: ring-draw .7s cubic-bezier(.2, .8, .2, 1) .15s both; }
+  @keyframes ring-draw { from { stroke-dasharray: 0 999; } }
+}
+
+/* ---------- face-off header on a bout ---------- */
+.faceoff { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: stretch; background: var(--surface); border: var(--stroke-hairline) solid var(--line); border-radius: var(--radius-md); overflow: hidden; }
+.fo-side { display: grid; gap: 2px; align-content: start; padding: var(--space-3) var(--space-4); border-top: var(--stroke-heavy) solid var(--corner-red); min-width: 0; }
+.fo-blue { border-top-color: var(--corner-blue); text-align: right; justify-items: end; }
+.fo-corner { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--corner-red); }
+.fo-blue .fo-corner { color: var(--corner-blue); }
+.fo-name { font-family: var(--font-display); font-stretch: 112%; font-weight: 900; text-transform: uppercase; font-size: 17px; line-height: 20px; overflow-wrap: break-word; }
+.fo-vs { display: grid; place-items: center; padding: 0 var(--space-3); font-family: var(--font-display); font-stretch: 125%; font-weight: 900; font-size: 18px; color: var(--on-ink); background: var(--ink); }
+
+/* ---------- roster avatars ---------- */
+.who { display: flex; align-items: center; gap: var(--space-3); }
+.who-text { display: grid; gap: 2px; min-width: 0; }
+.mini-avatar { flex: none; display: grid; place-items: center; width: 36px; height: 36px; border-radius: var(--radius-full); background: var(--ink); color: var(--on-ink); font-family: var(--font-display); font-stretch: 125%; font-weight: 800; font-size: 12px; }

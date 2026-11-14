@@ -5,7 +5,7 @@
   var Button = T.Button, Badge = T.Badge, CornerTag = T.CornerTag, Icon = T.Icon, Scorecard = T.Scorecard, Record = T.Record,
     LevelLadder = T.LevelLadder, SkillMeter = T.SkillMeter, ClearanceCard = T.ClearanceCard, AthleteCard = T.AthleteCard,
     Field = T.Field, Toggle = T.Toggle, BottomNav = T.BottomNav;
-  var STORE_KEY = 'trueround-demo-v1';
+  var STORE_KEY = 'trueround-demo-v2';
   var TODAY = D.TODAY, LEVELS = D.LEVELS;
 
   /* ---------- helpers ---------- */
@@ -107,19 +107,19 @@
       case 'verify':
         a.items.forEach(function (it) {
           var x = n.athletes[it.athlete].skills[it.skill];
-          x.value = it.value; x.status = 'verified'; x.by = 'karim'; x.date = TODAY; delete x.requested; delete x.requestedOn;
-          feedItem(n, it.athlete, 'verified', 'Coach Karim Nassar verified ' + SKILL_NAMES[it.skill] + ' at ' + it.value + '%.');
+          x.value = it.value; x.status = 'verified'; x.by = 'hassan'; x.date = TODAY; delete x.requested; delete x.requestedOn;
+          feedItem(n, it.athlete, 'verified', 'Coach Hassan Jizzini verified ' + SKILL_NAMES[it.skill] + ' at ' + it.value + '%.');
         });
         break;
       case 'notYet':
         sk = n.athletes[a.athlete].skills[a.skill];
         sk.status = sk.value > 0 ? 'verified' : 'none'; delete sk.requested; delete sk.requestedOn;
-        feedItem(n, a.athlete, 'review', 'Coach Karim Nassar reviewed ' + SKILL_NAMES[a.skill] + ': not yet. Keep drilling it and ask again.');
+        feedItem(n, a.athlete, 'review', 'Coach Hassan Jizzini reviewed ' + SKILL_NAMES[a.skill] + ': not yet. Keep drilling it and ask again.');
         break;
       case 'recommend':
         ath = n.athletes[a.athlete];
-        n.gradings.unshift({ id: uid(), athlete: a.athlete, from: ath.level, to: ath.level + 1, coach: 'karim', status: 'recommended', on: TODAY });
-        feedItem(n, a.athlete, 'review', 'Coach Karim Nassar recommended you for ' + LEVELS[ath.level + 1] + '. The federation grading panel will review it.');
+        n.gradings.unshift({ id: uid(), athlete: a.athlete, from: ath.level, to: ath.level + 1, coach: 'hassan', status: 'recommended', on: TODAY });
+        feedItem(n, a.athlete, 'review', 'Coach Hassan Jizzini recommended you for ' + LEVELS[ath.level + 1] + '. The federation grading panel will review it.');
         break;
       case 'grading':
         n.gradings.forEach(function (g) {
@@ -154,7 +154,7 @@
         if (ath.watched.indexOf(a.video) < 0) ath.watched.push(a.video);
         break;
       case 'privacy': n.athletes[a.athlete].privacy[a.key] = a.value; break;
-      case 'create': n.athletes[a.athlete.id] = a.athlete; n.viewAs = a.athlete.id; n.role = 'athlete'; feedItem(n, a.athlete.id, 'review', 'Account created. Coach Karim Nassar can now see you on the Cedar Combat Club roster.'); break;
+      case 'create': n.athletes[a.athlete.id] = a.athlete; n.viewAs = a.athlete.id; n.role = 'athlete'; feedItem(n, a.athlete.id, 'review', 'Account created. Coach Hassan Jizzini can now see you on the Cedar Combat Club roster.'); break;
       case 'delete':
         delete n.athletes[a.id];
         ['bouts', 'registrations', 'feed', 'gradings'].forEach(function (k) { n[k] = n[k].filter(function (x) { return x.athlete !== a.id; }); });
@@ -178,6 +178,41 @@
   }
 
   function Num(props) { return T.useCountUp(props.n, true, 600); }
+
+  function initialsOf(a) { return (a.first.charAt(0) + a.last.charAt(0)).toUpperCase(); }
+
+  // Event date as a tile: the day large, the month under it.
+  function DateTile(props) {
+    var x = parse(props.date);
+    return html`<div className="date-tile" aria-hidden="true"><span className="date-day">${x.getUTCDate()}</span><span className="date-mon">${MONTHS[x.getUTCMonth()]}</span></div>`;
+  }
+
+  // How the wins came: decision, submission or stoppage, as ring gauges.
+  var WIN_METHODS = [['Decision', /decision/i], ['Submission', /submission/i], ['Stoppage', /stops|stoppage|ko\b/i]];
+  function WinMethods(props) {
+    var wins = props.bouts.filter(function (b) { return b.result === 'win'; });
+    if (!wins.length) return null;
+    var counts = WIN_METHODS.map(function (m) { return wins.filter(function (b) { return m[1].test(b.method); }).length; });
+    var lead = Math.max.apply(null, counts), C = 2 * Math.PI * 26;
+    return html`<section className="card"><h2 className="tr-label">How the wins came</h2>
+      <div className="rings">${WIN_METHODS.map(function (m, i) {
+        var pct = Math.round(counts[i] / wins.length * 100);
+        return html`<figure key=${m[0]} className=${'ring-stat' + (counts[i] === lead && lead > 0 ? ' lead' : '')}>
+          <div className="ring-box"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="26" className="ring-track"/>
+            <circle cx="32" cy="32" r="26" className="ring-val" style=${{ strokeDasharray: (C * pct / 100).toFixed(1) + ' ' + C.toFixed(1) }} transform="rotate(-90 32 32)"/></svg>
+            <span className="ring-num">${counts[i]}</span></div>
+          <figcaption><span className="ring-name">${m[0]}</span><span className="data muted">${pct}% of wins</span></figcaption></figure>`;
+      })}</div></section>`;
+  }
+
+  // Face-off header for a bout: red corner left, blue corner right.
+  function FaceOff(props) {
+    return html`<div className="faceoff">
+      <div className="fo-side fo-red"><span className="fo-corner">Red corner</span><span className="fo-name">${props.red}</span><span className="data muted">${props.redNation || ''}</span></div>
+      <span className="fo-vs" aria-label="versus">VS</span>
+      <div className="fo-side fo-blue"><span className="fo-corner">Blue corner</span><span className="fo-name">${props.blue}</span><span className="data muted">${props.blueNation || ''}</span></div>
+    </div>`;
+  }
 
   function Sheet(props) {
     var ref = useRef(null);
@@ -294,7 +329,7 @@
       <//>
       <section className="card">
         <div className="card-head"><h2 className="tr-label">Next event</h2>${reg ? html`<${Badge} status="cleared">Registered<//>` : null}</div>
-        ${reg ? html`<div className="next-event"><div><p className="headline tr-display">${reg.ev.name}</p><p className="muted">${reg.ev.city} · ${fmt(reg.ev.date)} · ${reg.weightClass}</p></div>
+        ${reg ? html`<div className="next-event"><${DateTile} date=${reg.ev.date} /><div className="next-event-text"><p className="headline tr-display">${reg.ev.name}</p><p className="muted small">${reg.ev.city} · ${reg.weightClass}</p></div>
           <div className="countdown"><span className="countdown-num">${days(TODAY, reg.ev.date)}</span><span className="tr-label">days</span></div></div>`
           : html`<p className="muted">You're not registered for anything yet.</p><${Button} size="sm" onClick=${function () { p.go('events'); }}>Browse events<//>`}
       </section>
@@ -348,6 +383,7 @@
         <${Record} wins=${rec.wins} losses=${rec.losses} draws=${rec.draws} animate=${true} />
         <p className="small muted">${list.length} bouts. Every result here was written by the event's officials from a signed bout sheet. You can't add or edit one yourself.</p>
       </section>
+      <${WinMethods} bouts=${list} />
       ${list.length ? html`<ul className="bouts">${list.map(function (b) {
         return html`<li key=${b.id}><button type="button" className="bout-row" onClick=${function () { setOpen(b.id); }}>
           <span className=${'res res-' + b.result}>${boutResultLabel(b)}</span>
@@ -358,8 +394,10 @@
       })}</ul>` : html`<p className="muted">No bouts yet. Your first result appears here after your first event.</p>`}
       ${bout ? html`<${Sheet} title=${bout.event} onClose=${function () { setOpen(null); }} wide=${true}>
         <p className="small muted">${bout.city} · ${fmt(bout.date)} · ${a.division} ${a.weightClass}</p>
+        <${FaceOff} red=${bout.corner === 'red' ? nameOf(a) : bout.opponent} blue=${bout.corner === 'blue' ? nameOf(a) : bout.opponent}
+          redNation=${bout.corner === 'red' ? a.nation : bout.oppNation} blueNation=${bout.corner === 'blue' ? a.nation : bout.oppNation} />
         ${bout.judges ? html`<${Scorecard} red=${bout.corner === 'red' ? nameOf(a) : bout.opponent} blue=${bout.corner === 'blue' ? nameOf(a) : bout.opponent}
-            judges=${bout.judges} verifiedBy=${'Bout sheet signed · ' + bout.official}
+            judges=${bout.judges} verifiedBy=${'Bout sheet signed · ' + bout.official} hideCorners=${true}
             result=${{ winner: bout.result === 'draw' ? null : (bout.result === 'win') === (bout.corner === 'red') ? 'red' : 'blue', method: bout.method }} />`
           : html`<div className="card"><div className="row-between"><${CornerTag} corner=${bout.corner}>${nameOf(a)}<//><span className=${'res res-' + bout.result}>${boutResultLabel(bout)}</span></div>
             <p className="headline tr-display">${bout.method}</p><p className="muted">Round ${bout.round} · ${bout.time}</p>
@@ -406,8 +444,8 @@
         var reg = s.registrations.some(function (r) { return r.event === e.id && r.athlete === a.id; });
         return html`<section key=${e.id} className="card event">
           <div className="card-head"><p className="tr-label">${e.scope} · ${e.divisions.join(' and ')}</p>${reg ? html`<${Badge} status="cleared">Registered · ${a.weightClass}<//>` : null}</div>
-          <h2 className="headline tr-display">${e.name}</h2>
-          <p className="muted">${e.city} · ${fmt(e.date)} · registration closes ${fmt(e.closes)}</p>
+          <div className="event-row"><${DateTile} date=${e.date} /><div className="next-event-text"><h2 className="headline tr-display">${e.name}</h2>
+          <p className="muted small">${e.city} · registration closes ${fmt(e.closes)}</p></div></div>
           <div className="btn-row">${reg ? html`<${Button} size="sm" variant="quiet" onClick=${function () { act({ type: 'withdraw', event: e.id, athlete: a.id }, 'Withdrawn from ' + e.name + '.'); }}>Withdraw<//>`
             : html`<${Button} size="sm" onClick=${function () { setChecking(e.id); }}>Check eligibility<//>`}</div>
         </section>`;
@@ -486,7 +524,7 @@
       var id = (f.first + '-' + f.last).toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + uid().slice(0, 3);
       var sk = {};
       Object.keys(SKILL_NAMES).forEach(function (k) { sk[k] = { value: 0, status: 'none', by: null, date: null }; });
-      act({ type: 'create', athlete: { id: id, first: f.first.trim(), last: f.last.trim(), dob: f.dob, nation: f.federation.slice(0, 3).toUpperCase(), gym: f.gym, coach: 'karim', weightClass: f.weight, division: (minor ? 'Junior' : 'Senior') + ' athlete', level: 0, email: minor ? f.gEmail : f.email,
+      act({ type: 'create', athlete: { id: id, first: f.first.trim(), last: f.last.trim(), dob: f.dob, nation: f.federation.slice(0, 3).toUpperCase(), gym: f.gym, coach: 'hassan', weightClass: f.weight, division: (minor ? 'Junior' : 'Senior') + ' athlete', level: 0, email: minor ? f.gEmail : f.email,
         guardian: minor ? { name: f.gName, email: f.gEmail, consentOn: TODAY } : undefined, clearance: null, suspension: null,
         privacy: { publicPage: !minor && f.publicPage, shareCards: !minor && f.shareCards, marketing: f.marketing }, skills: sk, unlocked: [0], watched: [] } }, 'Welcome to TrueRound, ' + f.first.trim() + '.');
       props.close();
@@ -508,7 +546,7 @@
       <div className="tr-field"><label htmlFor="su-fed">National federation</label><select id="su-fed" value=${f.federation} onChange=${set('federation')}>${D.federations.map(function (x) { return html`<option key=${x}>${x}</option>`; })}</select></div>
       <div className="tr-field"><label htmlFor="su-gym">Gym</label><select id="su-gym" value=${f.gym} onChange=${set('gym')}>${D.gyms.map(function (g) { return html`<option key=${g.id} value=${g.name}>${g.name} · ${g.city}</option>`; })}</select></div>
       <div className="tr-field"><label htmlFor="su-wt">Weight class</label><select id="su-wt" value=${f.weight} onChange=${set('weight')}>${['48 kg', '52 kg', '57 kg', '61 kg', '66 kg', '70 kg', '77 kg', '84 kg', '93 kg', '120 kg'].map(function (x) { return html`<option key=${x}>${x}</option>`; })}</select></div>
-      <p className="note"><${Icon} name="user" size=${16} /> Your coach at this gym, Karim Nassar, is the only person who can verify your skills.</p></div>`;
+      <p className="note"><${Icon} name="user" size=${16} /> Your coach at this gym, Hassan Jizzini, is the only person who can verify your skills.</p></div>`;
     else body = html`<div className="form"><p className="muted">Pathway tracking is required. Everything else is your choice and can change later.</p>
       <${Toggle} id="su-core" label="Pathway tracking" hint="Required: your coach verifies your skills here." checked=${true} disabled=${true} />
       <${Toggle} id="su-public" label="Public fighter page" hint=${minor ? 'Off for under-18s. Your guardian can choose later.' : 'Lets clubs and scouts find your verified record.'} checked=${!minor && f.publicPage} disabled=${minor} onChange=${set('publicPage')} />
@@ -525,8 +563,8 @@
   /* ---------- coach portal ---------- */
   function CoachPortal(props) {
     var s = props.s, act = props.act;
-    var coach = D.coaches.karim;
-    var roster = Object.keys(s.athletes).map(function (k) { return s.athletes[k]; }).filter(function (a) { return a.coach === 'karim'; });
+    var coach = D.coaches.hassan;
+    var roster = Object.keys(s.athletes).map(function (k) { return s.athletes[k]; }).filter(function (a) { return a.coach === 'hassan'; });
     var requests = [];
     roster.forEach(function (a) { Object.keys(a.skills).forEach(function (k) { if (a.skills[k].status === 'pending') requests.push({ athlete: a, skill: k, x: a.skills[k] }); }); });
     var tab = props.tab, setTab = props.setTab;
@@ -564,7 +602,7 @@
         var pend = Object.keys(a.skills).filter(function (k) { return a.skills[k].status === 'pending'; }).length;
         var graded = s.gradings.some(function (g) { return g.athlete === a.id && g.status === 'recommended'; });
         return html`<tr key=${a.id}>
-          <th scope="row"><span className="cell-name">${nameOf(a)}</span><span className="small muted">${a.division} · ${a.weightClass}${isMinor(a) ? ' · guardian-managed' : ''}</span></th>
+          <th scope="row"><div className="who"><span className="mini-avatar" aria-hidden="true">${initialsOf(a)}</span><div className="who-text"><span className="cell-name">${nameOf(a)}</span><span className="small muted">${a.division} · ${a.weightClass}${isMinor(a) ? ' · guardian-managed' : ''}</span></div></div></th>
           <td>${LEVELS[a.level]}</td><td>${medicalBadge(m)}</td>
           <td>${pend ? html`<${Badge} status="pending">${pend} waiting<//>` : html`<span className="muted">None</span>`}</td>
           <td className="mono">${rec.wins}-${rec.losses}-${rec.draws}</td>
@@ -744,7 +782,7 @@
   /* ---------- guided demo ---------- */
   var GUIDE = [
     { role: 'athlete', tab: 'pathway', title: 'Ask for a check', text: 'As Layla, open Pathway and tap “Ask coach to check” on any skill below 100%.' },
-    { role: 'coach', tab: 'verify', title: 'Verify it as the coach', text: 'The request is waiting for Coach Karim Nassar. Pick a level and verify it.' },
+    { role: 'coach', tab: 'verify', title: 'Verify it as the coach', text: 'The request is waiting for Coach Hassan Jizzini. Pick a level and verify it.' },
     { role: 'official', tab: 'bout', title: 'Sign a bout sheet', text: 'Score three rounds as the officials. Signing writes the result to the athlete’s record.' },
     { role: 'official', tab: 'medical', title: 'Issue a suspension', text: 'Record a post-stoppage suspension. The coach’s sparring plan blocks that athlete at once.' },
     { role: 'athlete', tab: 'events', title: 'Check eligibility', text: 'Back as an athlete, try to register. Medical, suspension and level decide, not a form.' }
