@@ -111,7 +111,7 @@
   --shadow-lg: 0 12px 32px #000000b3;
   color-scheme: dark;
 }
-.share-card {
+.theme-dark {
   --canvas: #0e1012;
   --surface: #16191c;
   --surface-sunken: #0a0c0d;
@@ -156,7 +156,7 @@ body { margin: 0; font-family: var(--font-sans); font-size: 16px; line-height: 2
 .tr-btn-primary:hover { background: var(--ink); opacity: .88; }
 .tr-btn-quiet { background: transparent; border-color: transparent; color: var(--ink); }
 .tr-btn-danger { background: var(--surface); border-color: var(--stop); color: var(--stop); }
-.tr-btn-sm { height: 32px; font-size: 13px; padding: 0 var(--space-3); }
+.tr-btn-sm { height: 40px; font-size: 14px; padding: 0 var(--space-4); }
 .tr-btn-block { width: 100%; }
 
 /* Badge */
@@ -264,12 +264,25 @@ body { margin: 0; font-family: var(--font-sans); font-size: 16px; line-height: 2
 
 /* Bottom nav */
 .tr-nav { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; background: var(--surface); border-top: var(--stroke-hairline) solid var(--line); }
-.tr-nav-item { position: relative; display: grid; justify-items: center; gap: 2px; padding: var(--space-2) 0 var(--space-2); border: 0; background: none; font: inherit; font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: .04em; color: var(--ink-muted); cursor: pointer; }
+.tr-nav-item { position: relative; display: grid; justify-items: center; align-content: center; gap: 2px; min-height: 56px; padding: var(--space-2) 0 var(--space-2); border: 0; background: none; font: inherit; font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: .04em; color: var(--ink-muted); cursor: pointer; }
 .tr-nav-item.is-active { color: var(--ink); }
 .tr-nav-item.is-active::before { content: ""; position: absolute; top: 0; left: 30%; right: 30%; height: 3px; background: var(--ink); }
 .tr-nav-dot { position: absolute; top: 6px; left: calc(50% + 8px); width: 8px; height: 8px; border-radius: var(--radius-full); background: var(--gold-mark); }
 
-@media (prefers-reduced-motion: reduce) { .tr-btn, .tr-switch, .tr-switch-knob { transition: none; } }
+/* Motion: the record reveals itself once, on mount. Scores tick in round by round, meters fill
+   segment by segment, the current level draws in. Nothing loops, and nothing moves under reduced motion. */
+@keyframes tr-rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes tr-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.tr-skill-meter span.on { transform-origin: left center; animation: tr-fill .28s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i, 0) * 35ms); }
+.tr-ladder-current .tr-ladder-bar { transform-origin: left center; animation: tr-fill .45s cubic-bezier(.2, .8, .2, 1) .15s both; }
+.tr-sc-table tbody td { animation: tr-rise .26s ease-out both; animation-delay: calc(120ms + var(--i, 0) * 55ms); }
+.tr-sc-result { animation: tr-rise .3s ease-out .9s both; }
+.tr-nav-item.is-active::before { animation: tr-fill .2s ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tr-btn, .tr-switch, .tr-switch-knob { transition: none; }
+  .tr-skill-meter span.on, .tr-ladder-current .tr-ladder-bar, .tr-sc-table tbody td, .tr-sc-result, .tr-nav-item.is-active::before { animation: none; }
+}
 
 /* TrueRound app layout. Layout concept: a demo bar over one stage; athletes get a phone-width column, coaches and officials a portal. */
 * { box-sizing: border-box; }
@@ -288,7 +301,8 @@ h1, h2, h3, p { margin: 0; }
 .stack { display: grid; gap: var(--space-4); }
 .row-between { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-3); }
 .btn-row { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; }
-.link-btn { border: 0; background: none; padding: 4px 0; font-weight: 600; font-size: 14px; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.link-btn { display: inline-flex; align-items: center; min-height: 44px; border: 0; background: none; padding: 0; font-weight: 600; font-size: 14px; color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; cursor: pointer; transition: text-decoration-color .15s ease-out; }
+.link-btn:hover { text-decoration-color: var(--gold-mark); }
 .link-btn:focus-visible, .avatar-btn:focus-visible, .bout-row:focus-visible, .video-row:focus-visible, .icon-btn:focus-visible, .seg button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 .mark .mark-ink { stroke: var(--ink); }
 .mark .mark-gold { stroke: var(--gold-mark); }
@@ -304,7 +318,7 @@ select { font: inherit; height: 44px; padding: 0 var(--space-3); border-radius: 
 .demobar-select select { height: 32px; font-size: 13px; }
 .demobar-date { font-family: var(--font-mono); font-size: 12px; color: var(--ink-muted); }
 .seg { display: inline-flex; padding: 3px; gap: 2px; background: var(--surface-sunken); border-radius: var(--radius-sm); max-width: 100%; overflow-x: auto; }
-.seg button { display: inline-flex; align-items: center; gap: 6px; border: 0; background: none; padding: 6px 12px; border-radius: var(--radius-xs); font-size: 13px; font-weight: 600; color: var(--ink-muted); cursor: pointer; white-space: nowrap; }
+.seg button { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; border: 0; background: none; padding: 6px 14px; transition: background .15s ease-out, color .15s ease-out; border-radius: var(--radius-xs); font-size: 13px; font-weight: 600; color: var(--ink-muted); cursor: pointer; white-space: nowrap; }
 .seg button.on { background: var(--ink); color: var(--on-ink); }
 .seg-count { font-family: var(--font-mono); font-size: 11px; padding: 0 5px; border-radius: var(--radius-full); background: var(--gold-mark); color: #0f1214; }
 
@@ -444,6 +458,99 @@ select { font: inherit; height: 44px; padding: 0 var(--space-3); border-radius: 
 @keyframes toast-in { from { transform: translateY(8px); opacity: 0; } to { transform: none; opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .toast { animation: none; } }
 
+/* ---------- atmosphere: ruled scorecard paper behind everything ---------- */
+:root { --texture: rgba(15, 18, 20, 0.045); --ring-ink: rgba(15, 18, 20, 0.08); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --texture: rgba(238, 238, 234, 0.035); --ring-ink: rgba(238, 238, 234, 0.08); } }
+:root[data-theme="dark"], .theme-dark { --texture: rgba(238, 238, 234, 0.035); --ring-ink: rgba(238, 238, 234, 0.08); }
+.stage { background-image: repeating-linear-gradient(180deg, transparent 0 31px, var(--texture) 31px 32px); }
+
+/* ---------- stage: phone + guided demo side by side on wide screens ---------- */
+.stage { display: grid; justify-content: center; gap: var(--space-12); align-items: start; }
+.stage-main { min-width: 0; width: 100%; }
+.stage-coach, .stage-official { grid-template-columns: minmax(0, 1080px); }
+.stage-athlete { grid-template-columns: minmax(0, 440px); }
+.stage-guide { display: none; }
+@media (min-width: 1040px) {
+  .stage-athlete { grid-template-columns: 440px 340px; }
+  .stage-guide { display: block; position: sticky; top: calc(88px + env(safe-area-inset-top, 0px)); }
+}
+
+/* ---------- demo bar: always the dark broadcast strip ---------- */
+.demobar { background: var(--surface); color: var(--ink); border-bottom-color: var(--line); }
+.demobar .link-btn { min-height: 32px; font-size: 13px; color: var(--ink); }
+.demobar .mark .mark-ink { stroke: var(--ink); }
+@media (max-width: 640px) {
+  .demobar-tag, .demobar-date { display: none; }
+  .demobar { position: relative; top: 0; gap: var(--space-2) var(--space-3); }
+  .demobar-brand { flex: 1 0 100%; }
+  .demobar-select > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .demobar-select select { max-width: 150px; }
+}
+
+/* ---------- home: the fight-card header ---------- */
+.hero-card { position: relative; overflow: hidden; display: grid; gap: var(--space-4); padding: var(--space-5) var(--space-5) var(--space-5); border-radius: 14px; background: var(--canvas); color: var(--ink); background-image: repeating-linear-gradient(180deg, transparent 0 31px, var(--texture) 31px 32px); box-shadow: var(--shadow-lg); }
+.hero-card .tr-label { color: var(--ink-muted); position: relative; }
+.hero-ring { position: absolute; right: -72px; top: -64px; width: 280px; height: 280px; fill: none; stroke-width: 7; pointer-events: none; }
+.hero-ring .ring-a { stroke: var(--ring-ink); }
+.hero-ring .ring-b { stroke: var(--gold-mark); opacity: .55; }
+.hero-top { position: relative; display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); }
+.hero-card .avatar-btn { background: var(--ink); color: var(--on-ink); }
+.hero-name { position: relative; margin: 0; font-weight: 900; font-size: 44px; line-height: 40px; letter-spacing: -0.015em; overflow-wrap: anywhere; }
+.hero-stats { position: relative; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: var(--space-4); padding-top: var(--space-4); border-top: var(--stroke-hairline) solid var(--line); }
+.hero-card .tr-record-num { color: var(--ink); }
+.hero-level { display: grid; justify-items: end; gap: 2px; }
+.hero-level-name { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-display); font-stretch: 125%; font-weight: 800; text-transform: uppercase; font-size: 18px; color: var(--gold); }
+@media (prefers-reduced-motion: no-preference) {
+  .hero-ring { animation: ring-in .9s cubic-bezier(.2, .8, .2, 1) both; }
+  @keyframes ring-in { from { opacity: 0; transform: rotate(-40deg) scale(.9); } to { opacity: 1; transform: none; } }
+}
+
+/* ---------- guided demo ---------- */
+.guide { display: grid; gap: var(--space-3); padding: var(--space-5); background: var(--surface); border: var(--stroke-hairline) solid var(--line); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
+.sheet .guide { padding: 0; border: 0; box-shadow: none; background: none; }
+.guide-kicker { color: var(--gold); }
+.guide-title { margin: 0; font-weight: 900; font-size: 28px; line-height: 28px; }
+.guide-steps { list-style: none; margin: var(--space-2) 0 0; padding: 0; display: grid; gap: 0; counter-reset: none; }
+.guide-steps li { display: grid; grid-template-columns: 32px 1fr; gap: var(--space-3); padding: var(--space-3) 0; border-top: var(--stroke-hairline) solid var(--line); }
+.guide-n { display: grid; place-items: center; width: 28px; height: 28px; border-radius: var(--radius-full); border: var(--stroke-rule) solid var(--rule); font-family: var(--font-mono); font-size: 13px; font-weight: 600; }
+.guide-steps li.here .guide-n { background: var(--gold-mark); border-color: var(--gold-mark); color: #0f1214; }
+.guide-body { display: grid; gap: 2px; min-width: 0; justify-items: start; }
+.guide-step { margin: 0; font-weight: 600; font-size: 15px; line-height: 20px; }
+.guide .link-btn { min-height: 36px; font-size: 13px; }
+
+/* ---------- coach summary tiles ---------- */
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-3); }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.tile { display: grid; gap: var(--space-1); justify-items: start; padding: var(--space-4) var(--space-5); background: var(--surface); border: var(--stroke-hairline) solid var(--line); border-radius: var(--radius-md); text-align: left; cursor: pointer; transition: border-color .15s ease-out, transform .15s ease-out; }
+.tile:hover { border-color: var(--rule); }
+.tile:active { transform: scale(.98); }
+.tile:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.tile-num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 36px; line-height: 40px; font-weight: 600; }
+.tile-caution .tile-num { color: var(--caution); }
+.tile-stop .tile-num { color: var(--stop); }
+.live-dot { display: inline-block; width: 8px; height: 8px; margin-right: 8px; border-radius: var(--radius-full); background: var(--gold-mark); vertical-align: 1px; }
+
+/* ---------- toasts carry what happened ---------- */
+.toast { display: flex; align-items: center; gap: var(--space-3); }
+.toast-icon { flex: none; display: grid; place-items: center; width: 26px; height: 26px; border-radius: var(--radius-full); background: var(--on-ink); color: var(--ink); }
+.toast-verified .toast-icon { background: var(--gold-mark); color: #0f1214; }
+.toast-cleared .toast-icon { background: var(--cleared-soft); color: var(--cleared); }
+.toast-stop .toast-icon { background: var(--stop-soft); color: var(--stop); }
+
+/* ---------- motion: each screen arrives in order, once ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .phone-screen > .stack > *, .portal > * { animation: tr-rise .42s cubic-bezier(.2, .8, .2, 1) both; }
+  .phone-screen > .stack > :nth-child(2), .portal > :nth-child(2) { animation-delay: .05s; }
+  .phone-screen > .stack > :nth-child(3), .portal > :nth-child(3) { animation-delay: .1s; }
+  .phone-screen > .stack > :nth-child(4), .portal > :nth-child(4) { animation-delay: .15s; }
+  .phone-screen > .stack > :nth-child(5), .portal > :nth-child(5) { animation-delay: .2s; }
+  .phone-screen > .stack > :nth-child(n+6) { animation-delay: .25s; }
+  .bout-row, .video-row { transition: background .15s ease-out, transform .15s ease-out; }
+  .bout-row:active { transform: scale(.99); }
+  .sheet { animation: sheet-in .28s cubic-bezier(.2, .8, .2, 1) both; }
+  @keyframes sheet-in { from { transform: translateY(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+}
+
 </style>
 </head>
 <body>
@@ -527,14 +634,15 @@ select { font: inherit; height: 44px; padding: 0 var(--space-3); border-radius: 
     var head = [h('th', { key: 'j', scope: 'col' }, 'Judge')];
     for (var r = 0; r < rounds; r++) head.push(h('th', { key: 'r' + r, scope: 'col' }, 'R' + (r + 1)));
     head.push(h('th', { key: 't', scope: 'col', className: 'tr-sc-total' }, 'Total'));
+    // --i staggers the reveal: round by round across judges, then the totals.
     var rows = judges.map(function (j, ji) {
       var cells = [h('th', { key: 'n', scope: 'row' }, String(ji + 1))];
       j.forEach(function (pair, ri) {
-        cells.push(h('td', { key: ri }, h('span', { className: 'tr-sc-red' }, pair[0]), h('span', { className: 'tr-sc-sep' }, ':'), h('span', { className: 'tr-sc-blue' }, pair[1])));
+        cells.push(h('td', { key: ri, style: { '--i': ri * judges.length + ji } }, h('span', { className: 'tr-sc-red' }, pair[0]), h('span', { className: 'tr-sc-sep' }, ':'), h('span', { className: 'tr-sc-blue' }, pair[1])));
       });
       var tr = sum(j.map(function (p) { return p[0]; }));
       var tb = sum(j.map(function (p) { return p[1]; }));
-      cells.push(h('td', { key: 't', className: 'tr-sc-total' }, h('span', { className: 'tr-sc-red' }, tr), h('span', { className: 'tr-sc-sep' }, ':'), h('span', { className: 'tr-sc-blue' }, tb)));
+      cells.push(h('td', { key: 't', className: 'tr-sc-total', style: { '--i': rounds * judges.length + ji + 1 } }, h('span', { className: 'tr-sc-red' }, tr), h('span', { className: 'tr-sc-sep' }, ':'), h('span', { className: 'tr-sc-blue' }, tb)));
       return h('tr', { key: ji }, cells);
     });
     var result = props.result;
@@ -551,10 +659,36 @@ select { font: inherit; height: 44px; padding: 0 var(--space-3); border-radius: 
         props.verifiedBy ? h(Badge, { status: 'verified' }, props.verifiedBy) : null) : null);
   }
 
+  function reducedMotion() {
+    try { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return true; }
+  }
+
+  // Counts from 0 to `target` once on mount; instant under reduced motion.
+  function useCountUp(target, enabled, ms) {
+    var still = !enabled || reducedMotion() || document.hidden;
+    var st = React.useState(still ? target : 0), val = st[0], setVal = st[1];
+    React.useEffect(function () {
+      if (!enabled || reducedMotion() || document.hidden) { setVal(target); return; }
+      var start = null, raf;
+      function step(t) {
+        if (start === null) start = t;
+        var p = Math.min(1, (t - start) / (ms || 700));
+        setVal(Math.round(target * (1 - Math.pow(1 - p, 3))));
+        if (p < 1) raf = requestAnimationFrame(step);
+      }
+      raf = requestAnimationFrame(step);
+      // Frames pause in hidden tabs and thumbnail captures: always land on the real number.
+      var done = setTimeout(function () { setVal(target); }, (ms || 700) + 150);
+      return function () { cancelAnimationFrame(raf); clearTimeout(done); };
+    }, [target, enabled]);
+    return val;
+  }
+
   function Record(props) {
     var w = props.wins || 0, l = props.losses || 0, d = props.draws || 0;
+    var cw = useCountUp(w, props.animate), cl = useCountUp(l, props.animate), cd = useCountUp(d, props.animate);
     return h('div', { className: cx('tr-record', props.size === 'sm' && 'tr-record-sm', props.className), 'aria-label': w + ' wins, ' + l + ' losses, ' + d + ' draws' },
-      h('div', { className: 'tr-record-num' }, w + '-' + l + '-' + d),
+      h('div', { className: 'tr-record-num', 'aria-hidden': 'true' }, cw + '-' + cl + '-' + cd),
       h('div', { className: 'tr-record-key', 'aria-hidden': 'true' }, h('span', null, 'W'), h('span', null, 'L'), h('span', null, 'D')));
   }
 
@@ -574,7 +708,7 @@ select { font: inherit; height: 44px; padding: 0 var(--space-3); border-radius: 
     var value = Math.max(0, Math.min(100, props.value || 0));
     var filled = Math.round(value / 10);
     var segs = [];
-    for (var i = 0; i < 10; i++) segs.push(h('span', { key: i, className: i < filled ? 'on' : '' }));
+    for (var i = 0; i < 10; i++) segs.push(h('span', { key: i, className: i < filled ? 'on' : '', style: { '--i': i } }));
     var status = props.status || (value >= 100 ? 'verified' : 'neutral');
     return h('div', { className: cx('tr-skill', props.className) },
       h('div', { className: 'tr-skill-head' },
@@ -656,7 +790,7 @@ select { font: inherit; height: 44px; padding: 0 var(--space-3); border-radius: 
   window.TrueRound = {
     Button: Button, Badge: Badge, CornerTag: CornerTag, Icon: Icon, Scorecard: Scorecard, Record: Record,
     LevelLadder: LevelLadder, SkillMeter: SkillMeter, ClearanceCard: ClearanceCard, AthleteCard: AthleteCard,
-    Field: Field, Toggle: Toggle, BottomNav: BottomNav, icons: Object.keys(PATHS)
+    Field: Field, Toggle: Toggle, BottomNav: BottomNav, useCountUp: useCountUp, icons: Object.keys(PATHS)
   };
 })();
 
@@ -938,6 +1072,14 @@ window.TR_DATA = (function () {
       <path d="M22.5 32.5L29 39L42 25.5" fill="none" className="mark-gold" strokeWidth="6" strokeLinecap="square"/></svg>`;
   }
 
+  // The three-round ring from the mark, used large as a watermark.
+  function Ring(props) {
+    return html`<svg className=${props.className} viewBox="0 0 64 64" aria-hidden="true">
+      <path className="ring-a" d="M36.2 10.4A22 22 0 0 1 52.8 39.16"/><path className="ring-a" d="M48.6 46.43A22 22 0 0 1 15.4 46.43"/><path className="ring-b" d="M11.2 39.16A22 22 0 0 1 27.8 10.4"/></svg>`;
+  }
+
+  function Num(props) { return T.useCountUp(props.n, true, 600); }
+
   function Sheet(props) {
     var ref = useRef(null);
     useEffect(function () {
@@ -972,7 +1114,7 @@ window.TR_DATA = (function () {
     var s = props.s, act = props.act;
     var cs = useState(false), confirming = cs[0], setConfirming = cs[1];
     var athletes = Object.keys(s.athletes).map(function (k) { return s.athletes[k]; });
-    return html`<div className="demobar">
+    return html`<div className="demobar theme-dark">
       <div className="demobar-brand"><${Mark} size=${24} /><span className="wordmark">TrueRound</span><span className="demobar-tag">Concept prototype</span></div>
       <${Seg} label="Switch role" value=${s.role} onChange=${function (r) { act({ type: 'role', role: r }); }}
         options=${[['athlete', 'Athlete'], ['coach', 'Coach'], ['official', 'Official']]} />
@@ -981,6 +1123,7 @@ window.TR_DATA = (function () {
           ${athletes.map(function (a) { return html`<option key=${a.id} value=${a.id}>${nameOf(a)}${isMinor(a) ? ' (under 18)' : ''}</option>`; })}
         </select></label>` : null}
       <span className="demobar-date">Demo date ${fmt(TODAY)}</span>
+      <button type="button" className="link-btn guide-btn" onClick=${props.openGuide}>How to demo</button>
       <button type="button" className="link-btn" onClick=${function () { setConfirming(true); }}>Reset demo</button>
       ${confirming ? html`<${Confirm} title="Reset the demo?" confirmLabel="Reset" danger=${true}
         onCancel=${function () { setConfirming(false); }} onConfirm=${function () { setConfirming(false); act({ type: 'reset' }, 'Demo data restored.'); }}>
@@ -994,7 +1137,7 @@ window.TR_DATA = (function () {
   function AthleteApp(props) {
     var s = props.s, act = props.act;
     var a = s.athletes[s.viewAs];
-    var ts = useState('home'), tab = ts[0], setTab = ts[1];
+    var tab = props.tab, setTab = props.setTab;
     var ps = useState(false), profile = ps[0], setProfile = ps[1];
     var ss = useState(false), signup = ss[0], setSignup = ss[1];
     useEffect(function () { setProfile(false); }, [s.viewAs]);
@@ -1032,11 +1175,19 @@ window.TR_DATA = (function () {
     var feed = s.feed.filter(function (f) { return f.athlete === a.id; }).slice(0, 5);
     var grading = s.gradings.filter(function (g) { return g.athlete === a.id && g.status === 'recommended'; })[0];
     var KIND_ICON = { verified: 'check', result: 'card', medical: 'shield', review: 'clock' };
+    var rec = recordOf(s, a.id);
     return html`<div className="stack">
-      <header className="home-head">
-        <button type="button" className="avatar-btn" onClick=${p.openProfile} aria-label="Open your profile">${(a.first[0] + a.last[0]).toUpperCase()}</button>
-        <div className="home-hello"><p className="tr-label">${a.division} · ${a.weightClass}</p><h1 className="scr-title tr-display">${a.first}</h1></div>
-        <${Badge} status="verified">${LEVELS[a.level]}<//>
+      <header className="hero-card theme-dark">
+        <${Ring} className="hero-ring" />
+        <div className="hero-top">
+          <p className="tr-label">${a.division} · ${a.weightClass}${a.nation ? ' · ' + a.nation : ''}</p>
+          <button type="button" className="avatar-btn" onClick=${p.openProfile} aria-label="Open your profile">${(a.first[0] + a.last[0]).toUpperCase()}</button>
+        </div>
+        <h1 className="hero-name tr-display">${a.first}<br/>${isMinor(a) ? a.last.charAt(0) + '.' : a.last}</h1>
+        <div className="hero-stats">
+          <${Record} wins=${rec.wins} losses=${rec.losses} draws=${rec.draws} animate=${true} />
+          <div className="hero-level"><span className="tr-label">Level</span><span className="hero-level-name"><${Icon} name="check" size=${16} strokeWidth=${3} />${LEVELS[a.level]}</span></div>
+        </div>
       </header>
       <${ClearanceCard} status=${m.status} title=${medicalTitle(m)} until=${m.until ? fmt(m.until).toUpperCase() : null} issuedBy=${m.by}>
         ${m.status === 'suspended' ? html`<p className="small">${m.reason}. Your coach can't book you for contact sparring until then.</p>` : null}
@@ -1095,7 +1246,7 @@ window.TR_DATA = (function () {
     return html`<div className="stack">
       <${ScreenHead} eyebrow="Verified record" title="Record" />
       <section className="card record-hero">
-        <${Record} wins=${rec.wins} losses=${rec.losses} draws=${rec.draws} />
+        <${Record} wins=${rec.wins} losses=${rec.losses} draws=${rec.draws} animate=${true} />
         <p className="small muted">${list.length} bouts. Every result here was written by the event's officials from a signed bout sheet. You can't add or edit one yourself.</p>
       </section>
       ${list.length ? html`<ul className="bouts">${list.map(function (b) {
@@ -1166,7 +1317,7 @@ window.TR_DATA = (function () {
         <p className="muted">${ev.city} · ${fmt(ev.date)} · ${isMinor(a) ? 'Junior' : 'Senior'} ${a.weightClass}</p>
         <ul className="checks">${checks.map(function (c, i) { return html`<li key=${i} className=${c.ok ? 'ok' : 'no'}><${Icon} name=${c.ok ? 'check' : 'ban'} size=${18} /><span>${c.label}</span></li>`; })}</ul>
         <div className="btn-row"><${Button} variant="primary" block=${true} disabled=${!ok}
-          onClick=${function () { act({ type: 'register', event: ev.id, athlete: a.id }, 'Registered for ' + ev.name + '.'); setChecking(null); }}>${ok ? 'Register' : 'Not eligible yet'}<//></div>
+          onClick=${function () { act({ type: 'register', event: ev.id, athlete: a.id }, 'Registered for ' + ev.name + '.', 'cleared'); setChecking(null); }}>${ok ? 'Register' : 'Not eligible yet'}<//></div>
       <//>` : null}
     </div>`;
   }
@@ -1201,7 +1352,7 @@ window.TR_DATA = (function () {
         <${Button} size="sm" onClick=${p.startSignup}>Start sign-up flow<//></section>
       <p className="small muted about">TrueRound is a concept prototype prepared for a partnership proposal. It is not an official product of GAMMA or of any federation. Every athlete, coach, gym, official and event in it is fictional.</p>
       ${view === 'share' ? html`<${Sheet} title="Share card" onClose=${function () { setView(null); }}>
-        <div className="share-card" data-theme="dark">
+        <div className="share-card theme-dark">
           <div className="share-top"><${Mark} size=${28} /><span className="wordmark">TrueRound</span></div>
           <p className="tr-label share-kicker">Verified record</p>
           <p className="share-name tr-display">${a.first}<br/>${a.last}</p>
@@ -1279,7 +1430,15 @@ window.TR_DATA = (function () {
     var roster = Object.keys(s.athletes).map(function (k) { return s.athletes[k]; }).filter(function (a) { return a.coach === 'karim'; });
     var requests = [];
     roster.forEach(function (a) { Object.keys(a.skills).forEach(function (k) { if (a.skills[k].status === 'pending') requests.push({ athlete: a, skill: k, x: a.skills[k] }); }); });
-    var ts = useState('roster'), tab = ts[0], setTab = ts[1];
+    var tab = props.tab, setTab = props.setTab;
+    var suspended = roster.filter(function (a) { return medical(a).status === 'suspended'; }).length;
+    var due = roster.filter(function (a) { var m = medical(a); return m.status === 'pending'; }).length;
+    var tiles = [
+      { label: 'Athletes', n: roster.length, go: 'roster' },
+      { label: 'Checks waiting', n: requests.length, go: 'verify', tone: requests.length ? 'caution' : '' },
+      { label: 'Suspended', n: suspended, go: 'sparring', tone: suspended ? 'stop' : '' },
+      { label: 'Medical due', n: due, go: 'roster', tone: due ? 'caution' : '' }
+    ];
     var body;
     if (tab === 'roster') body = html`<${CoachRoster} s=${s} roster=${roster} act=${act} />`;
     else if (tab === 'verify') body = html`<${CoachVerify} requests=${requests} act=${act} />`;
@@ -1289,6 +1448,10 @@ window.TR_DATA = (function () {
       <header className="portal-head"><div><p className="tr-label">Coach portal · synced with the app</p><h1 className="scr-title tr-display">${coach.name}</h1>
         <p className="muted">${coach.gym} · ${coach.licence}</p></div>
         <p className="small muted portal-scope"><${Icon} name="lock" size=${16} /> You see only athletes assigned to you.</p></header>
+      <div className="tiles">${tiles.map(function (t) {
+        return html`<button key=${t.label} type="button" className=${'tile' + (t.tone ? ' tile-' + t.tone : '')} onClick=${function () { setTab(t.go); }}>
+          <span className="tile-num"><${Num} n=${t.n} /></span><span className="tr-label">${t.label}</span></button>`;
+      })}</div>
       <${Seg} label="Coach sections" value=${tab} onChange=${setTab} options=${[['roster', 'Roster'], ['verify', 'Verify', requests.length || null], ['sparring', 'Sparring plan'], ['gradings', 'Gradings']]} />
       ${body}</div>`;
   }
@@ -1322,7 +1485,7 @@ window.TR_DATA = (function () {
     return html`<div className="stack">
       <div className="row-between"><p className="muted">Verify only what you have seen in person. Each verification is signed with your licence.</p>
         <${Button} variant="primary" icon="check" disabled=${!chosen.length}
-          onClick=${function () { act({ type: 'verify', items: chosen.map(function (r) { return { athlete: r.athlete.id, skill: r.skill, value: valueOf(r) }; }) }, 'Verified ' + chosen.length + ' skill' + (chosen.length === 1 ? '' : 's') + '.'); setSel({}); }}>Verify selected (${chosen.length})<//></div>
+          onClick=${function () { act({ type: 'verify', items: chosen.map(function (r) { return { athlete: r.athlete.id, skill: r.skill, value: valueOf(r) }; }) }, 'Verified ' + chosen.length + ' skill' + (chosen.length === 1 ? '' : 's') + '.', 'verified'); setSel({}); }}>Verify selected (${chosen.length})<//></div>
       <ul className="requests">${reqs.map(function (r) {
         var k = key(r);
         return html`<li key=${k} className="card request">
@@ -1332,7 +1495,7 @@ window.TR_DATA = (function () {
           <div className="tr-field request-value"><label htmlFor=${'rv-' + k}>Verify at</label>
             <select id=${'rv-' + k} value=${valueOf(r)} onChange=${function (e) { var o = Object.assign({}, values); o[k] = Number(e.target.value); setValues(o); }}>
               ${[10, 20, 30, 40, 50, 60, 70, 80, 90, 100].filter(function (v) { return v > r.x.value; }).map(function (v) { return html`<option key=${v} value=${v}>${v}%</option>`; })}</select></div>
-          <div className="btn-row"><${Button} size="sm" variant="primary" onClick=${function () { act({ type: 'verify', items: [{ athlete: r.athlete.id, skill: r.skill, value: valueOf(r) }] }, 'Verified ' + SKILL_NAMES[r.skill] + ' for ' + r.athlete.first + '.'); }}>Verify<//>
+          <div className="btn-row"><${Button} size="sm" variant="primary" onClick=${function () { act({ type: 'verify', items: [{ athlete: r.athlete.id, skill: r.skill, value: valueOf(r) }] }, 'Verified ' + SKILL_NAMES[r.skill] + ' for ' + r.athlete.first + '.', 'verified'); }}>Verify<//>
             <${Button} size="sm" variant="quiet" onClick=${function () { act({ type: 'notYet', athlete: r.athlete.id, skill: r.skill }, 'Sent back to ' + r.athlete.first + ': not yet.'); }}>Not yet<//></div>
         </li>`;
       })}</ul></div>`;
@@ -1369,7 +1532,7 @@ window.TR_DATA = (function () {
       return html`<li key=${g.id} className="card request">
         <div className="request-main"><p className="cell-name">${nameOf(a)} · ${LEVELS[g.from]} → ${LEVELS[g.to]}</p>
           <p className="small muted">Recommended by ${coachName(g.coach)} on ${fmt(g.on)}${g.decidedOn ? ' · decided ' + fmt(g.decidedOn) : ''}</p></div>
-        ${g.status === 'recommended' ? (official ? html`<div className="btn-row"><${Button} size="sm" variant="primary" onClick=${function () { act({ type: 'grading', id: g.id, approve: true }, nameOf(a) + ' promoted to ' + LEVELS[g.to] + '.'); }}>Approve promotion<//>
+        ${g.status === 'recommended' ? (official ? html`<div className="btn-row"><${Button} size="sm" variant="primary" onClick=${function () { act({ type: 'grading', id: g.id, approve: true }, nameOf(a) + ' promoted to ' + LEVELS[g.to] + '.', 'verified'); }}>Approve promotion<//>
             <${Button} size="sm" variant="quiet" onClick=${function () { act({ type: 'grading', id: g.id, approve: false }, 'Returned to the coach.'); }}>Return to coach<//></div>`
           : html`<${Badge} status="pending">Awaiting grading panel<//>`)
           : g.status === 'approved' ? html`<${Badge} status="verified">Approved<//>` : html`<${Badge}>Returned<//>`}
@@ -1380,7 +1543,7 @@ window.TR_DATA = (function () {
   /* ---------- officials' desk ---------- */
   function OfficialDesk(props) {
     var s = props.s, act = props.act;
-    var ts = useState('bout'), tab = ts[0], setTab = ts[1];
+    var tab = props.tab, setTab = props.setTab;
     var ms = useState(null), medFor = ms[0], setMedFor = ms[1];
     var pending = s.gradings.filter(function (g) { return g.status === 'recommended' && s.athletes[g.athlete]; }).length;
     var body;
@@ -1388,7 +1551,7 @@ window.TR_DATA = (function () {
     else if (tab === 'medical') body = html`<${MedicalDesk} s=${s} act=${act} initial=${medFor} />`;
     else body = html`<${Gradings} s=${s} mode="official" act=${act} />`;
     return html`<div className="portal">
-      <header className="portal-head"><div><p className="tr-label">Officials' desk · today · ${TONIGHT.city}</p><h1 className="scr-title tr-display">${TONIGHT.name}</h1>
+      <header className="portal-head"><div><p className="tr-label"><span className="live-dot" aria-hidden="true"></span>Officials' desk · today · ${TONIGHT.city}</p><h1 className="scr-title tr-display">${TONIGHT.name}</h1>
         <p className="muted">Bout sheets, medicals and gradings are written here, and only here.</p></div></header>
       <${Seg} label="Officials sections" value=${tab} onChange=${setTab} options=${[['bout', 'Bout result'], ['medical', 'Medical'], ['gradings', 'Grading panel', pending || null]]} />
       ${body}</div>`;
@@ -1415,7 +1578,7 @@ window.TR_DATA = (function () {
       var method = dec ? dec.method : f.method === 'Submission' ? 'Submission (' + f.sub + ')' : f.method;
       var bout = { id: uid(), athlete: a.id, event: f.event, city: TONIGHT.city, date: TODAY, corner: f.corner, opponent: f.opponent, oppNation: f.oppNation.toUpperCase(), result: result, method: method, round: dec ? 3 : Number(f.round), time: dec ? '3:00' : f.time, official: f.official };
       if (dec) bout.judges = f.judges;
-      act({ type: 'bout', bout: bout }, 'Bout sheet signed. ' + a.first + "'s record is updated.");
+      act({ type: 'bout', bout: bout }, 'Bout sheet signed. ' + a.first + "'s record is updated.", 'verified');
       setDone({ athlete: a, result: result, stoppage: result === 'loss' && /Referee stops/.test(method) });
     }
     if (!athletes.length) return html`<p className="muted">No athletes in the registry.</p>`;
@@ -1470,30 +1633,71 @@ window.TR_DATA = (function () {
         <${ClearanceCard} status=${m.status} title=${'Now: ' + medicalTitle(m)} until=${m.until ? fmt(m.until).toUpperCase() : null} issuedBy=${m.by} />
         <section className="card form"><h2 className="title">Record a pre-competition medical</h2>
           <${Field} id="md-until" label="Cleared to compete until" type="date" value=${until} min=${TODAY} onChange=${function (e) { setUntil(e.target.value); }} />
-          <${Button} variant="primary" icon="shield" onClick=${function () { act({ type: 'clear', athlete: a.id, until: until, by: by }, nameOf(a) + ' cleared until ' + fmt(until) + '.'); }}>Record clearance<//></section>
+          <${Button} variant="primary" icon="shield" onClick=${function () { act({ type: 'clear', athlete: a.id, until: until, by: by }, nameOf(a) + ' cleared until ' + fmt(until) + '.', 'cleared'); }}>Record clearance<//></section>
         <section className="card form"><h2 className="title">Issue a suspension</h2>
           <${Field} id="md-susp" label="No contact until" type="date" value=${suspUntil} min=${TODAY} onChange=${function (e) { setSuspUntil(e.target.value); }} />
           <div className="tr-field"><label htmlFor="md-reason">Category</label><select id="md-reason" value=${reason} onChange=${function (e) { setReason(e.target.value); }}>
             <option>Mandatory rest after a stoppage</option><option>Event doctor's decision</option></select></div>
-          <${Button} variant="danger" icon="ban" onClick=${function () { act({ type: 'suspend', athlete: a.id, until: suspUntil, reason: reason, by: by }, nameOf(a) + ' suspended until ' + fmt(suspUntil) + '. Their coach sees it now.'); }}>Issue suspension<//></section>
+          <${Button} variant="danger" icon="ban" onClick=${function () { act({ type: 'suspend', athlete: a.id, until: suspUntil, reason: reason, by: by }, nameOf(a) + ' suspended until ' + fmt(suspUntil) + '. Their coach sees it now.', 'stop'); }}>Issue suspension<//></section>
       </div></div>`;
   }
+
+  /* ---------- guided demo ---------- */
+  var GUIDE = [
+    { role: 'athlete', tab: 'pathway', title: 'Ask for a check', text: 'As Layla, open Pathway and tap “Ask coach to check” on any skill below 100%.' },
+    { role: 'coach', tab: 'verify', title: 'Verify it as the coach', text: 'The request is waiting for Coach Karim Nassar. Pick a level and verify it.' },
+    { role: 'official', tab: 'bout', title: 'Sign a bout sheet', text: 'Score three rounds as the officials. Signing writes the result to the athlete’s record.' },
+    { role: 'official', tab: 'medical', title: 'Issue a suspension', text: 'Record a post-stoppage suspension. The coach’s sparring plan blocks that athlete at once.' },
+    { role: 'athlete', tab: 'events', title: 'Check eligibility', text: 'Back as an athlete, try to register. Medical, suspension and level decide, not a form.' }
+  ];
+  function Guide(props) {
+    return html`<div className="guide">
+      <p className="tr-label guide-kicker">Guided demo · 2 minutes</p>
+      <h2 className="guide-title tr-display">One record,<br/>three roles</h2>
+      <p className="small muted">Every change you make here appears for the other roles straight away.</p>
+      <ol className="guide-steps">${GUIDE.map(function (g, i) {
+        var here = props.role === g.role && props.tab === g.tab;
+        return html`<li key=${g.title} className=${here ? 'here' : ''}>
+          <span className="guide-n" aria-hidden="true">${i + 1}</span>
+          <div className="guide-body"><p className="guide-step">${g.title}</p><p className="small muted">${g.text}</p>
+            <button type="button" className="link-btn" onClick=${function () { props.go(g.role, g.tab); }}>${here ? 'You are here' : 'Go there'} →</button></div>
+        </li>`;
+      })}</ol>
+      <p className="small muted">Changes stay in this browser. “Reset demo” restores the starting data.</p>
+    </div>`;
+  }
+
+  var TOAST_ICON = { verified: 'check', stop: 'ban', cleared: 'shield' };
 
   /* ---------- root ---------- */
   function App() {
     var st = useReducer(reducer, null, load), s = st[0], dispatch = st[1];
     var ts = useState(null), toast = ts[0], setToast = ts[1];
+    var ns = useState({ athlete: 'home', coach: 'roster', official: 'bout' }), nav = ns[0], setNav = ns[1];
+    var gs = useState(false), guideOpen = gs[0], setGuideOpen = gs[1];
     var timer = useRef(null);
     useEffect(function () { try { window.localStorage.setItem(STORE_KEY, JSON.stringify(s)); } catch (e) { /* storage blocked */ } }, [s]);
-    function act(a, msg) {
+    function act(a, msg, kind) {
       if (a.type !== 'noop') dispatch(a);
-      if (msg) { setToast(msg); clearTimeout(timer.current); timer.current = setTimeout(function () { setToast(null); }, 3200); }
+      if (msg) { setToast({ msg: msg, kind: kind || '' }); clearTimeout(timer.current); timer.current = setTimeout(function () { setToast(null); }, 4000); }
     }
-    var view = s.role === 'coach' ? html`<${CoachPortal} s=${s} act=${act} />` : s.role === 'official' ? html`<${OfficialDesk} s=${s} act=${act} />` : html`<${AthleteApp} s=${s} act=${act} />`;
+    function setTab(role) { return function (t) { setNav(function (cur) { var o = Object.assign({}, cur); o[role] = t; return o; }); }; }
+    function go(role, tab) {
+      if (role !== s.role) dispatch({ type: 'role', role: role });
+      setTab(role)(tab); setGuideOpen(false); window.scrollTo(0, 0);
+    }
+    var view = s.role === 'coach' ? html`<${CoachPortal} s=${s} act=${act} tab=${nav.coach} setTab=${setTab('coach')} />`
+      : s.role === 'official' ? html`<${OfficialDesk} s=${s} act=${act} tab=${nav.official} setTab=${setTab('official')} />`
+      : html`<${AthleteApp} s=${s} act=${act} tab=${nav.athlete} setTab=${setTab('athlete')} />`;
     return html`<div className="shell">
-      <${DemoBar} s=${s} act=${act} />
-      <div className="stage">${view}</div>
-      <div className="toast-zone" aria-live="polite">${toast ? html`<div className="toast" role="status">${toast}</div>` : null}</div>
+      <${DemoBar} s=${s} act=${act} openGuide=${function () { setGuideOpen(true); }} />
+      <div className=${'stage stage-' + s.role}>
+        <div className="stage-main">${view}</div>
+        ${s.role === 'athlete' ? html`<aside className="stage-guide" aria-label="Guided demo"><${Guide} role=${s.role} tab=${nav[s.role]} go=${go} /></aside>` : null}
+      </div>
+      ${guideOpen ? html`<${Sheet} title="How to demo" onClose=${function () { setGuideOpen(false); }}><${Guide} role=${s.role} tab=${nav[s.role]} go=${go} /><//>` : null}
+      <div className="toast-zone" aria-live="polite">${toast ? html`<div className=${'toast toast-' + (toast.kind || 'plain')} role="status">
+        ${TOAST_ICON[toast.kind] ? html`<span className="toast-icon"><${Icon} name=${TOAST_ICON[toast.kind]} size=${16} strokeWidth=${3} /></span>` : null}${toast.msg}</div>` : null}</div>
     </div>`;
   }
 

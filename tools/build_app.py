@@ -8,7 +8,7 @@ os.makedirs(out, exist_ok=True)
 read = lambda p: open(p, encoding='utf-8').read()
 
 tokens = compile_tokens(os.path.join(ds, 'tokens.json'),
-                        dark_selectors=['@media (prefers-color-scheme: dark)', ':root[data-theme="dark"]', '.share-card'])
+                        dark_selectors=['@media (prefers-color-scheme: dark)', ':root[data-theme="dark"]', '.theme-dark'])
 bundle_css = re.sub(r"^@import url\([^)]*\);\s*", '', read(os.path.join(ds, 'components', 'bundle.css')))
 assert '@import' not in bundle_css
 css = tokens + '\n' + bundle_css + '\n' + read(os.path.join(src, 'app.css'))

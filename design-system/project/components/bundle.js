@@ -73,14 +73,15 @@
     var head = [h('th', { key: 'j', scope: 'col' }, 'Judge')];
     for (var r = 0; r < rounds; r++) head.push(h('th', { key: 'r' + r, scope: 'col' }, 'R' + (r + 1)));
     head.push(h('th', { key: 't', scope: 'col', className: 'tr-sc-total' }, 'Total'));
+    // --i staggers the reveal: round by round across judges, then the totals.
     var rows = judges.map(function (j, ji) {
       var cells = [h('th', { key: 'n', scope: 'row' }, String(ji + 1))];
       j.forEach(function (pair, ri) {
-        cells.push(h('td', { key: ri }, h('span', { className: 'tr-sc-red' }, pair[0]), h('span', { className: 'tr-sc-sep' }, ':'), h('span', { className: 'tr-sc-blue' }, pair[1])));
+        cells.push(h('td', { key: ri, style: { '--i': ri * judges.length + ji } }, h('span', { className: 'tr-sc-red' }, pair[0]), h('span', { className: 'tr-sc-sep' }, ':'), h('span', { className: 'tr-sc-blue' }, pair[1])));
       });
       var tr = sum(j.map(function (p) { return p[0]; }));
       var tb = sum(j.map(function (p) { return p[1]; }));
-      cells.push(h('td', { key: 't', className: 'tr-sc-total' }, h('span', { className: 'tr-sc-red' }, tr), h('span', { className: 'tr-sc-sep' }, ':'), h('span', { className: 'tr-sc-blue' }, tb)));
+      cells.push(h('td', { key: 't', className: 'tr-sc-total', style: { '--i': rounds * judges.length + ji + 1 } }, h('span', { className: 'tr-sc-red' }, tr), h('span', { className: 'tr-sc-sep' }, ':'), h('span', { className: 'tr-sc-blue' }, tb)));
       return h('tr', { key: ji }, cells);
     });
     var result = props.result;
@@ -97,10 +98,36 @@
         props.verifiedBy ? h(Badge, { status: 'verified' }, props.verifiedBy) : null) : null);
   }
 
+  function reducedMotion() {
+    try { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return true; }
+  }
+
+  // Counts from 0 to `target` once on mount; instant under reduced motion.
+  function useCountUp(target, enabled, ms) {
+    var still = !enabled || reducedMotion() || document.hidden;
+    var st = React.useState(still ? target : 0), val = st[0], setVal = st[1];
+    React.useEffect(function () {
+      if (!enabled || reducedMotion() || document.hidden) { setVal(target); return; }
+      var start = null, raf;
+      function step(t) {
+        if (start === null) start = t;
+        var p = Math.min(1, (t - start) / (ms || 700));
+        setVal(Math.round(target * (1 - Math.pow(1 - p, 3))));
+        if (p < 1) raf = requestAnimationFrame(step);
+      }
+      raf = requestAnimationFrame(step);
+      // Frames pause in hidden tabs and thumbnail captures: always land on the real number.
+      var done = setTimeout(function () { setVal(target); }, (ms || 700) + 150);
+      return function () { cancelAnimationFrame(raf); clearTimeout(done); };
+    }, [target, enabled]);
+    return val;
+  }
+
   function Record(props) {
     var w = props.wins || 0, l = props.losses || 0, d = props.draws || 0;
+    var cw = useCountUp(w, props.animate), cl = useCountUp(l, props.animate), cd = useCountUp(d, props.animate);
     return h('div', { className: cx('tr-record', props.size === 'sm' && 'tr-record-sm', props.className), 'aria-label': w + ' wins, ' + l + ' losses, ' + d + ' draws' },
-      h('div', { className: 'tr-record-num' }, w + '-' + l + '-' + d),
+      h('div', { className: 'tr-record-num', 'aria-hidden': 'true' }, cw + '-' + cl + '-' + cd),
       h('div', { className: 'tr-record-key', 'aria-hidden': 'true' }, h('span', null, 'W'), h('span', null, 'L'), h('span', null, 'D')));
   }
 
@@ -120,7 +147,7 @@
     var value = Math.max(0, Math.min(100, props.value || 0));
     var filled = Math.round(value / 10);
     var segs = [];
-    for (var i = 0; i < 10; i++) segs.push(h('span', { key: i, className: i < filled ? 'on' : '' }));
+    for (var i = 0; i < 10; i++) segs.push(h('span', { key: i, className: i < filled ? 'on' : '', style: { '--i': i } }));
     var status = props.status || (value >= 100 ? 'verified' : 'neutral');
     return h('div', { className: cx('tr-skill', props.className) },
       h('div', { className: 'tr-skill-head' },
@@ -202,6 +229,6 @@
   window.TrueRound = {
     Button: Button, Badge: Badge, CornerTag: CornerTag, Icon: Icon, Scorecard: Scorecard, Record: Record,
     LevelLadder: LevelLadder, SkillMeter: SkillMeter, ClearanceCard: ClearanceCard, AthleteCard: AthleteCard,
-    Field: Field, Toggle: Toggle, BottomNav: BottomNav, icons: Object.keys(PATHS)
+    Field: Field, Toggle: Toggle, BottomNav: BottomNav, useCountUp: useCountUp, icons: Object.keys(PATHS)
   };
 })();

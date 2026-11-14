@@ -52,6 +52,25 @@ All three are Google Fonts and load from `components/bundle.css`. If the brand m
 - Corners are squared like printed cards: `radius-sm` on controls, `radius-md` on cards. Only round things are round: avatars, corner dots, toggles.
 - Lines do the separating, not shadows: `stroke-hairline` between rows, `stroke-rule` under headers and above totals, `stroke-heavy` for the corner stripe on a bout card.
 
+## Motion
+
+The record reveals itself once, the way a result is read out:
+- **Scorecard:** each judge's round scores tick in order, then the totals, then the result line, all within about a second.
+- **Skill meters and level ladder:** meters fill segment by segment, and the current level draws in.
+- **Records:** totals count up when `Record` gets `animate`. They always land on the real number, even in background tabs and thumbnails.
+
+Rules:
+- Motion plays on arrival and never loops.
+- Durations are 150–300ms for interface feedback and up to 900ms for a reveal.
+- Easing is a sharp ease-out (`cubic-bezier(.2, .8, .2, 1)`), never bouncy.
+- With reduced motion turned on, nothing moves and every value shows at once.
+
+## Texture
+
+Surfaces can carry a faint ruled-paper pattern: one hairline every 32px at about 4% ink, like the ruled sheet of a scorecard. Use it on the page background and on dark header cards, never behind running text.
+
+The three-round ring from the mark can appear large and cropped as a watermark: two arcs in faint ink, the third in gold. Use it once per screen at most.
+
 ## Logo
 
 The mark is a ring cut into three arcs, the three rounds of an amateur bout, with a gold check inside: the round, verified. The wordmark is drawn on a grid of 6px strokes to echo the scorecard's rules.

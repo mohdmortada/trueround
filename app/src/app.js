@@ -171,6 +171,14 @@
       <path d="M22.5 32.5L29 39L42 25.5" fill="none" className="mark-gold" strokeWidth="6" strokeLinecap="square"/></svg>`;
   }
 
+  // The three-round ring from the mark, used large as a watermark.
+  function Ring(props) {
+    return html`<svg className=${props.className} viewBox="0 0 64 64" aria-hidden="true">
+      <path className="ring-a" d="M36.2 10.4A22 22 0 0 1 52.8 39.16"/><path className="ring-a" d="M48.6 46.43A22 22 0 0 1 15.4 46.43"/><path className="ring-b" d="M11.2 39.16A22 22 0 0 1 27.8 10.4"/></svg>`;
+  }
+
+  function Num(props) { return T.useCountUp(props.n, true, 600); }
+
   function Sheet(props) {
     var ref = useRef(null);
     useEffect(function () {
@@ -205,7 +213,7 @@
     var s = props.s, act = props.act;
     var cs = useState(false), confirming = cs[0], setConfirming = cs[1];
     var athletes = Object.keys(s.athletes).map(function (k) { return s.athletes[k]; });
-    return html`<div className="demobar">
+    return html`<div className="demobar theme-dark">
       <div className="demobar-brand"><${Mark} size=${24} /><span className="wordmark">TrueRound</span><span className="demobar-tag">Concept prototype</span></div>
       <${Seg} label="Switch role" value=${s.role} onChange=${function (r) { act({ type: 'role', role: r }); }}
         options=${[['athlete', 'Athlete'], ['coach', 'Coach'], ['official', 'Official']]} />
@@ -214,6 +222,7 @@
           ${athletes.map(function (a) { return html`<option key=${a.id} value=${a.id}>${nameOf(a)}${isMinor(a) ? ' (under 18)' : ''}</option>`; })}
         </select></label>` : null}
       <span className="demobar-date">Demo date ${fmt(TODAY)}</span>
+      <button type="button" className="link-btn guide-btn" onClick=${props.openGuide}>How to demo</button>
       <button type="button" className="link-btn" onClick=${function () { setConfirming(true); }}>Reset demo</button>
       ${confirming ? html`<${Confirm} title="Reset the demo?" confirmLabel="Reset" danger=${true}
         onCancel=${function () { setConfirming(false); }} onConfirm=${function () { setConfirming(false); act({ type: 'reset' }, 'Demo data restored.'); }}>
@@ -227,7 +236,7 @@
   function AthleteApp(props) {
     var s = props.s, act = props.act;
     var a = s.athletes[s.viewAs];
-    var ts = useState('home'), tab = ts[0], setTab = ts[1];
+    var tab = props.tab, setTab = props.setTab;
     var ps = useState(false), profile = ps[0], setProfile = ps[1];
     var ss = useState(false), signup = ss[0], setSignup = ss[1];
     useEffect(function () { setProfile(false); }, [s.viewAs]);
@@ -265,11 +274,19 @@
     var feed = s.feed.filter(function (f) { return f.athlete === a.id; }).slice(0, 5);
     var grading = s.gradings.filter(function (g) { return g.athlete === a.id && g.status === 'recommended'; })[0];
     var KIND_ICON = { verified: 'check', result: 'card', medical: 'shield', review: 'clock' };
+    var rec = recordOf(s, a.id);
     return html`<div className="stack">
-      <header className="home-head">
-        <button type="button" className="avatar-btn" onClick=${p.openProfile} aria-label="Open your profile">${(a.first[0] + a.last[0]).toUpperCase()}</button>
-        <div className="home-hello"><p className="tr-label">${a.division} · ${a.weightClass}</p><h1 className="scr-title tr-display">${a.first}</h1></div>
-        <${Badge} status="verified">${LEVELS[a.level]}<//>
+      <header className="hero-card theme-dark">
+        <${Ring} className="hero-ring" />
+        <div className="hero-top">
+          <p className="tr-label">${a.division} · ${a.weightClass}${a.nation ? ' · ' + a.nation : ''}</p>
+          <button type="button" className="avatar-btn" onClick=${p.openProfile} aria-label="Open your profile">${(a.first[0] + a.last[0]).toUpperCase()}</button>
+        </div>
+        <h1 className="hero-name tr-display">${a.first}<br/>${isMinor(a) ? a.last.charAt(0) + '.' : a.last}</h1>
+        <div className="hero-stats">
+          <${Record} wins=${rec.wins} losses=${rec.losses} draws=${rec.draws} animate=${true} />
+          <div className="hero-level"><span className="tr-label">Level</span><span className="hero-level-name"><${Icon} name="check" size=${16} strokeWidth=${3} />${LEVELS[a.level]}</span></div>
+        </div>
       </header>
       <${ClearanceCard} status=${m.status} title=${medicalTitle(m)} until=${m.until ? fmt(m.until).toUpperCase() : null} issuedBy=${m.by}>
         ${m.status === 'suspended' ? html`<p className="small">${m.reason}. Your coach can't book you for contact sparring until then.</p>` : null}
@@ -328,7 +345,7 @@
     return html`<div className="stack">
       <${ScreenHead} eyebrow="Verified record" title="Record" />
       <section className="card record-hero">
-        <${Record} wins=${rec.wins} losses=${rec.losses} draws=${rec.draws} />
+        <${Record} wins=${rec.wins} losses=${rec.losses} draws=${rec.draws} animate=${true} />
         <p className="small muted">${list.length} bouts. Every result here was written by the event's officials from a signed bout sheet. You can't add or edit one yourself.</p>
       </section>
       ${list.length ? html`<ul className="bouts">${list.map(function (b) {
@@ -399,7 +416,7 @@
         <p className="muted">${ev.city} · ${fmt(ev.date)} · ${isMinor(a) ? 'Junior' : 'Senior'} ${a.weightClass}</p>
         <ul className="checks">${checks.map(function (c, i) { return html`<li key=${i} className=${c.ok ? 'ok' : 'no'}><${Icon} name=${c.ok ? 'check' : 'ban'} size=${18} /><span>${c.label}</span></li>`; })}</ul>
         <div className="btn-row"><${Button} variant="primary" block=${true} disabled=${!ok}
-          onClick=${function () { act({ type: 'register', event: ev.id, athlete: a.id }, 'Registered for ' + ev.name + '.'); setChecking(null); }}>${ok ? 'Register' : 'Not eligible yet'}<//></div>
+          onClick=${function () { act({ type: 'register', event: ev.id, athlete: a.id }, 'Registered for ' + ev.name + '.', 'cleared'); setChecking(null); }}>${ok ? 'Register' : 'Not eligible yet'}<//></div>
       <//>` : null}
     </div>`;
   }
@@ -434,7 +451,7 @@
         <${Button} size="sm" onClick=${p.startSignup}>Start sign-up flow<//></section>
       <p className="small muted about">TrueRound is a concept prototype prepared for a partnership proposal. It is not an official product of GAMMA or of any federation. Every athlete, coach, gym, official and event in it is fictional.</p>
       ${view === 'share' ? html`<${Sheet} title="Share card" onClose=${function () { setView(null); }}>
-        <div className="share-card" data-theme="dark">
+        <div className="share-card theme-dark">
           <div className="share-top"><${Mark} size=${28} /><span className="wordmark">TrueRound</span></div>
           <p className="tr-label share-kicker">Verified record</p>
           <p className="share-name tr-display">${a.first}<br/>${a.last}</p>
@@ -512,7 +529,15 @@
     var roster = Object.keys(s.athletes).map(function (k) { return s.athletes[k]; }).filter(function (a) { return a.coach === 'karim'; });
     var requests = [];
     roster.forEach(function (a) { Object.keys(a.skills).forEach(function (k) { if (a.skills[k].status === 'pending') requests.push({ athlete: a, skill: k, x: a.skills[k] }); }); });
-    var ts = useState('roster'), tab = ts[0], setTab = ts[1];
+    var tab = props.tab, setTab = props.setTab;
+    var suspended = roster.filter(function (a) { return medical(a).status === 'suspended'; }).length;
+    var due = roster.filter(function (a) { var m = medical(a); return m.status === 'pending'; }).length;
+    var tiles = [
+      { label: 'Athletes', n: roster.length, go: 'roster' },
+      { label: 'Checks waiting', n: requests.length, go: 'verify', tone: requests.length ? 'caution' : '' },
+      { label: 'Suspended', n: suspended, go: 'sparring', tone: suspended ? 'stop' : '' },
+      { label: 'Medical due', n: due, go: 'roster', tone: due ? 'caution' : '' }
+    ];
     var body;
     if (tab === 'roster') body = html`<${CoachRoster} s=${s} roster=${roster} act=${act} />`;
     else if (tab === 'verify') body = html`<${CoachVerify} requests=${requests} act=${act} />`;
@@ -522,6 +547,10 @@
       <header className="portal-head"><div><p className="tr-label">Coach portal · synced with the app</p><h1 className="scr-title tr-display">${coach.name}</h1>
         <p className="muted">${coach.gym} · ${coach.licence}</p></div>
         <p className="small muted portal-scope"><${Icon} name="lock" size=${16} /> You see only athletes assigned to you.</p></header>
+      <div className="tiles">${tiles.map(function (t) {
+        return html`<button key=${t.label} type="button" className=${'tile' + (t.tone ? ' tile-' + t.tone : '')} onClick=${function () { setTab(t.go); }}>
+          <span className="tile-num"><${Num} n=${t.n} /></span><span className="tr-label">${t.label}</span></button>`;
+      })}</div>
       <${Seg} label="Coach sections" value=${tab} onChange=${setTab} options=${[['roster', 'Roster'], ['verify', 'Verify', requests.length || null], ['sparring', 'Sparring plan'], ['gradings', 'Gradings']]} />
       ${body}</div>`;
   }
@@ -555,7 +584,7 @@
     return html`<div className="stack">
       <div className="row-between"><p className="muted">Verify only what you have seen in person. Each verification is signed with your licence.</p>
         <${Button} variant="primary" icon="check" disabled=${!chosen.length}
-          onClick=${function () { act({ type: 'verify', items: chosen.map(function (r) { return { athlete: r.athlete.id, skill: r.skill, value: valueOf(r) }; }) }, 'Verified ' + chosen.length + ' skill' + (chosen.length === 1 ? '' : 's') + '.'); setSel({}); }}>Verify selected (${chosen.length})<//></div>
+          onClick=${function () { act({ type: 'verify', items: chosen.map(function (r) { return { athlete: r.athlete.id, skill: r.skill, value: valueOf(r) }; }) }, 'Verified ' + chosen.length + ' skill' + (chosen.length === 1 ? '' : 's') + '.', 'verified'); setSel({}); }}>Verify selected (${chosen.length})<//></div>
       <ul className="requests">${reqs.map(function (r) {
         var k = key(r);
         return html`<li key=${k} className="card request">
@@ -565,7 +594,7 @@
           <div className="tr-field request-value"><label htmlFor=${'rv-' + k}>Verify at</label>
             <select id=${'rv-' + k} value=${valueOf(r)} onChange=${function (e) { var o = Object.assign({}, values); o[k] = Number(e.target.value); setValues(o); }}>
               ${[10, 20, 30, 40, 50, 60, 70, 80, 90, 100].filter(function (v) { return v > r.x.value; }).map(function (v) { return html`<option key=${v} value=${v}>${v}%</option>`; })}</select></div>
-          <div className="btn-row"><${Button} size="sm" variant="primary" onClick=${function () { act({ type: 'verify', items: [{ athlete: r.athlete.id, skill: r.skill, value: valueOf(r) }] }, 'Verified ' + SKILL_NAMES[r.skill] + ' for ' + r.athlete.first + '.'); }}>Verify<//>
+          <div className="btn-row"><${Button} size="sm" variant="primary" onClick=${function () { act({ type: 'verify', items: [{ athlete: r.athlete.id, skill: r.skill, value: valueOf(r) }] }, 'Verified ' + SKILL_NAMES[r.skill] + ' for ' + r.athlete.first + '.', 'verified'); }}>Verify<//>
             <${Button} size="sm" variant="quiet" onClick=${function () { act({ type: 'notYet', athlete: r.athlete.id, skill: r.skill }, 'Sent back to ' + r.athlete.first + ': not yet.'); }}>Not yet<//></div>
         </li>`;
       })}</ul></div>`;
@@ -602,7 +631,7 @@
       return html`<li key=${g.id} className="card request">
         <div className="request-main"><p className="cell-name">${nameOf(a)} · ${LEVELS[g.from]} → ${LEVELS[g.to]}</p>
           <p className="small muted">Recommended by ${coachName(g.coach)} on ${fmt(g.on)}${g.decidedOn ? ' · decided ' + fmt(g.decidedOn) : ''}</p></div>
-        ${g.status === 'recommended' ? (official ? html`<div className="btn-row"><${Button} size="sm" variant="primary" onClick=${function () { act({ type: 'grading', id: g.id, approve: true }, nameOf(a) + ' promoted to ' + LEVELS[g.to] + '.'); }}>Approve promotion<//>
+        ${g.status === 'recommended' ? (official ? html`<div className="btn-row"><${Button} size="sm" variant="primary" onClick=${function () { act({ type: 'grading', id: g.id, approve: true }, nameOf(a) + ' promoted to ' + LEVELS[g.to] + '.', 'verified'); }}>Approve promotion<//>
             <${Button} size="sm" variant="quiet" onClick=${function () { act({ type: 'grading', id: g.id, approve: false }, 'Returned to the coach.'); }}>Return to coach<//></div>`
           : html`<${Badge} status="pending">Awaiting grading panel<//>`)
           : g.status === 'approved' ? html`<${Badge} status="verified">Approved<//>` : html`<${Badge}>Returned<//>`}
@@ -613,7 +642,7 @@
   /* ---------- officials' desk ---------- */
   function OfficialDesk(props) {
     var s = props.s, act = props.act;
-    var ts = useState('bout'), tab = ts[0], setTab = ts[1];
+    var tab = props.tab, setTab = props.setTab;
     var ms = useState(null), medFor = ms[0], setMedFor = ms[1];
     var pending = s.gradings.filter(function (g) { return g.status === 'recommended' && s.athletes[g.athlete]; }).length;
     var body;
@@ -621,7 +650,7 @@
     else if (tab === 'medical') body = html`<${MedicalDesk} s=${s} act=${act} initial=${medFor} />`;
     else body = html`<${Gradings} s=${s} mode="official" act=${act} />`;
     return html`<div className="portal">
-      <header className="portal-head"><div><p className="tr-label">Officials' desk · today · ${TONIGHT.city}</p><h1 className="scr-title tr-display">${TONIGHT.name}</h1>
+      <header className="portal-head"><div><p className="tr-label"><span className="live-dot" aria-hidden="true"></span>Officials' desk · today · ${TONIGHT.city}</p><h1 className="scr-title tr-display">${TONIGHT.name}</h1>
         <p className="muted">Bout sheets, medicals and gradings are written here, and only here.</p></div></header>
       <${Seg} label="Officials sections" value=${tab} onChange=${setTab} options=${[['bout', 'Bout result'], ['medical', 'Medical'], ['gradings', 'Grading panel', pending || null]]} />
       ${body}</div>`;
@@ -648,7 +677,7 @@
       var method = dec ? dec.method : f.method === 'Submission' ? 'Submission (' + f.sub + ')' : f.method;
       var bout = { id: uid(), athlete: a.id, event: f.event, city: TONIGHT.city, date: TODAY, corner: f.corner, opponent: f.opponent, oppNation: f.oppNation.toUpperCase(), result: result, method: method, round: dec ? 3 : Number(f.round), time: dec ? '3:00' : f.time, official: f.official };
       if (dec) bout.judges = f.judges;
-      act({ type: 'bout', bout: bout }, 'Bout sheet signed. ' + a.first + "'s record is updated.");
+      act({ type: 'bout', bout: bout }, 'Bout sheet signed. ' + a.first + "'s record is updated.", 'verified');
       setDone({ athlete: a, result: result, stoppage: result === 'loss' && /Referee stops/.test(method) });
     }
     if (!athletes.length) return html`<p className="muted">No athletes in the registry.</p>`;
@@ -703,30 +732,71 @@
         <${ClearanceCard} status=${m.status} title=${'Now: ' + medicalTitle(m)} until=${m.until ? fmt(m.until).toUpperCase() : null} issuedBy=${m.by} />
         <section className="card form"><h2 className="title">Record a pre-competition medical</h2>
           <${Field} id="md-until" label="Cleared to compete until" type="date" value=${until} min=${TODAY} onChange=${function (e) { setUntil(e.target.value); }} />
-          <${Button} variant="primary" icon="shield" onClick=${function () { act({ type: 'clear', athlete: a.id, until: until, by: by }, nameOf(a) + ' cleared until ' + fmt(until) + '.'); }}>Record clearance<//></section>
+          <${Button} variant="primary" icon="shield" onClick=${function () { act({ type: 'clear', athlete: a.id, until: until, by: by }, nameOf(a) + ' cleared until ' + fmt(until) + '.', 'cleared'); }}>Record clearance<//></section>
         <section className="card form"><h2 className="title">Issue a suspension</h2>
           <${Field} id="md-susp" label="No contact until" type="date" value=${suspUntil} min=${TODAY} onChange=${function (e) { setSuspUntil(e.target.value); }} />
           <div className="tr-field"><label htmlFor="md-reason">Category</label><select id="md-reason" value=${reason} onChange=${function (e) { setReason(e.target.value); }}>
             <option>Mandatory rest after a stoppage</option><option>Event doctor's decision</option></select></div>
-          <${Button} variant="danger" icon="ban" onClick=${function () { act({ type: 'suspend', athlete: a.id, until: suspUntil, reason: reason, by: by }, nameOf(a) + ' suspended until ' + fmt(suspUntil) + '. Their coach sees it now.'); }}>Issue suspension<//></section>
+          <${Button} variant="danger" icon="ban" onClick=${function () { act({ type: 'suspend', athlete: a.id, until: suspUntil, reason: reason, by: by }, nameOf(a) + ' suspended until ' + fmt(suspUntil) + '. Their coach sees it now.', 'stop'); }}>Issue suspension<//></section>
       </div></div>`;
   }
+
+  /* ---------- guided demo ---------- */
+  var GUIDE = [
+    { role: 'athlete', tab: 'pathway', title: 'Ask for a check', text: 'As Layla, open Pathway and tap “Ask coach to check” on any skill below 100%.' },
+    { role: 'coach', tab: 'verify', title: 'Verify it as the coach', text: 'The request is waiting for Coach Karim Nassar. Pick a level and verify it.' },
+    { role: 'official', tab: 'bout', title: 'Sign a bout sheet', text: 'Score three rounds as the officials. Signing writes the result to the athlete’s record.' },
+    { role: 'official', tab: 'medical', title: 'Issue a suspension', text: 'Record a post-stoppage suspension. The coach’s sparring plan blocks that athlete at once.' },
+    { role: 'athlete', tab: 'events', title: 'Check eligibility', text: 'Back as an athlete, try to register. Medical, suspension and level decide, not a form.' }
+  ];
+  function Guide(props) {
+    return html`<div className="guide">
+      <p className="tr-label guide-kicker">Guided demo · 2 minutes</p>
+      <h2 className="guide-title tr-display">One record,<br/>three roles</h2>
+      <p className="small muted">Every change you make here appears for the other roles straight away.</p>
+      <ol className="guide-steps">${GUIDE.map(function (g, i) {
+        var here = props.role === g.role && props.tab === g.tab;
+        return html`<li key=${g.title} className=${here ? 'here' : ''}>
+          <span className="guide-n" aria-hidden="true">${i + 1}</span>
+          <div className="guide-body"><p className="guide-step">${g.title}</p><p className="small muted">${g.text}</p>
+            <button type="button" className="link-btn" onClick=${function () { props.go(g.role, g.tab); }}>${here ? 'You are here' : 'Go there'} →</button></div>
+        </li>`;
+      })}</ol>
+      <p className="small muted">Changes stay in this browser. “Reset demo” restores the starting data.</p>
+    </div>`;
+  }
+
+  var TOAST_ICON = { verified: 'check', stop: 'ban', cleared: 'shield' };
 
   /* ---------- root ---------- */
   function App() {
     var st = useReducer(reducer, null, load), s = st[0], dispatch = st[1];
     var ts = useState(null), toast = ts[0], setToast = ts[1];
+    var ns = useState({ athlete: 'home', coach: 'roster', official: 'bout' }), nav = ns[0], setNav = ns[1];
+    var gs = useState(false), guideOpen = gs[0], setGuideOpen = gs[1];
     var timer = useRef(null);
     useEffect(function () { try { window.localStorage.setItem(STORE_KEY, JSON.stringify(s)); } catch (e) { /* storage blocked */ } }, [s]);
-    function act(a, msg) {
+    function act(a, msg, kind) {
       if (a.type !== 'noop') dispatch(a);
-      if (msg) { setToast(msg); clearTimeout(timer.current); timer.current = setTimeout(function () { setToast(null); }, 3200); }
+      if (msg) { setToast({ msg: msg, kind: kind || '' }); clearTimeout(timer.current); timer.current = setTimeout(function () { setToast(null); }, 4000); }
     }
-    var view = s.role === 'coach' ? html`<${CoachPortal} s=${s} act=${act} />` : s.role === 'official' ? html`<${OfficialDesk} s=${s} act=${act} />` : html`<${AthleteApp} s=${s} act=${act} />`;
+    function setTab(role) { return function (t) { setNav(function (cur) { var o = Object.assign({}, cur); o[role] = t; return o; }); }; }
+    function go(role, tab) {
+      if (role !== s.role) dispatch({ type: 'role', role: role });
+      setTab(role)(tab); setGuideOpen(false); window.scrollTo(0, 0);
+    }
+    var view = s.role === 'coach' ? html`<${CoachPortal} s=${s} act=${act} tab=${nav.coach} setTab=${setTab('coach')} />`
+      : s.role === 'official' ? html`<${OfficialDesk} s=${s} act=${act} tab=${nav.official} setTab=${setTab('official')} />`
+      : html`<${AthleteApp} s=${s} act=${act} tab=${nav.athlete} setTab=${setTab('athlete')} />`;
     return html`<div className="shell">
-      <${DemoBar} s=${s} act=${act} />
-      <div className="stage">${view}</div>
-      <div className="toast-zone" aria-live="polite">${toast ? html`<div className="toast" role="status">${toast}</div>` : null}</div>
+      <${DemoBar} s=${s} act=${act} openGuide=${function () { setGuideOpen(true); }} />
+      <div className=${'stage stage-' + s.role}>
+        <div className="stage-main">${view}</div>
+        ${s.role === 'athlete' ? html`<aside className="stage-guide" aria-label="Guided demo"><${Guide} role=${s.role} tab=${nav[s.role]} go=${go} /></aside>` : null}
+      </div>
+      ${guideOpen ? html`<${Sheet} title="How to demo" onClose=${function () { setGuideOpen(false); }}><${Guide} role=${s.role} tab=${nav[s.role]} go=${go} /><//>` : null}
+      <div className="toast-zone" aria-live="polite">${toast ? html`<div className=${'toast toast-' + (toast.kind || 'plain')} role="status">
+        ${TOAST_ICON[toast.kind] ? html`<span className="toast-icon"><${Icon} name=${TOAST_ICON[toast.kind]} size=${16} strokeWidth=${3} /></span>` : null}${toast.msg}</div>` : null}</div>
     </div>`;
   }
 

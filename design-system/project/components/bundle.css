@@ -18,7 +18,7 @@ body { margin: 0; font-family: var(--font-sans); font-size: 16px; line-height: 2
 .tr-btn-primary:hover { background: var(--ink); opacity: .88; }
 .tr-btn-quiet { background: transparent; border-color: transparent; color: var(--ink); }
 .tr-btn-danger { background: var(--surface); border-color: var(--stop); color: var(--stop); }
-.tr-btn-sm { height: 32px; font-size: 13px; padding: 0 var(--space-3); }
+.tr-btn-sm { height: 40px; font-size: 14px; padding: 0 var(--space-4); }
 .tr-btn-block { width: 100%; }
 
 /* Badge */
@@ -126,9 +126,22 @@ body { margin: 0; font-family: var(--font-sans); font-size: 16px; line-height: 2
 
 /* Bottom nav */
 .tr-nav { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; background: var(--surface); border-top: var(--stroke-hairline) solid var(--line); }
-.tr-nav-item { position: relative; display: grid; justify-items: center; gap: 2px; padding: var(--space-2) 0 var(--space-2); border: 0; background: none; font: inherit; font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: .04em; color: var(--ink-muted); cursor: pointer; }
+.tr-nav-item { position: relative; display: grid; justify-items: center; align-content: center; gap: 2px; min-height: 56px; padding: var(--space-2) 0 var(--space-2); border: 0; background: none; font: inherit; font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: .04em; color: var(--ink-muted); cursor: pointer; }
 .tr-nav-item.is-active { color: var(--ink); }
 .tr-nav-item.is-active::before { content: ""; position: absolute; top: 0; left: 30%; right: 30%; height: 3px; background: var(--ink); }
 .tr-nav-dot { position: absolute; top: 6px; left: calc(50% + 8px); width: 8px; height: 8px; border-radius: var(--radius-full); background: var(--gold-mark); }
 
-@media (prefers-reduced-motion: reduce) { .tr-btn, .tr-switch, .tr-switch-knob { transition: none; } }
+/* Motion: the record reveals itself once, on mount. Scores tick in round by round, meters fill
+   segment by segment, the current level draws in. Nothing loops, and nothing moves under reduced motion. */
+@keyframes tr-rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes tr-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.tr-skill-meter span.on { transform-origin: left center; animation: tr-fill .28s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i, 0) * 35ms); }
+.tr-ladder-current .tr-ladder-bar { transform-origin: left center; animation: tr-fill .45s cubic-bezier(.2, .8, .2, 1) .15s both; }
+.tr-sc-table tbody td { animation: tr-rise .26s ease-out both; animation-delay: calc(120ms + var(--i, 0) * 55ms); }
+.tr-sc-result { animation: tr-rise .3s ease-out .9s both; }
+.tr-nav-item.is-active::before { animation: tr-fill .2s ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tr-btn, .tr-switch, .tr-switch-knob { transition: none; }
+  .tr-skill-meter span.on, .tr-ladder-current .tr-ladder-bar, .tr-sc-table tbody td, .tr-sc-result, .tr-nav-item.is-active::before { animation: none; }
+}
