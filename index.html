@@ -472,10 +472,10 @@ select { font: inherit; height: 44px; padding: 0 var(--space-3); border-radius: 
 .stage-main { min-width: 0; width: 100%; }
 .stage-coach, .stage-official { grid-template-columns: minmax(0, 1080px); }
 .stage-athlete { grid-template-columns: minmax(0, 440px); }
-@media (min-width: 521px) { .stage-athlete { grid-template-columns: 410px; } }
+@media (min-width: 521px) { .stage-athlete { grid-template-columns: auto; } }
 .stage-guide { display: none; }
 @media (min-width: 1040px) {
-  .stage-athlete { grid-template-columns: 410px 340px; }
+  .stage-athlete { grid-template-columns: auto 340px; }
   .stage-guide { display: block; position: sticky; top: calc(88px + env(safe-area-inset-top, 0px)); }
 }
 
@@ -561,7 +561,9 @@ select { font: inherit; height: 44px; padding: 0 var(--space-3); border-radius: 
 .date-day { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 24px; line-height: 26px; font-weight: 600; }
 .date-mon { font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
 .next-event { justify-content: flex-start; }
-.next-event-text { display: grid; gap: 2px; flex: 1; min-width: 0; }
+.next-event-text { container-type: inline-size; display: grid; gap: 2px; flex: 1; min-width: 0; }
+/* Headings sized by their longest word (set as --chars), so a word never breaks in the middle. */
+.headline.fit { font-size: min(20px, calc(100cqi / (var(--chars, 8) * 1.05))); overflow-wrap: normal; }
 .event-row { display: flex; align-items: center; gap: var(--space-3); }
 
 /* ---------- how the wins came: ring gauges ---------- */
@@ -609,7 +611,8 @@ body { background: var(--surface-sunken); }
 /* ---------- device frame on wide screens ---------- */
 .phone-status { display: none; }
 @media (min-width: 521px) {
-  .phone { width: 410px; max-width: 410px; height: min(864px, calc(100vh - 150px)); min-height: 600px; border: 10px solid #0b0d0f; border-radius: 54px; box-shadow: 0 0 0 1px #3a3f44, 0 30px 60px #0f121433, 0 8px 20px #0f12141f; overflow: hidden; transform: translateZ(0); grid-template-rows: auto minmax(0, 1fr) auto; }
+  /* A 390 x 844 screen plus a 10px bezel, zoomed as a whole (--pz, set in app.js) so it keeps a phone's shape. */
+  .phone { width: 410px; max-width: none; height: 864px; min-height: 0; zoom: var(--pz, 1); border: 10px solid #0b0d0f; border-radius: 54px; box-shadow: 0 0 0 1px #3a3f44, 0 30px 60px #0f121433, 0 8px 20px #0f12141f; overflow: hidden; transform: translateZ(0); grid-template-rows: auto minmax(0, 1fr) auto; }
   .phone-status { position: relative; z-index: 6; display: flex; align-items: center; justify-content: space-between; height: 46px; padding: 0 30px 0 34px; font-family: var(--font-sans); font-size: 14px; font-weight: 600; background: var(--canvas); color: var(--ink); }
   .phone:has(.dark-top) .phone-status { background: #0e1012; color: #eeeeea; }
   .phone-island { position: absolute; left: 50%; top: 10px; width: 112px; height: 30px; margin-left: -56px; border-radius: 20px; background: #0b0d0f; }
@@ -627,13 +630,18 @@ body { background: var(--surface-sunken); }
 
 /* ---------- home ---------- */
 .home-top { display: flex; align-items: center; gap: var(--space-3); }
-.home-hello { display: grid; margin-right: auto; min-width: 0; }
-.home-name { font-weight: 900; font-size: 26px; line-height: 28px; overflow-wrap: anywhere; }
+.home-hello { container-type: inline-size; flex: 1; display: grid; min-width: 0; }
+.home-greet { display: flex; justify-content: space-between; align-items: center; gap: var(--space-2); }
+.home-name { font-weight: 900; font-size: min(26px, calc(100cqi / (var(--chars, 6) * 1.05))); line-height: 1.08; }
 .next-up { position: relative; overflow: hidden; display: grid; gap: var(--space-3); padding: var(--space-5); border-radius: 14px; background: var(--canvas); color: var(--ink); border-top: 3px solid var(--gold-mark); box-shadow: var(--shadow-lg); }
 .next-ring { position: absolute; right: -96px; bottom: -118px; width: 230px; height: 230px; fill: none; stroke-width: 7; pointer-events: none; }
 .next-ring .ring-a, .fp-ring .ring-a, .onb-ring .ring-a { stroke: var(--ring-ink); }
 .next-ring .ring-b, .fp-ring .ring-b, .onb-ring .ring-b { stroke: var(--gold-mark); opacity: .5; }
-.next-kicker { position: relative; color: var(--gold); }
+.next-head { position: relative; display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); }
+.next-kicker { color: var(--gold); }
+.next-count { display: flex; align-items: baseline; gap: 6px; }
+.next-count .countdown-num { font-size: 26px; line-height: 28px; }
+.next-count .tr-label { color: var(--ink-muted); }
 .next-up .next-event, .next-up .btn-row, .next-empty { position: relative; }
 .next-empty { display: grid; gap: var(--space-1); }
 .next-up .countdown { border-color: var(--line); }
@@ -723,11 +731,11 @@ button.fp-last:focus-visible { outline: 2px solid var(--focus-ring); outline-off
 /* ---------- onboarding ---------- */
 .phone-onb { display: flex; flex-direction: column; }
 .onb { flex: 1; min-height: 100%; display: flex; flex-direction: column; gap: var(--space-5); }
-.onb-hero-screen { position: relative; overflow: hidden; margin: calc(-1 * var(--space-5)) calc(-1 * var(--space-4)) calc(-1 * var(--space-8)); padding: var(--space-6) var(--space-6) var(--space-8); background: var(--canvas); color: var(--ink); background-image: repeating-linear-gradient(180deg, transparent 0 31px, var(--texture) 31px 32px); }
+.onb-hero-screen { container-type: inline-size; position: relative; overflow: hidden; margin: calc(-1 * var(--space-5)) calc(-1 * var(--space-4)) calc(-1 * var(--space-8)); padding: var(--space-6) var(--space-6) var(--space-8); background: var(--canvas); color: var(--ink); background-image: repeating-linear-gradient(180deg, transparent 0 31px, var(--texture) 31px 32px); }
 .onb-hero-screen > * { position: relative; }
 .onb-hero-screen > .onb-ring { position: absolute; right: -120px; top: -100px; width: 360px; height: 360px; fill: none; stroke-width: 6; pointer-events: none; }
 .onb-brand { display: flex; align-items: center; gap: var(--space-2); }
-.onb-hero { font-weight: 900; font-size: 40px; line-height: 38px; margin-top: var(--space-6); }
+.onb-hero { font-weight: 900; font-size: min(40px, calc(100cqi / (var(--chars, 8) * 1.05))); line-height: .95; margin-top: var(--space-6); }
 .onb-points, .safety-list, .next-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4); }
 .onb-points li, .safety-list li, .next-steps li { display: grid; grid-template-columns: 40px 1fr; gap: var(--space-3); align-items: start; }
 .onb-points strong, .safety-list strong, .next-steps strong { display: block; font-size: 15px; line-height: 20px; }
@@ -1184,6 +1192,10 @@ window.TR_DATA = (function () {
   document.documentElement.setAttribute('data-theme', 'light');
   // First visit: open on the onboarding welcome instead of the demo athlete.
   var FIRST_VISIT = (function () { try { return !window.localStorage.getItem(STORE_KEY); } catch (e) { return false; } })();
+  // On wide screens the phone is laid out at a real phone's size (390 x 844 plus bezel), then zoomed to fit the window height.
+  function fitPhone() { var z = Math.min(1, Math.max(0.7, (window.innerHeight - 120) / 864)); document.documentElement.style.setProperty('--pz', z.toFixed(3)); }
+  fitPhone();
+  window.addEventListener('resize', fitPhone);
 
   /* ---------- helpers ---------- */
   var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -1364,6 +1376,10 @@ window.TR_DATA = (function () {
   function initialsOf(a) { return (a.first.charAt(0) + a.last.charAt(0)).toUpperCase(); }
   // Longest line of a stacked display name; the CSS sizes the type so it fits.
   function nameChars(a) { return { '--chars': Math.max(6, a.first.length, isMinor(a) ? 2 : a.last.length) }; }
+  // The same for any heading: its longest word sets the size, so no word ever breaks in the middle.
+  function fit(text, min) {
+    return { '--chars': Math.max(min || 6, Math.max.apply(null, String(text).split(/\s+/).map(function (w) { return w.length; }))) };
+  }
   // Under-18s never show a photo, whatever the record holds.
   // A photo is either a key into TR_PHOTOS or one the athlete uploaded during onboarding.
   function photoOf(a) {
@@ -1524,15 +1540,15 @@ window.TR_DATA = (function () {
     return html`<div className="stack">
       <header className="home-top">
         <button type="button" className="avatar-btn" onClick=${p.openProfile} aria-label="Open your fighter page"><${Face} a=${a} size=${48} /></button>
-        <div className="home-hello"><p className="small muted">${a.since === TODAY ? 'Welcome' : 'Welcome back'}</p><h1 className="home-name tr-display">${a.first}</h1></div>
-        <${LevelPill} level=${a.level} />
+        <div className="home-hello"><div className="home-greet"><p className="small muted">${a.since === TODAY ? 'Welcome' : 'Welcome back'}</p><${LevelPill} level=${a.level} /></div>
+          <h1 className="home-name tr-display" style=${fit(a.first, 5)}>${a.first}</h1></div>
       </header>
       ${a.joinStatus === 'pending' ? html`<p className="note"><${Icon} name="clock" size=${16} /> Your join request is with Coach ${coachName(a.coach)}. Skill checks open once you're on the roster.</p>` : null}
       <section className="next-up theme-dark">
         <${Ring} className="next-ring" />
-        <p className="tr-label next-kicker">Next up</p>
-        ${reg ? html`<div className="next-event"><${DateTile} date=${reg.ev.date} /><div className="next-event-text"><p className="headline tr-display">${reg.ev.name}</p><p className="small muted">${reg.ev.city} · ${reg.weightClass} · registered</p></div>
-          <div className="countdown"><span className="countdown-num"><${Num} n=${days(TODAY, reg.ev.date)} /></span><span className="tr-label">days</span></div></div>`
+        <div className="next-head"><p className="tr-label next-kicker">Next up</p>
+          ${reg ? html`<span className="next-count"><span className="countdown-num"><${Num} n=${days(TODAY, reg.ev.date)} /></span><span className="tr-label">days to go</span></span>` : null}</div>
+        ${reg ? html`<div className="next-event"><${DateTile} date=${reg.ev.date} /><div className="next-event-text"><p className="headline tr-display fit" style=${fit(reg.ev.name)}>${reg.ev.name}</p><p className="small muted">${reg.ev.city} · ${reg.weightClass} · registered</p></div></div>`
           : html`<div className="next-empty"><p className="headline tr-display">No event yet</p><p className="small muted">Pick one and the app checks your eligibility before you register.</p></div>`}
         <div className="btn-row"><${Button} size="sm" variant=${reg ? 'secondary' : 'primary'} onClick=${function () { p.go('events'); }}>${reg ? 'All events' : 'Browse events'}<//></div>
       </section>
@@ -1801,7 +1817,7 @@ window.TR_DATA = (function () {
         var reg = s.registrations.some(function (r) { return r.event === e.id && r.athlete === a.id; });
         return html`<section key=${e.id} className="card event">
           <div className="card-head"><p className="tr-label">${e.scope} · ${e.divisions.join(' and ')}</p>${reg ? html`<${Badge} status="cleared">Registered · ${a.weightClass}<//>` : null}</div>
-          <div className="event-row"><${DateTile} date=${e.date} /><div className="next-event-text"><h2 className="headline tr-display">${e.name}</h2>
+          <div className="event-row"><${DateTile} date=${e.date} /><div className="next-event-text"><h2 className="headline tr-display fit" style=${fit(e.name)}>${e.name}</h2>
           <p className="muted small">${e.city} · registration closes ${fmt(e.closes)}</p></div></div>
           <div className="btn-row">${reg ? html`<${Button} size="sm" variant="quiet" onClick=${function () { act({ type: 'withdraw', event: e.id, athlete: a.id }, 'Withdrawn from ' + e.name + '.'); }}>Withdraw<//>`
             : html`<${Button} size="sm" onClick=${function () { setChecking(e.id); }}>Check eligibility<//>`}</div>
@@ -1938,7 +1954,7 @@ window.TR_DATA = (function () {
     if (step === 'welcome') return html`<div className="onb onb-hero-screen theme-dark dark-top">
       <${Ring} className="onb-ring" />
       <div className="onb-brand"><${Mark} size=${34} /><span className="wordmark">TrueRound</span></div>
-      <h1 className="onb-hero tr-display">Your fight record.<br/>Verified.</h1>
+      <h1 className="onb-hero tr-display" style=${fit('Verified.', 8)}>Your fight record.<br/>Verified.</h1>
       <ul className="onb-points">
         <li><span className="onb-ico"><${Icon} name="ladder" size=${20} /></span><span><strong>A pathway your coach signs off</strong><span>Skills move only after your coach has seen them in person.</span></span></li>
         <li><span className="onb-ico"><${Icon} name="card" size=${20} /></span><span><strong>Results from the officials</strong><span>Every bout comes from a signed bout sheet, with the judges’ scores.</span></span></li>
@@ -1953,7 +1969,7 @@ window.TR_DATA = (function () {
       <${Ring} className="onb-ring" />
       <span className="fp-photo onb-done-face"><${Face} a=${created} size=${88} /></span>
       <p className="tr-label onb-gold">Account created</p>
-      <h1 className="onb-hero tr-display">You’re in,<br/>${created.first}.</h1>
+      <h1 className="onb-hero tr-display" style=${fit('You’re ' + created.first + '.', 8)}>You’re in,<br/>${created.first}.</h1>
       <p className="muted">Your join request is with Coach ${coachName(created.coach)} at ${created.gym}.</p>
       <ol className="next-steps">
         <li className="now"><span className="ns-dot"><${Icon} name="clock" size=${14} strokeWidth=${2.5} /></span><span><strong>Coach accepts you</strong><span>Usually after your next session.</span></span></li>

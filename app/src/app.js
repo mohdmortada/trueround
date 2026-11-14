@@ -11,6 +11,10 @@
   document.documentElement.setAttribute('data-theme', 'light');
   // First visit: open on the onboarding welcome instead of the demo athlete.
   var FIRST_VISIT = (function () { try { return !window.localStorage.getItem(STORE_KEY); } catch (e) { return false; } })();
+  // On wide screens the phone is laid out at a real phone's size (390 x 844 plus bezel), then zoomed to fit the window height.
+  function fitPhone() { var z = Math.min(1, Math.max(0.7, (window.innerHeight - 120) / 864)); document.documentElement.style.setProperty('--pz', z.toFixed(3)); }
+  fitPhone();
+  window.addEventListener('resize', fitPhone);
 
   /* ---------- helpers ---------- */
   var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -191,6 +195,10 @@
   function initialsOf(a) { return (a.first.charAt(0) + a.last.charAt(0)).toUpperCase(); }
   // Longest line of a stacked display name; the CSS sizes the type so it fits.
   function nameChars(a) { return { '--chars': Math.max(6, a.first.length, isMinor(a) ? 2 : a.last.length) }; }
+  // The same for any heading: its longest word sets the size, so no word ever breaks in the middle.
+  function fit(text, min) {
+    return { '--chars': Math.max(min || 6, Math.max.apply(null, String(text).split(/\s+/).map(function (w) { return w.length; }))) };
+  }
   // Under-18s never show a photo, whatever the record holds.
   // A photo is either a key into TR_PHOTOS or one the athlete uploaded during onboarding.
   function photoOf(a) {
@@ -351,15 +359,15 @@
     return html`<div className="stack">
       <header className="home-top">
         <button type="button" className="avatar-btn" onClick=${p.openProfile} aria-label="Open your fighter page"><${Face} a=${a} size=${48} /></button>
-        <div className="home-hello"><p className="small muted">${a.since === TODAY ? 'Welcome' : 'Welcome back'}</p><h1 className="home-name tr-display">${a.first}</h1></div>
-        <${LevelPill} level=${a.level} />
+        <div className="home-hello"><div className="home-greet"><p className="small muted">${a.since === TODAY ? 'Welcome' : 'Welcome back'}</p><${LevelPill} level=${a.level} /></div>
+          <h1 className="home-name tr-display" style=${fit(a.first, 5)}>${a.first}</h1></div>
       </header>
       ${a.joinStatus === 'pending' ? html`<p className="note"><${Icon} name="clock" size=${16} /> Your join request is with Coach ${coachName(a.coach)}. Skill checks open once you're on the roster.</p>` : null}
       <section className="next-up theme-dark">
         <${Ring} className="next-ring" />
-        <p className="tr-label next-kicker">Next up</p>
-        ${reg ? html`<div className="next-event"><${DateTile} date=${reg.ev.date} /><div className="next-event-text"><p className="headline tr-display">${reg.ev.name}</p><p className="small muted">${reg.ev.city} · ${reg.weightClass} · registered</p></div>
-          <div className="countdown"><span className="countdown-num"><${Num} n=${days(TODAY, reg.ev.date)} /></span><span className="tr-label">days</span></div></div>`
+        <div className="next-head"><p className="tr-label next-kicker">Next up</p>
+          ${reg ? html`<span className="next-count"><span className="countdown-num"><${Num} n=${days(TODAY, reg.ev.date)} /></span><span className="tr-label">days to go</span></span>` : null}</div>
+        ${reg ? html`<div className="next-event"><${DateTile} date=${reg.ev.date} /><div className="next-event-text"><p className="headline tr-display fit" style=${fit(reg.ev.name)}>${reg.ev.name}</p><p className="small muted">${reg.ev.city} · ${reg.weightClass} · registered</p></div></div>`
           : html`<div className="next-empty"><p className="headline tr-display">No event yet</p><p className="small muted">Pick one and the app checks your eligibility before you register.</p></div>`}
         <div className="btn-row"><${Button} size="sm" variant=${reg ? 'secondary' : 'primary'} onClick=${function () { p.go('events'); }}>${reg ? 'All events' : 'Browse events'}<//></div>
       </section>
@@ -628,7 +636,7 @@
         var reg = s.registrations.some(function (r) { return r.event === e.id && r.athlete === a.id; });
         return html`<section key=${e.id} className="card event">
           <div className="card-head"><p className="tr-label">${e.scope} · ${e.divisions.join(' and ')}</p>${reg ? html`<${Badge} status="cleared">Registered · ${a.weightClass}<//>` : null}</div>
-          <div className="event-row"><${DateTile} date=${e.date} /><div className="next-event-text"><h2 className="headline tr-display">${e.name}</h2>
+          <div className="event-row"><${DateTile} date=${e.date} /><div className="next-event-text"><h2 className="headline tr-display fit" style=${fit(e.name)}>${e.name}</h2>
           <p className="muted small">${e.city} · registration closes ${fmt(e.closes)}</p></div></div>
           <div className="btn-row">${reg ? html`<${Button} size="sm" variant="quiet" onClick=${function () { act({ type: 'withdraw', event: e.id, athlete: a.id }, 'Withdrawn from ' + e.name + '.'); }}>Withdraw<//>`
             : html`<${Button} size="sm" onClick=${function () { setChecking(e.id); }}>Check eligibility<//>`}</div>
@@ -765,7 +773,7 @@
     if (step === 'welcome') return html`<div className="onb onb-hero-screen theme-dark dark-top">
       <${Ring} className="onb-ring" />
       <div className="onb-brand"><${Mark} size=${34} /><span className="wordmark">TrueRound</span></div>
-      <h1 className="onb-hero tr-display">Your fight record.<br/>Verified.</h1>
+      <h1 className="onb-hero tr-display" style=${fit('Verified.', 8)}>Your fight record.<br/>Verified.</h1>
       <ul className="onb-points">
         <li><span className="onb-ico"><${Icon} name="ladder" size=${20} /></span><span><strong>A pathway your coach signs off</strong><span>Skills move only after your coach has seen them in person.</span></span></li>
         <li><span className="onb-ico"><${Icon} name="card" size=${20} /></span><span><strong>Results from the officials</strong><span>Every bout comes from a signed bout sheet, with the judges’ scores.</span></span></li>
@@ -780,7 +788,7 @@
       <${Ring} className="onb-ring" />
       <span className="fp-photo onb-done-face"><${Face} a=${created} size=${88} /></span>
       <p className="tr-label onb-gold">Account created</p>
-      <h1 className="onb-hero tr-display">You’re in,<br/>${created.first}.</h1>
+      <h1 className="onb-hero tr-display" style=${fit('You’re ' + created.first + '.', 8)}>You’re in,<br/>${created.first}.</h1>
       <p className="muted">Your join request is with Coach ${coachName(created.coach)} at ${created.gym}.</p>
       <ol className="next-steps">
         <li className="now"><span className="ns-dot"><${Icon} name="clock" size=${14} strokeWidth=${2.5} /></span><span><strong>Coach accepts you</strong><span>Usually after your next session.</span></span></li>
