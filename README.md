@@ -6,7 +6,8 @@ Verified athlete platform for amateur MMA, prepared as a partnership proposal fo
 
 | Path | What |
 | --- | --- |
-| `index.html` | Copy of `app/dist/index.html` at the root, served by GitHub Pages. |
+| `index.html`, `credits.html`, `assets/`, `brand/` | The marketing site, served by GitHub Pages at the root. Published from `www/` (kept out of git) by `tools/publish_site.mjs`. |
+| `demo/index.html` | Copy of `app/dist/index.html`: the live demo the site links to. |
 | `app/dist/index.html` | The working app, one self-contained file. Deploy this. |
 | `app/src/` | App source: `app.js` (React 18 + htm, no build step), `data.js` (demo data), `app.css`. |
 | `design-system/project/` | Design system source: `tokens.json`, `components/bundle.js` + `bundle.css` (`window.TrueRound`), component guidelines and previews, logos, brand book (`README.md`). |
@@ -26,6 +27,16 @@ npx vercel deploy app/dist --prod
 1. Create an empty public repository, for example `trueround`.
 2. From this folder: `git remote add origin https://github.com/<you>/trueround.git` then `git push -u origin main`.
 3. In the repository: Settings → Pages → Source "Deploy from a branch" → branch `main`, folder `/ (root)`. Add a root `index.html` that redirects to `app/dist/` or move `app/dist/index.html` to the root.
+
+## Publish the site and the demo
+
+The site was built with the design-taste-frontend skill in `www/` (the full kit, its check history and screenshots stay there, out of git). After editing `www/index.html` or rebuilding the app:
+
+```bash
+node tools/publish_site.mjs
+```
+
+It copies the files the page loads (about 30 of the kit's) to the root and `app/dist/index.html` to `demo/index.html`.
 
 ## Rebuild the app after editing `app/src`
 
