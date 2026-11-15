@@ -2,3 +2,5 @@ __pycache__/
 *.pyc
 notes/
 www/
+.taste-skill/
+shots/
