@@ -7,8 +7,8 @@
     Field = T.Field, Toggle = T.Toggle, BottomNav = T.BottomNav;
   var STORE_KEY = 'trueround-demo-v4';
   var TODAY = D.TODAY, LEVELS = D.LEVELS;
-  // The app is a bright design with dark hero blocks, whatever the system theme.
-  document.documentElement.setAttribute('data-theme', 'light');
+  // The brand is black and gold: the app is always dark, whatever the system theme.
+  document.documentElement.setAttribute('data-theme', 'dark');
   // First visit: open on the onboarding welcome instead of the demo athlete.
   var FIRST_VISIT = (function () { try { return !window.localStorage.getItem(STORE_KEY); } catch (e) { return false; } })();
   // On wide screens the phone is laid out at a real phone's size (390 x 844 plus bezel), then zoomed to fit the window height.
@@ -178,17 +178,22 @@
   }
 
   /* ---------- shared bits ---------- */
+  // The emblem: a ring broken into four rounds; the gold one turns into the check.
+  var RING_WHITE = 'M85.93 62.37A38 38 0 0 1 57.25 87.3M49.34 87.99A38 38 0 0 1 12.7 57.25M12.01 49.34A38 38 0 0 1 42.75 12.7';
+  var RING_GOLD = 'M53.97 12.21A38 38 0 0 1 87.72 54.63';
   function Mark(props) {
-    return html`<svg width=${props.size || 28} height=${props.size || 28} viewBox="0 0 64 64" aria-hidden="true" className="mark">
-      <g fill="none" strokeWidth="9"><path className="mark-ink" d="M36.2 10.4A22 22 0 0 1 52.8 39.16"/><path className="mark-ink" d="M48.6 46.43A22 22 0 0 1 15.4 46.43"/><path className="mark-ink" d="M11.2 39.16A22 22 0 0 1 27.8 10.4"/></g>
-      <path d="M22.5 32.5L29 39L42 25.5" fill="none" className="mark-gold" strokeWidth="6" strokeLinecap="square"/></svg>`;
+    return html`<svg width=${props.size || 28} height=${props.size || 28} viewBox="0 0 100 100" aria-hidden="true" className="mark">
+      <g fill="none" strokeWidth="13"><path className="mark-ink" d=${RING_WHITE}/><path className="mark-gold" d=${RING_GOLD}/>
+      <path className="mark-gold" d="M32 50L48 66L79 35" strokeWidth="12.5"/></g></svg>`;
   }
 
-  // The three-round ring from the mark, used large as a watermark.
+  // The emblem's broken ring, used large as a watermark: three faint segments and the gold one.
   function Ring(props) {
-    return html`<svg className=${props.className} viewBox="0 0 64 64" aria-hidden="true">
-      <path className="ring-a" d="M36.2 10.4A22 22 0 0 1 52.8 39.16"/><path className="ring-a" d="M48.6 46.43A22 22 0 0 1 15.4 46.43"/><path className="ring-b" d="M11.2 39.16A22 22 0 0 1 27.8 10.4"/></svg>`;
+    return html`<svg className=${props.className} viewBox="0 0 100 100" aria-hidden="true">
+      <path className="ring-a" d=${RING_WHITE}/><path className="ring-b" d=${RING_GOLD}/></svg>`;
   }
+
+  function Wordmark() { return html`<span className="wordmark">True<b>Round</b></span>`; }
 
   function Num(props) { return T.useCountUp(props.n, true, 600); }
 
@@ -282,7 +287,7 @@
     var cs = useState(false), confirming = cs[0], setConfirming = cs[1];
     var athletes = Object.keys(s.athletes).map(function (k) { return s.athletes[k]; });
     return html`<div className="demobar theme-dark">
-      <div className="demobar-brand"><${Mark} size=${24} /><span className="wordmark">TrueRound</span><span className="demobar-tag">Concept prototype</span></div>
+      <div className="demobar-brand"><${Mark} size=${24} /><${Wordmark} /><span className="demobar-tag">Concept prototype</span></div>
       <${Seg} label="Switch role" value=${s.role} onChange=${function (r) { act({ type: 'role', role: r }); }}
         options=${[['athlete', 'Athlete'], ['coach', 'Coach'], ['official', 'Official']]} />
       ${s.role === 'athlete' ? html`<label className="demobar-select"><span>Viewing as</span>
@@ -442,7 +447,7 @@
     var a = props.a, rec = props.rec, photo = photoOf(a);
     return html`<${Sheet} title="Share card" onClose=${props.onClose}>
       <div className="share-card theme-dark">
-        <div className="share-top"><${Mark} size=${28} /><span className="wordmark">TrueRound</span>${photo ? html`<img className="share-photo" src=${photo} alt="" width="64" height="64" />` : null}</div>
+        <div className="share-top"><${Mark} size=${28} /><${Wordmark} />${photo ? html`<img className="share-photo" src=${photo} alt="" width="64" height="64" />` : null}</div>
         <p className="tr-label share-kicker">Verified record</p>
         <p className="share-name tr-display" style=${nameChars(a)}>${a.first}<br/>${a.last}</p>
         <p className="share-sub">${a.gym} · ${LEVELS[a.level]} · ${a.weightClass}</p>
@@ -772,8 +777,9 @@
 
     if (step === 'welcome') return html`<div className="onb onb-hero-screen theme-dark dark-top">
       <${Ring} className="onb-ring" />
-      <div className="onb-brand"><${Mark} size=${34} /><span className="wordmark">TrueRound</span></div>
-      <h1 className="onb-hero tr-display" style=${fit('Verified.', 8)}>Your fight record.<br/>Verified.</h1>
+      <div className="onb-brand"><${Mark} size=${34} /><${Wordmark} /></div>
+      <p className="tagline">Train <i aria-hidden="true">•</i> Track <i aria-hidden="true">•</i> Improve</p>
+      <h1 className="onb-hero tr-display" style=${fit('Verified.', 8)}>Your fight record.<br/><em>Verified.</em></h1>
       <ul className="onb-points">
         <li><span className="onb-ico"><${Icon} name="ladder" size=${20} /></span><span><strong>A pathway your coach signs off</strong><span>Skills move only after your coach has seen them in person.</span></span></li>
         <li><span className="onb-ico"><${Icon} name="card" size=${20} /></span><span><strong>Results from the officials</strong><span>Every bout comes from a signed bout sheet, with the judges’ scores.</span></span></li>

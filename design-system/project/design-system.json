@@ -1,38 +1,143 @@
 {
   "v": 3,
   "layout": "files",
-  "createdOnFiles": { "v": 1, "at": "2026-11-14T21:40:00Z" },
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-11-14T21:40:00Z"
+  },
   "title": "TrueRound",
   "namespace": "TrueRound",
   "libraries": [
-    { "name": "react", "version": "18" },
-    { "name": "react-dom", "version": "18" }
+    {
+      "name": "react",
+      "version": "18"
+    },
+    {
+      "name": "react-dom",
+      "version": "18"
+    }
   ],
   "sections": {},
-  "groups": ["Logos"],
+  "groups": [
+    "Logos"
+  ],
   "assetGroups": {
     "Logos": {
       "name": "Logos",
       "tile": "l",
       "order": [
-        "trueround-lockup.svg",
-        "trueround-lockup-dark.svg",
-        "trueround-mark.svg",
-        "trueround-mark-dark.svg",
+        "trueround-logo-horizontal.svg",
+        "trueround-logo-horizontal-light.svg",
+        "trueround-logo-stacked.svg",
+        "trueround-logo-stacked-light.svg",
+        "trueround-emblem.svg",
+        "trueround-emblem-light.svg",
+        "trueround-emblem-mono-white.svg",
+        "trueround-emblem-mono-gray.svg",
         "trueround-wordmark.svg",
-        "trueround-wordmark-dark.svg"
+        "trueround-wordmark-light.svg",
+        "trueround-app-icon.svg",
+        "trueround-app-icon-gold.svg",
+        "trueround-app-icon-white.svg",
+        "trueround-app-icon-outline.svg"
       ],
       "files": {
-        "trueround-lockup.svg": { "name": "trueround-lockup.svg", "blob": "61eca8429a470fd5106148b3e5d08626", "size": 1318, "type": "image/svg+xml" },
-        "trueround-lockup-dark.svg": { "name": "trueround-lockup-dark.svg", "blob": "badcde309d2e8c047db39f192bfd7037", "size": 1318, "type": "image/svg+xml" },
-        "trueround-mark.svg": { "name": "trueround-mark.svg", "blob": "6cacfbcd5c40e066dab6cfa311a51a9e", "size": 527, "type": "image/svg+xml" },
-        "trueround-mark-dark.svg": { "name": "trueround-mark-dark.svg", "blob": "ff065bf0666fe50138502929151ed68a", "size": 527, "type": "image/svg+xml" },
-        "trueround-wordmark.svg": { "name": "trueround-wordmark.svg", "blob": "25c72ac9a03917efe4219341cff1e550", "size": 936, "type": "image/svg+xml" },
-        "trueround-wordmark-dark.svg": { "name": "trueround-wordmark-dark.svg", "blob": "df02772d713e83989a571fa34f499126", "size": 936, "type": "image/svg+xml" }
+        "trueround-logo-horizontal.svg": {
+          "name": "trueround-logo-horizontal.svg",
+          "blob": "203608e267197430b30b766b32e57378",
+          "size": 5706,
+          "type": "image/svg+xml"
+        },
+        "trueround-logo-horizontal-light.svg": {
+          "name": "trueround-logo-horizontal-light.svg",
+          "blob": "8e54c2fa66fcff4bfa4eb877a0dec5c0",
+          "size": 5706,
+          "type": "image/svg+xml"
+        },
+        "trueround-logo-stacked.svg": {
+          "name": "trueround-logo-stacked.svg",
+          "blob": "1403dc82fb5a76e4c925b42c23ad89d9",
+          "size": 5702,
+          "type": "image/svg+xml"
+        },
+        "trueround-logo-stacked-light.svg": {
+          "name": "trueround-logo-stacked-light.svg",
+          "blob": "730af8862bb9b2652af82d16363488ac",
+          "size": 5702,
+          "type": "image/svg+xml"
+        },
+        "trueround-emblem.svg": {
+          "name": "trueround-emblem.svg",
+          "blob": "caaf0e640845f50baf098dd7e27095e9",
+          "size": 487,
+          "type": "image/svg+xml"
+        },
+        "trueround-emblem-light.svg": {
+          "name": "trueround-emblem-light.svg",
+          "blob": "12560d44a08230549bfaad692a76c1e6",
+          "size": 487,
+          "type": "image/svg+xml"
+        },
+        "trueround-emblem-mono-white.svg": {
+          "name": "trueround-emblem-mono-white.svg",
+          "blob": "60fe720b37184dc5189457b950bbe825",
+          "size": 487,
+          "type": "image/svg+xml"
+        },
+        "trueround-emblem-mono-gray.svg": {
+          "name": "trueround-emblem-mono-gray.svg",
+          "blob": "771eb69368fc4c50c43f3703102d7fa3",
+          "size": 487,
+          "type": "image/svg+xml"
+        },
+        "trueround-wordmark.svg": {
+          "name": "trueround-wordmark.svg",
+          "blob": "0bb8dec315497539da3a54253503d3ac",
+          "size": 2194,
+          "type": "image/svg+xml"
+        },
+        "trueround-wordmark-light.svg": {
+          "name": "trueround-wordmark-light.svg",
+          "blob": "7add0fb34e955fd50cea10b324b4a3c0",
+          "size": 2194,
+          "type": "image/svg+xml"
+        },
+        "trueround-app-icon.svg": {
+          "name": "trueround-app-icon.svg",
+          "blob": "3721c42a97167556bd27b19ece6c37a9",
+          "size": 601,
+          "type": "image/svg+xml"
+        },
+        "trueround-app-icon-gold.svg": {
+          "name": "trueround-app-icon-gold.svg",
+          "blob": "cbd5546bf1b9475290fa47f75ddabef3",
+          "size": 601,
+          "type": "image/svg+xml"
+        },
+        "trueround-app-icon-white.svg": {
+          "name": "trueround-app-icon-white.svg",
+          "blob": "53f8b7f265294ef0fd86bff1784d40c8",
+          "size": 601,
+          "type": "image/svg+xml"
+        },
+        "trueround-app-icon-outline.svg": {
+          "name": "trueround-app-icon-outline.svg",
+          "blob": "6f21366590987433ed1deaac04f7fed3",
+          "size": 709,
+          "type": "image/svg+xml"
+        }
       }
     }
   },
   "blobs": {},
-  "docs": { "readme": "project/README.md", "sections": [] },
-  "lastChange": { "by": "Mohammad", "via": "Claude Code", "at": "2026-11-14T21:40:00Z", "note": "First version of the TrueRound system for the GAMMA pitch" }
+  "docs": {
+    "readme": "project/README.md",
+    "sections": []
+  },
+  "lastChange": {
+    "by": "Mohammad",
+    "via": "Claude Code",
+    "at": "2026-11-15T01:30:00Z",
+    "note": "New brand: black and gold, Montserrat, the broken-ring emblem and Train • Track • Improve"
+  }
 }

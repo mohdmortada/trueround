@@ -2,18 +2,19 @@
 
 TrueRound is the verified athlete platform for amateur mixed martial arts: a coach-verified training pathway, an official competition record written by the people who ran the bout, and medical clearance that travels with the athlete. It is being prepared as a partnership proposal for GAMMA (Global Association of Mixed Martial Arts). It is the sibling of Taegeuk, built on the same model for a different sport.
 
-Tagline: **Every round, on the record.**
+Tagline: **Train • Track • Improve.** Set in Montserrat SemiBold, widely tracked, with gold bullets.
 
 ## The idea the brand rests on
 
-In amateur MMA, a record is only as good as the person who wrote it down. Screenshots, spreadsheets and self-reported fight histories are how most athletes prove themselves today. TrueRound's look is borrowed from the one document everyone in the sport already trusts: **the official scorecard**. Ruled rows, tabular figures, red on the left and blue on the right, a heavy rule above the total, and a signature at the bottom.
+In amateur MMA, a record is only as good as the person who wrote it down. Screenshots, spreadsheets and self-reported fight histories are how most athletes prove themselves today. TrueRound turns that into a promise athletes can feel: **train, track, improve**, on a record nobody can fake. The brand is fight-night black and championship gold. The emblem is a broken ring, the rounds, with a gold check breaking out of it: the work, verified. Inside the product, the scorecard still sets the rules: ruled rows, tabular figures, red on the left and blue on the right, and a signature on every fact.
 
 ## Voice
 
 The voice is the official's, not the promoter's. Factual, calm, exact.
 
 - **Say who did it.** "Verified by Coach Hassan Jizzini, 4 Nov 2026." "Result written by Official #A-118." Never "Verified!" on its own.
-- **Name the real thing.** Use the sport's own terms: weigh-in, bout sheet, unanimous decision, referee stops contest, medical suspension. Don't use gym-app slang like streaks, XP, "crushing it" or "beast mode".
+- **Name the real thing.** Use the sport's own terms: weigh-in, bout sheet, unanimous decision, referee stops contest, medical suspension. Don't use gym-app slang like XP, "crushing it" or "beast mode".
+- **Energy lives in the display lines.** Short, imperative, uppercase italic: TRAIN HARDER. TRACK SMARTER. Body copy stays calm and exact.
 - **No hype about violence.** No blood, no "war", no "destroy". Amateur MMA is chasing Olympic recognition, and the copy should read like it belongs there.
 - **Sentence case** for everything except display lines, which are set uppercase by the display style itself.
 - **Numbers stay plain.** "11-2-0", "29:28", "57 kg". No exclamation marks, no emoji.
@@ -28,29 +29,41 @@ The voice is the official's, not the promoter's. Factual, calm, exact.
 
 ## Colour
 
-The palette is ink and paper with three jobs for colour. Every colour has one meaning and keeps it everywhere.
+Four brand colours, from the brand sheet: **Gold `#E6B800`**, **White `#FFFFFF`**, **Gray `#4A4A4A`**, **Black `#0B0B0B`**. The product is dark first.
 
-- **Ink and canvas** (`ink`, `canvas`, `surface`, `surface-sunken`, `line`, `rule`) carry almost everything. Primary actions are ink-filled buttons with `on-ink` text.
-- **Gold means verified** (`gold`, `gold-soft`, `gold-mark`). It's the check in the logo, the badge on a signed-off skill, the current level on the pathway. If nobody with authority signed it, it isn't gold.
-- **Red and blue belong to the corners** (`corner-red`, `corner-blue` and their `-soft` tints). They identify the two athletes in a bout: scorecard columns, corner tags, bout cards. They never mean good, bad, error or brand.
-- **Safety states** have their own colours, always paired with a word and an icon: `cleared` (green, shield), `caution` (amber, clock), `stop` (deep raspberry, bar). `stop` is deliberately darker and pinker than `corner-red` so a suspended athlete in the red corner never reads as one signal.
-- Focus is a 2px gap in `canvas`, then 2px of `focus-ring`.
+- **Black and white carry almost everything** (`canvas`, `surface`, `surface-sunken`, `line`, `rule`, `ink`, `ink-muted`). Cards are a step up from black (`surface #161616`), never gray boxes.
+- **Gold is the brand and the proof** (`accent`, `gold`, `gold-soft`, `gold-mark`).
+  - It fills every primary button: `accent`, with `on-accent` black text at 11:1.
+  - It marks the active tab and the current step, fills the skill meters and draws the emblem's check.
+  - On a verified badge it still means someone with authority signed this.
+  - Use one gold focal point per area. Gold everywhere is no gold at all.
+- **Red and blue belong to the corners** (`corner-red`, `corner-blue` and their tints). They identify the two athletes in a bout and never mean good, bad, error or brand.
+- **Safety states** keep their own colours, always with a word and an icon:
+  - `cleared`: green, shield.
+  - `caution`: orange, clock. It moved off amber so it never reads as brand gold.
+  - `stop`: raspberry, bar.
+- **Glow:** the app icon's gold edge glow (`glow`) frames the device and one featured card per screen at most.
+- **Focus** is a 2px gap in `canvas`, then 2px of `focus-ring`: gold in dark, corner blue in light.
 
-Both themes are designed: light is the default for the app and the coach portal; dark is for fight nights, the share card and deck title slides. Every text token's note names the surfaces it passes 4.5:1 on. `ink-faint` is the one exception: icons and borders only.
+Dark is the default for the app, coach portal, mockups and deck. The light theme exists for print and documents. There, gold text darkens to `#7A6200` and brand gray `#4A4A4A` carries secondary text.
 
 ## Type
 
-- **Display: Archivo at 125% width**, heavy, uppercase (`display-xl`, `display-l`, `headline`). It reads like a broadcast caption or a fight poster. Use it for athlete names, event names and screen titles, never for sentences. Apply with the `tr-display` class, which also sets the width.
-- **Text: IBM Plex Sans** (`title`, `body`, `body-sm`, `label`). It's institutional and plain, which is what an official form should look like.
-- **Data: IBM Plex Mono** with tabular figures (`stat-xl`, `stat`, `data`) for every score, record, weight, date and ID. Digits always line up.
+- **One family: Montserrat**, from the brand sheet.
+- **Display:** Montserrat Black and ExtraBold *Italic*, uppercase (`display-xl`, `display-l`, `headline`). It matches the wordmark's forward lean. Use it for athlete names, event names, screen titles and short calls to action, never for sentences. Apply it with the `tr-display` class.
+- **Text:** Montserrat Medium for body copy, SemiBold and Bold for interface text (`title`, `body`, `body-sm`, `label`).
+- **Data:** Montserrat with tabular figures (`stat-xl`, `stat`, `data`) for every score, record, weight, date and ID, so digits line up.
 
-All three are Google Fonts and load from `components/bundle.css`. If the brand moves to licensed faces later, keep the roles: a wide display face, a plain sans and a tabular mono.
+Montserrat loads from Google Fonts in `components/bundle.css`.
 
 ## Space, radius, lines
 
-- 4px base. Screens breathe (`space-4` gutters, `space-6` between cards); scorecards and rosters stay dense (`space-2`/`space-3` cells).
-- Corners are squared like printed cards: `radius-sm` on controls, `radius-md` on cards. Only round things are round: avatars, corner dots, toggles.
-- Lines do the separating, not shadows: `stroke-hairline` between rows, `stroke-rule` under headers and above totals, `stroke-heavy` for the corner stripe on a bout card.
+- **Space:** 4px base. Screens breathe (`space-4` gutters, `space-6` between cards); scorecards and rosters stay dense (`space-2`/`space-3` cells).
+- **Radius:** rounded but firm, like the app icon. `radius-sm` (6px) on controls, `radius-md` (12px) on cards. Avatars, corner dots, toggles and the emblem are fully round.
+- **Lines** separate, not boxes:
+  - `stroke-hairline` between rows;
+  - `stroke-rule` under headers and above totals;
+  - `stroke-heavy` for the corner stripe on a bout card.
 
 ## Motion
 
@@ -67,23 +80,29 @@ Rules:
 
 ## Texture
 
-Surfaces can carry a faint ruled-paper pattern: one hairline every 32px at about 4% ink, like the ruled sheet of a scorecard. Use it on the page background and on dark header cards, never behind running text.
-
-The three-round ring from the mark can appear large and cropped as a watermark: two arcs in faint ink, the third in gold. Use it once per screen at most.
+- **Ruled pattern:** black surfaces can carry one hairline every 32px at about 3% white, the ruled sheet of a scorecard. Use it on the page background and on hero blocks, never behind running text.
+- **Ring watermark:** the emblem's broken ring can appear large and cropped, with three segments in faint white and the fourth in gold. Use it once per screen at most.
+- **Gold stripes:** diagonal stripes, like the tagline banner on the brand sheet, may close a hero or a slide. They are never a background behind text.
 
 ## Logo
 
-The mark is a ring cut into three arcs, the three rounds of an amateur bout, with a gold check inside: the round, verified. The wordmark is drawn on a grid of 6px strokes to echo the scorecard's rules.
+The emblem is a ring broken into four segments, the rounds. The gold segment turns into a check that breaks out of the ring: the work, verified, moving up. The wordmark is Montserrat Black Italic outlines: TRUE in white (or black on light), ROUND in gold. The tagline sits under it in tracked Montserrat SemiBold.
 
-- `trueround-lockup.svg` / `trueround-lockup-dark.svg`: the mark and wordmark together, for headers and title slides.
-- `trueround-mark.svg` / `-dark`: app icon, favicon, avatar fallbacks. Tested at 32px.
-- `trueround-wordmark.svg` / `-dark`: where the mark already appears nearby.
-- Use the light files on `canvas`/`surface` and the dark files on ink or photography. Never recolour the check: it is always gold.
-- Clear space is the height of the wordmark on every side. Don't rotate, outline or add effects.
+These are vector masters, rebuilt from the supplied brand sheet; the PNGs in the brand pack are reference extractions. Files ending `-light` are for white grounds.
+- **Lockups:** `trueround-logo-horizontal.svg` (primary) and `trueround-logo-stacked.svg`.
+- **Emblem:** `trueround-emblem.svg`, plus `-mono-white` and `-mono-gray` for single-colour uses such as embossing and watermarks.
+- **Wordmark:** `trueround-wordmark.svg`, for where the emblem already appears nearby.
+- **App icons:** `trueround-app-icon.svg` (black, primary), `-gold`, `-white` and `-outline` (black with a gold edge). All 1024 × 1024.
+
+Rules:
+- **Colour:** never recolour the check or ROUND. Both are always gold, except in the monochrome files.
+- **Clear space:** the height of the T on every side.
+- **Minimum size:** 24px for the emblem; 120px wide for the horizontal lockup.
+- **Don't** rotate, outline, add effects or re-set the wordmark in live text.
 
 ## Iconography
 
-Line icons on a 24px grid with a 2px stroke, square caps and mitred joins, so they share the wordmark's squared-off construction. They come from the `Icon` component and follow the text colour. No emoji, no filled illustration icons, no mascots.
+Line icons on a 24px grid with a 2px stroke, from the `Icon` component. They follow the text colour: white by default, gold when active or selected, matching the linear/filled pairs on the brand sheet. No emoji, no mascots.
 
 ## Components
 
@@ -115,4 +134,5 @@ These are product decisions, not just styling. The components are built so the r
 
 - The name **TrueRound** passed a first screen (WIPO Global Brand Database, USPTO search, app stores), but it still needs a formal clearance search in classes 9, 41 and 42 before any filing.
 - The level names (Foundation → Elite) are placeholders for GAMMA's own syllabus.
-- The fonts are Google Fonts stand-ins; there are no licensed brand faces yet.
+- Montserrat is the brand font (OFL). The wordmark is outlined from Montserrat Black Italic; a custom-drawn wordmark can replace it later without changing the rest of the system.
+- The logo files are vector rebuilds of the supplied brand sheet. Compare them with the original artwork before printing at large sizes.

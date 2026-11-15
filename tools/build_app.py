@@ -16,16 +16,16 @@ js = [read(os.path.join(ds, 'components', 'bundle.js')), read(os.path.join(src, 
 for chunk in js + [css]:
     assert '</script' not in chunk.lower() and '</style' not in chunk.lower(), 'closing tag inside inline code'
 
-FONTS = 'https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap'
+FONTS = 'https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400..900;1,400..900&display=swap'
 LIBS = ['https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js',
         'https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js',
         'https://cdn.jsdelivr.net/npm/htm@3.1.1/dist/htm.umd.js']
-ICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f1214'/%3E"
-        "%3Cg fill='none' stroke='%23eeeeea' stroke-width='7'%3E%3Cpath d='M35.5 14.2A18 18 0 0 1 49.2 38.1'/%3E%3Cpath d='M45.6 44A18 18 0 0 1 18.4 44'/%3E%3Cpath d='M14.8 38.1A18 18 0 0 1 28.5 14.2'/%3E%3C/g%3E"
-        "%3Cpath d='M24 32.5L29.5 38L40.5 26.5' fill='none' stroke='%23e2b53e' stroke-width='5'/%3E%3C/svg%3E")
+ICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230B0B0B'/%3E"
+        "%3Cg transform='translate(13 13) scale(.74)' fill='none' stroke-width='13'%3E%3Cpath stroke='%23FFFFFF' d='M85.93 62.37A38 38 0 0 1 57.25 87.3M49.34 87.99A38 38 0 0 1 12.7 57.25M12.01 49.34A38 38 0 0 1 42.75 12.7'/%3E"
+        "%3Cpath stroke='%23E6B800' d='M53.97 12.21A38 38 0 0 1 87.72 54.63'/%3E%3Cpath stroke='%23E6B800' stroke-width='12.5' d='M32 50L48 66L79 35'/%3E%3C/g%3E%3C/svg%3E")
 
 head = f'''<title>TrueRound</title>
-<meta name="description" content="TrueRound: coach-verified pathway, official competition record and medical clearance for amateur MMA athletes. Concept prototype.">
+<meta name="description" content="TrueRound. Train, track, improve: coach-verified pathway, official competition record and medical clearance for amateur MMA athletes. Concept prototype.">
 <link rel="icon" href="{ICON}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,9 +36,9 @@ head = f'''<title>TrueRound</title>
 body = '<div id="app"></div>\n' + '\n'.join(f'<script src="{u}"></script>' for u in LIBS) + '\n' + '\n'.join(f'<script>\n{c}\n</script>' for c in js)
 
 open(os.path.join(out, 'index.html'), 'w', encoding='utf-8', newline='\n').write(
-    '<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
+    '<!doctype html>\n<html lang="en" data-theme="dark">\n<head>\n<meta charset="utf-8">\n'
     '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
-    '<meta name="theme-color" content="#0f1214">\n' + head + '\n</head>\n<body>\n' + body + '\n</body>\n</html>\n')
+    '<meta name="theme-color" content="#0B0B0B">\n' + head + '\n</head>\n<body>\n' + body + '\n</body>\n</html>\n')
 open(os.path.join(out, 'trueround-app.html'), 'w', encoding='utf-8', newline='\n').write(
     head.replace('<title>TrueRound</title>', '<title>TrueRound App</title>\n<meta name="claude:viewport-fit-sides" content="cover">') + '\n' + body + '\n')
 print('built', os.path.getsize(os.path.join(out, 'index.html')), 'bytes')

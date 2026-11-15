@@ -6,50 +6,19 @@
 <title>TrueRound</title>
 <style>
   html, body { margin:0; height:100%; }
-  body { background:var(--canvas); color:var(--ink); font-family:var(--font-sans); overflow:hidden; }
-  .cover { position:relative; height:288px; overflow:hidden; }
-  .art { position:absolute; top:0; left:480px; width:480px; height:288px; overflow:hidden; }
-  .art svg { display:block; width:480px; height:288px; }
-  .ink { fill:var(--ink); }
-  .gold { fill:var(--gold-mark); }
-  .red { fill:var(--corner-red); }
-  .blue { fill:var(--corner-blue); }
-  .tint { fill:var(--line); }
-  .blk { rx:var(--radius-sm); }
-  .cut { fill:none; stroke:var(--canvas); stroke-width:var(--space-2); }
-  .arc { fill:none; stroke:var(--ink); stroke-width:var(--space-2); }
-  .words { position:absolute; left:var(--space-6); bottom:var(--space-6); max-width:440px; }
-  .name { margin:0; font-family:var(--font-display); font-stretch:125%; font-size:64px; line-height:.95; font-weight:900; letter-spacing:-.01em; color:var(--ink); white-space:nowrap; }
-  .tag { margin:var(--space-2) 0 0 2px; font-size:14px; line-height:20px; color:var(--ink-muted); }
+  body { background:#0B0B0B; overflow:hidden; }
+  .cover { position:relative; height:288px; overflow:hidden; background:#0B0B0B; background-image:repeating-linear-gradient(180deg, transparent 0 31px, rgba(255,255,255,.03) 31px 32px); }
+  .lockup { position:absolute; left:32px; top:50%; width:520px; transform:translateY(-58%); display:block; }
+  .ring { position:absolute; right:-70px; top:-80px; width:420px; height:420px; }
+  .stripes { position:absolute; left:32px; right:0; bottom:28px; height:10px; background:repeating-linear-gradient(115deg, #E6B800 0 22px, transparent 22px 34px); clip-path:polygon(0 0, 100% 0, 100% 100%, 0 100%); opacity:.9; }
 </style>
 </head>
 <body>
 <div class="cover">
-<div class="art" aria-hidden="true">
-<svg viewBox="0 0 480 288" width="480" height="288">
-<!--
-  blocks      ink 192×272 slab bled off the top (the scorecard's ink) · gold-mark 96×96 (verified, the one hue people remember) · corner-red and corner-blue 96×40 side by side, the two columns of a scorecard · line 144×96 bleeding off the right edge as relief — about 30% of 960×288
-  arrangement one tall ink slab with satellites; every bottom on one line, space-6 above the edge; space-4 gutters
-  pattern     arcs, from the mark: a ring cut into three arcs, the three rounds of a bout, canvas cut out of the slab and in ink on the tint
-  scales      sides in space-6 multiples, gutters space-4, arc stroke space-2, block corners radius-sm (the system is squared)
--->
-<rect class="ink blk" x="16" y="-8" width="192" height="272" rx="4"/>
-<path class="cut" d="M122.68 97.03A56 56 0 0 1 164.95 170.23"/>
-<path class="cut" d="M154.26 188.74A56 56 0 0 1 69.74 188.74"/>
-<path class="cut" d="M59.05 170.23A56 56 0 0 1 101.32 97.03"/>
-<rect class="red blk" x="224" y="112" width="96" height="40" rx="4"/>
-<rect class="blue blk" x="336" y="112" width="96" height="40" rx="4"/>
-<rect class="gold blk" x="224" y="168" width="96" height="96" rx="4"/>
-<rect class="tint blk" x="336" y="168" width="152" height="96" rx="4"/>
-<path class="arc" d="M413.34 188.52A28 28 0 0 1 434.47 225.12"/>
-<path class="arc" d="M429.13 234.37A28 28 0 0 1 386.87 234.37"/>
-<path class="arc" d="M381.53 225.12A28 28 0 0 1 402.66 188.52"/>
-</svg>
-</div>
-<div class="words">
-<h1 class="name">TrueRound</h1>
-<p class="tag">Every round, on the record.</p>
-</div>
+<!-- The broken ring from the emblem, large and cropped: three faint segments and the gold one. -->
+<svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke-width="6"><path d="M85.93 62.37A38 38 0 0 1 57.25 87.3M49.34 87.99A38 38 0 0 1 12.7 57.25M12.01 49.34A38 38 0 0 1 42.75 12.7" stroke="#FFFFFF" stroke-opacity=".07"/><path d="M53.97 12.21A38 38 0 0 1 87.72 54.63" stroke="#E6B800" stroke-opacity=".55"/></g></svg>
+<svg class="lockup" viewBox="-4 -16 850 148" role="img" aria-label="TrueRound. Train, track, improve."><g transform="translate(0 -12) scale(1.4)" fill="none" stroke-linecap="butt" stroke-linejoin="miter"><path d="M85.93 62.37A38 38 0 0 1 57.25 87.3M49.34 87.99A38 38 0 0 1 12.7 57.25M12.01 49.34A38 38 0 0 1 42.75 12.7" stroke="#FFFFFF" stroke-width="13"/><path d="M53.97 12.21A38 38 0 0 1 87.72 54.63" stroke="#E6B800" stroke-width="13"/><path d="M32 50L48 66L79 35" stroke="#E6B800" stroke-width="12.5"/></g><g transform="translate(168 70)"><path d="M15.40 0L39 0L49.30-51.70L69.80-51.70L73.50-70L8.90-70L5.20-51.70L25.70-51.70ZM138.10-47C138.10-61.50 127.50-70 109-70L77.60-70L63.60 0L87.20 0L90.70-17.60L96.50-17.60L106.40 0L130.90 0L119.20-20.40C131.10-24.90 138.10-34.50 138.10-47ZM114.20-44.70C114.20-38.80 110.40-35.40 103.90-35.40L94.20-35.40L97.50-51.80L105.40-51.80C110.80-51.80 114.20-49.70 114.20-44.70ZM171.40 1.60C192.90 1.60 205.60-9.50 209.80-30.50L217.70-70L194.50-70L186.90-31.900C184.80-21.40 181.10-17.50 174.30-17.50C168.30-17.50 164.90-20.50 164.90-26.80C164.90-28.30 165.10-30 165.50-31.90L173.10-70L149.50-70L141.80-31.50C141.30-28.90 141-26.50 141-24.10C141-8.40 152.40 1.60 171.40 1.60ZM279.80-52.20L283.40-70L226.50-70L212.50 0L270.70 0L274.30-17.80L239.20-17.80L241-27L270.70-27L274.10-44L244.50-44L246.10-52.20Z" fill="#FFFFFF"/><path transform="translate(277.6 0)" d="M74.70-47C74.70-61.50 64.10-70 45.60-70L14.20-70L0.20 0L23.80 0L27.30-17.60L33.10-17.60L43 0L67.50 0L55.80-20.40C67.70-24.90 74.70-34.50 74.70-47ZM50.80-44.70C50.80-38.80 47-35.40 40.50-35.40L30.80-35.40L34.10-51.80L42-51.80C47.40-51.80 50.80-49.70 50.80-44.70ZM112.10 1.60C137.80 1.60 156.20-15.60 156.20-40.30C156.20-58.70 142.50-71.60 120.70-71.60C95-71.60 76.60-54.40 76.60-29.70C76.60-11.30 90.30 1.60 112.10 1.60ZM114.10-17.50C105.50-17.50 100.40-23 100.40-31.10C100.40-42.60 107.10-52.50 118.70-52.50C127.30-52.50 132.40-47 132.40-38.90C132.40-27.40 125.70-17.50 114.10-17.50ZM190.80 1.60C212.30 1.60 225-9.50 229.20-30.50L237.10-70L213.90-70L206.30-31.90C204.20-21.40 200.50-17.50 193.70-17.50C187.70-17.50 184.30-20.50 184.30-26.80C184.30-28.30 184.50-30 184.90-31.90L192.50-70L168.90-70L161.20-31.50C160.70-28.90 160.40-26.50 160.40-24.10C160.40-8.40 171.80 1.60 190.80 1.60ZM291.90-70L285.40-37.40L265.30-70L245.90-70L231.90 0L254.90 0L261.40-32.60L281.50 0L300.90 0L314.90-70ZM310.30 0L347.80 0C373.30 0 391.60-15.60 391.60-40.30C391.60-58.70 378-70 355.90-70L324.30-70ZM337.60-18.40L344.20-51.60L353.20-51.60C362.70-51.60 367.80-47 367.80-38.90C367.80-27.40 361.10-18.40 348.60-18.40Z" fill="#E6B800"/></g><g transform="translate(207.51 116.3)"><path transform="translate(0.00 0) scale(1.45)" d="M4.72 0L7.32 0L7.32-11.80L11.96-11.80L11.96-14L0.08-14L0.08-11.80L4.72-11.80ZM34.28 0L31.06-4.60C32.96-5.34 34.04-6.90 34.04-9.02C34.04-12.12 31.76-14 28.08-14L22.32-14L22.32 0L24.92 0L24.92-4.08L28.08-4.08C28.26-4.08 28.44-4.08 28.62-4.10L31.48 0ZM31.42-9.02C31.42-7.26 30.24-6.22 27.960-6.22L24.92-6.22L24.92-11.80L27.96-11.80C30.24-11.80 31.42-10.78 31.42-9.02ZM55.82 0L58.54 0L52.22-14L49.66-14L43.36 0L46.04 0L47.42-3.24L54.42-3.24ZM48.30-5.28L50.92-11.40L53.56-5.28ZM68.72 0L71.32 0L71.32-14L68.72-14ZM93.36-14L93.36-4.52L85.64-14L83.50-14L83.50 0L86.08 0L86.08-9.48L93.80 0L95.94 0L95.94-14Z" fill="#FFFFFF"/><circle cx="165.46" cy="-10.15" r="4.2" fill="#E6B800"/><path transform="translate(189.09 0) scale(1.45)" d="M4.72 0L7.32 0L7.32-11.80L11.96-11.80L11.96-14L0.08-14L0.08-11.80L4.72-11.80ZM34.28 0L31.06-4.60C32.96-5.34 34.04-6.90 34.04-9.02C34.04-12.12 31.76-14 28.08-14L22.32-14L22.32 0L24.92 0L24.92-4.08L28.08-4.08C28.26-4.08 28.44-4.08 28.62-4.10L31.48 0ZM31.42-9.02C31.42-7.26 30.24-6.22 27.96-6.22L24.92-6.22L24.92-11.80L27.96-11.80C30.24-11.80 31.42-10.78 31.42-9.02ZM55.82 0L58.54 0L52.22-14L49.66-14L43.36 0L46.04 0L47.42-3.24L54.42-3.24ZM48.30-5.28L50.92-11.40L53.56-5.28ZM75 0.20C77.30 0.20 79.26-0.62 80.56-2.14L78.88-3.74C77.86-2.62 76.60-2.08 75.14-2.08C72.24-2.08 70.14-4.12 70.14-7C70.14-9.88 72.24-11.92 75.14-11.92C76.60-11.92 77.86-11.38 78.88-10.28L80.56-11.86C79.26-13.38 77.30-14.20 75.02-14.20C70.72-14.20 67.52-11.18 67.52-7C67.52-2.82 70.72 0.20 75 0.20ZM101.22 0L104.26 0L98.02-7.74L103.90-14L100.98-14L94.06-6.82L94.06-14L91.46-14L91.46 0L94.06 0L94.06-3.58L96.28-5.86Z" fill="#FFFFFF"/><circle cx="363.74" cy="-10.15" r="4.2" fill="#E6B800"/><path transform="translate(387.37 0) scale(1.45)" d="M1.88 0L4.48 0L4.48-14L1.88-14ZM31.98 0L31.96-14L29.82-14L24.36-4.72L18.80-14L16.66-14L16.66 0L19.14 0L19.14-9.16L23.74-1.60L24.90-1.60L29.50-9.28L29.52 0ZM49.92-14L44.16-14L44.16 0L46.76 0L46.76-4.04L49.92-4.04C53.60-4.04 55.88-5.94 55.88-9.02C55.88-12.12 53.60-14 49.92-14ZM49.80-6.24L46.76-6.24L46.76-11.80L49.80-11.80C52.08-11.80 53.26-10.78 53.26-9.02C53.26-7.26 52.08-6.24 49.80-6.24ZM78.84 0L75.62-4.60C77.52-5.34 78.60-6.90 78.60-9.02C78.60-12.12 76.32-14 72.64-14L66.88-14L66.88 0L69.48 0L69.48-4.08L72.64-4.08C72.82-4.08 73-4.08 73.18-4.10L76.04 0ZM75.98-9.02C75.98-7.26 74.80-6.22 72.52-6.22L69.48-6.22L69.48-11.80L72.52-11.80C74.80-11.80 75.98-10.78 75.98-9.02ZM96.44 0.20C100.78 0.20 103.98-2.84 103.98-7C103.98-11.16 100.78-14.20 96.44-14.20C92.10-14.20 88.90-11.14 88.90-7C88.90-2.86 92.10 0.20 96.44 0.20ZM96.44-2.08C93.62-2.08 91.52-4.14 91.52-7C91.52-9.86 93.62-11.92 96.44-11.92C99.26-11.92 101.36-9.86 101.36-7C101.36-4.14 99.26-2.08 96.44-2.08ZM124.90-14L120.20-3.20L115.54-14L112.72-14L118.84 0L121.40 0L127.50-14ZM139.98-2.18L139.98-6.04L146.74-6.04L146.74-8.18L139.98-8.18L139.98-11.82L147.60-11.82L147.60-14L137.38-14L137.38 0L147.88 0L147.88-2.18Z" fill="#FFFFFF"/></g></svg>
+<div class="stripes" aria-hidden="true"></div>
 </div>
 </body>
 </html>
